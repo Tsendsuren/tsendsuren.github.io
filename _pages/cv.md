@@ -11,27 +11,26 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+* Ph.D in Physics, Pohang University of Science and Technology, 2021
+* M.S. in Physics, National University of Mongolia, 2012
+* B.S. in Physics, National University of Mongolia, 2009
 
 Work experience
 ======
-* Spring 2024: Academic Pages Collaborator
-  * Github University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+* 2021-till now: Postdoctoral researcher
+  * Pohang University of Science and Technology
 
+
+* 2012-2014: Lecturer
+  * National University of Mongolia
 
   
-Skills
+Programming languages
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Python
+* MATLAB
+* LabVIEW
+
 
 Publications
 ======

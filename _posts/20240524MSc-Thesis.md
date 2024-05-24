@@ -1,7 +1,7 @@
 ---
 title: 'Магистрын дипломын ажил'
 collection: publications
-permalink: /posts/20240524MSc-Thesis
+permalink: /posts/20240524MSc-Thesis/
 excerpt: 'Магистрын дипломын ажил.'
 date: 2024-05-24
 # venue: 'Journal 1'

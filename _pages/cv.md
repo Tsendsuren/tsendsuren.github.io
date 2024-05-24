@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Ultrashort CV"
+# title: "Ultrashort CV"
 permalink: /cv/
 author_profile: true
 redirect_from:

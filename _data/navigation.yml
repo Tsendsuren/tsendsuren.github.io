@@ -1,5 +1,10 @@
 # main links links
 main:
+
+  - title: "Ultrashort CV"
+    url: /cv/
+
+
   - title: "Publications"
     url: /publications/
 
@@ -12,11 +17,10 @@ main:
   # - title: "Portfolio"
   #   url: /portfolio/
         
-  - title: "Blog Posts"
+  - title: "My notes"
     url: /year-archive/
     
-  - title: "Ultrashort CV"
-    url: /cv/
+
     
   # - title: "Guide"
   #   url: /markdown/

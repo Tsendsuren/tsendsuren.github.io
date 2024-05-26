@@ -11,12 +11,22 @@ layout: compress
     {% include head/custom.html %}
   </head>
 
-  <body>
+  <!-- <body>
 
     {% include browser-upgrade.html %}
     {% include masthead.html %}
 
-    {{ content }}
+    {{ content }} -->
+
+  
+    <main>
+      {{ content }}
+      
+      {% if page.paperurl %}
+        <p><a href="{{ page.paperurl }}" class="btn btn-download">Download Paper</a></p>
+      {% endif %}
+    </main>
+
 
     <div class="page__footer">
       <footer>

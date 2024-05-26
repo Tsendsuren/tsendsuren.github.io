@@ -94,5 +94,17 @@
         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
       </p>
     {% endif %}
+
+    {% if post.paperurl or post.slidesurl %}
+      <p class="download-links">
+        {% if post.paperurl %}
+          <a href="{{ post.paperurl }}" class="btn btn-download">Download Paper</a>
+        {% endif %}
+        {% if post.slidesurl %}
+          <a href="{{ post.slidesurl }}" class="btn btn-download">Download Slides</a>
+        {% endif %}
+      </p>
+    {% endif %}
   </article>
 </div>
+

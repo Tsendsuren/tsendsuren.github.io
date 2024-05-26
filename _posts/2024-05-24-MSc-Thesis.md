@@ -11,4 +11,4 @@ permalink: /posts/2024-05-24-MSc-Thesis/
 
 Энэхүү магистрийн дипломын ажлыг 2012 онд МУИС-ын Физик электроникын сургуулийн Физикийн тэнхимд Проф. Ц.Ганцог багшийн удирдлага доор хийж байсан болно.
 
-[Download PDF](http://tsendsuren.github.io/files/Tsendsuren_MScThesis.pdf)
+<!-- [Download PDF](http://tsendsuren.github.io/files/Tsendsuren_MScThesis.pdf) -->

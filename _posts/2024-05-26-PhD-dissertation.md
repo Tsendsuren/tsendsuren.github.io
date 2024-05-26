@@ -1,5 +1,5 @@
 ---
-title: 'Exploring Attosecond Chemical Physics: My PhD Dissertation'
+title: 'My PhD Dissertation: Exploring Attosecond Chemical Physics'
 date: 2024-05-26
 permalink: /posts/2024-05-26-PhD-dissertation/
 

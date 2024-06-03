@@ -1,11 +1,15 @@
 ---
-title: 'Running OceanOptics Spectrometer with Python'
+title: 'Running HR4000 Spectrometer with Python'
 date: 2024-06-03
 permalink: /posts/2024-06-03-OceanOptics/
 
 ---
 # Intro
-With this program, you can easily connect to the OceanOptics HR4000 spectrometer and get readouts without installing any software.
+Ocean Optics spectrometers are a staple in many laser labs, known for their high quality. However, their reliance on proprietary software and drivers can be cumbersome. Fortunately, Python offers a flexible and customizable alternative for controlling these devices and acquiring spectrum data.
+
+With a simple Python script, you can bypass the need for Ocean Optics' software and drivers, and directly interface with your spectrometer. This approach streamlines your workflow and empowers you to tailor the data collection process to your specific experimental needs.
+
+In my own research, I wrote a simple Python code snippet that seamlessly connects to the Ocean Optics HR4000 spectrometer and retrieves spectral readouts. By incorporating this code into your experiments, you can unlock a more efficient and adaptable way to work with your spectrometer.
 
 ## Getting Started
 

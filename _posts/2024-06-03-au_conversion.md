@@ -1,7 +1,7 @@
 ---
 title: 'Atomic unit convention in ultrafast physics'
 date: 2024-06-04
-permalink: /posts/au_conversion/
+permalink: /posts/2024-06-03-au_conversion/
 
 ---
 
@@ -14,3 +14,6 @@ $$I=\frac{1}{2}\epsilon c E^{2}$$
 E_{au} = E_{SI} * 3.51e-16 
 ‘‘‘‘
 
+‘‘‘python
+E_{au} = ev_{SI} / 27.21
+‘‘‘‘

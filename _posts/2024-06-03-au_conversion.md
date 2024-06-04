@@ -5,13 +5,17 @@ permalink: /posts/2024-06-03-au_conversion/
 
 ---
 
-## Atomic unit convention in ultrafast physics
-
+<!-- ## Atomic unit convention in ultrafast physics -->
 
 ### Laser intensity conversion
 <!-- $$I=\frac{1}{2}\epsilon_{0} c E^{2}$$ -->
 ```python
-Intensity [au] = Intensity [W.cm2] * 3.51e-16 
+Intensity [au] = Intensity [W.cm2] / 3.51e16 
+```
+
+### Electric field strength
+```python
+E [au] = E [V/m] / 5.14e11
 ```
 
 ### Energy conversion
@@ -27,4 +31,9 @@ t [au] = t [fs] * 1000 / 24.2
 ### Wavelength conversion
 ```python
 lambda [au] = lambda [nm] * 18.89
+```
+
+### Angular frequency
+```python
+omega [au] = 45.56 / lambda [nm]
 ```

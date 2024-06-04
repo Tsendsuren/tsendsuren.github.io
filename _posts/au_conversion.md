@@ -1,0 +1,16 @@
+---
+title: 'Atomic unit convention in ultrafast physics'
+date: 2024-06-04
+permalink: /posts/au_conversion/
+
+---
+
+## Atomic unit convention in ultrafast physics
+
+
+### Laser intensity conversion
+$$I=\frac{1}{2}\epsilon c E^{2}$$
+‘‘‘python
+E_{au} = E_{SI} * 3.51e-16 
+‘‘‘‘
+

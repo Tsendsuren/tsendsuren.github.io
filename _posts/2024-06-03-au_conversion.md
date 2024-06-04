@@ -9,12 +9,22 @@ permalink: /posts/2024-06-03-au_conversion/
 
 
 ### Laser intensity conversion
-$$I=\frac{1}{2}\epsilon_{0} c E^{2}$$
+<!-- $$I=\frac{1}{2}\epsilon_{0} c E^{2}$$ -->
 ```python
-I_{au} = I_SI * 3.51e-16 
+Intensity [au] = Intensity [W.cm2] * 3.51e-16 
 ```
 
 ### Energy conversion
 ```python
-E_{au} = ev_{SI} / 27.21
+Energy [au] = Energy [eV] / 27.21
+```
+
+### Time conversion
+```python
+t [au] = t [fs] * 1000 / 24.2
+```
+
+### Wavelength conversion
+```python
+lambda [au] = lambda [nm] * 18.89
 ```

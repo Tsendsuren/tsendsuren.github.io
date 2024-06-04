@@ -11,10 +11,10 @@ permalink: /posts/2024-06-03-au_conversion/
 ### Laser intensity conversion
 $$I=\frac{1}{2}\epsilon_{0} c E^{2}$$
 ```python
-E_{au} = E_{SI} * 3.51e-16 
+I_{au} = I_SI * 3.51e-16 
 ```
 
 ### Energy conversion
 ```python
-E$$_{au}$$ = ev_{SI} / 27.21
+E_{au} = ev_{SI} / 27.21
 ```

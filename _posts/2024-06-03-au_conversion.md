@@ -16,5 +16,5 @@ E_{au} = E_{SI} * 3.51e-16
 
 ### Energy conversion
 ```python
-E_{au} = ev_{SI} / 27.21
+E$$_{au}$$ = ev_{SI} / 27.21
 ```

@@ -1,9 +1,10 @@
 ---
-title: 'Atomic unit convention in ultrafast physics'
+title: 'Atomic units and handy formulas'
 date: 2024-06-04
 permalink: /posts/2024-06-03-au_conversion/
 ---
 
+# Atomic units
 ### Laser intensity conversion
 
 ```python
@@ -34,3 +35,13 @@ lambda [au] = lambda [nm] * 18.89
 ```python
 omega [au] = 45.56 / lambda [nm]
 ```
+
+
+# Useful formulas in ultrafast physics
+
+### Wavelength-energy conversion
+$$ E [eV] = \frac{1240}{\lambda [nm]}$$
+
+### Ponderomotive energy
+
+$$ U_{p}=\frac{I}{4\omega^{2}} $$

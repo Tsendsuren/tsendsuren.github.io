@@ -40,7 +40,8 @@ omega [au] = 45.56 / lambda [nm]
 # Useful formulas in ultrafast physics
 
 ### Wavelength-energy conversion
-$$ E [eV] = \frac{1240}{\lambda [nm]}$$
+
+$$ E [\mathrm{eV}] = \frac{1240}{\lambda [\mathrm{nm}]}$$
 
 ### Ponderomotive energy
 

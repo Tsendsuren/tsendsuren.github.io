@@ -17,10 +17,10 @@ Education
 
 Work experience
 ======
-* June 2024-till now: Research Fellow
+* September 2024-till now: Research Fellow
   * Center for Quantum Dynamics, Griffith University, Australia
 
-* 2021-June 2024: Postdoctoral researcher
+* 2021-August 2024: Postdoctoral researcher
   * Max Planck Center for Attosecond Science, POSTECH, S.Korea
 
 

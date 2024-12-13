@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy unit conversion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Easy unit conversion</h1>
+        <table>
+            <tr>
+                <td><input type="number" id="eV" oninput="convertFrom('eV')"></td>
+                <td>eV</td>
+                <td><input type="number" id="nm" oninput="convertFrom('nm')"></td>
+                <td>nm</td>
+                <td><input type="number" id="cm-1" oninput="convertFrom('cm-1')"></td>
+                <td>cm<sup>-1</sup></td>
+                <td><input type="number" id="fs" oninput="convertFrom('fs')"></td>
+                <td>fs</td>
+            </tr>
+            <tr>
+                <td><input type="number" id="meV" oninput="convertFrom('meV')"></td>
+                <td>meV</td>
+                <td><input type="number" id="um" oninput="convertFrom('um')"></td>
+                <td>&mu;m</td>
+                <td><input type="number" id="THz" oninput="convertFrom('THz')"></td>
+                <td>THz</td>
+                <td><input type="number" id="ps" oninput="convertFrom('ps')"></td>
+                <td>ps</td>
+            </tr>
+        </table>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -17,7 +17,10 @@ Education
 
 Work experience
 ======
-* 2021-till now: Postdoctoral researcher
+* June 2024-till now: Research Fellow
+  * Griffith University
+
+* 2021-June 2024: Postdoctoral researcher
   * Pohang University of Science and Technology
 
 

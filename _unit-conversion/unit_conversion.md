@@ -1,5 +1,5 @@
 ---
 layout: default
 title: "Unit Conversion"
-permalink: /unit_conversion.html
+permalink: /unit-conversion/unit_conversion.html
 ---

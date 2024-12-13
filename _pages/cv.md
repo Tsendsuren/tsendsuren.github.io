@@ -18,10 +18,10 @@ Education
 Work experience
 ======
 * June 2024-till now: Research Fellow
-  * Griffith University
+  * Center for Quantum Dynamics, Griffith University
 
 * 2021-June 2024: Postdoctoral researcher
-  * Pohang University of Science and Technology
+  * Max Planck Center for Attosecond Science, Pohang University of Science and Technology
 
 
 * 2012-2014: Lecturer

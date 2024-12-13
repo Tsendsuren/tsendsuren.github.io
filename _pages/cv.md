@@ -25,7 +25,7 @@ Work experience
 
 
 * 2012-2014: Lecturer
-  * National University of Mongolia
+  * Department of Physics, National University of Mongolia
 
   
 Programming languages

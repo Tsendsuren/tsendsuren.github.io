@@ -12,27 +12,35 @@ redirect_from:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Easy unit conversion</title>
+    <link rel="stylesheet" href="styles_unitconversion.css">
 </head>
 <body>
-    <div class="tile-container">
-        <div class="tile">
-            <h2>Tile 1</h2>
-            <p>Content for the first tile.</p>
-        </div>
-        <div class="tile">
-            <h2>Tile 2</h2>
-            <p>Content for the second tile.</p>
-        </div>
-        <div class="tile">
-            <h2>Tile 3</h2>
-            <p>Content for the third tile.</p>
-        </div>
-        <div class="tile">
-            <h2>Tile 4</h2>
-            <p>Content for the fourth tile.</p>
-        </div>
+    <div class="container">
+        <h1>Easy unit conversion</h1>
+        <table>
+            <tr>
+                <td><input type="number" id="eV" oninput="convertFrom('eV')"></td>
+                <td>eV</td>
+                <td><input type="number" id="nm" oninput="convertFrom('nm')"></td>
+                <td>nm</td>
+                <td><input type="number" id="cm-1" oninput="convertFrom('cm-1')"></td>
+                <td>cm<sup>-1</sup></td>
+                <td><input type="number" id="fs" oninput="convertFrom('fs')"></td>
+                <td>fs</td>
+            </tr>
+            <tr>
+                <td><input type="number" id="meV" oninput="convertFrom('meV')"></td>
+                <td>meV</td>
+                <td><input type="number" id="um" oninput="convertFrom('um')"></td>
+                <td>&mu;m</td>
+                <td><input type="number" id="THz" oninput="convertFrom('THz')"></td>
+                <td>THz</td>
+                <td><input type="number" id="ps" oninput="convertFrom('ps')"></td>
+                <td>ps</td>
+            </tr>
+        </table>
     </div>
+    <script src="scripts.js"></script>
 </body>
 </html>

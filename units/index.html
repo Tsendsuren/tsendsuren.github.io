@@ -6,6 +6,22 @@
     <title>Photonics Unit Converter</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        
+        :root {
+            --navy-deep: #0f172a;    /* Very dark navy for background */
+            --navy-accent: #1e3a8a;  /* Corporate navy for headers/accents */
+            --navy-card: #1e293b;    /* Slightly lighter for input containers */
+            --text-light: #f1f5f9;   /* Off-white for main text */
+            --text-muted: #94a3b8;   /* Muted slate for secondary labels */
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--navy-deep);
+            color: var(--text-light);
+        }
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -14,140 +30,144 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
         .bg-visible-spectrum {
             background: linear-gradient(to right, 
                 #4b0082, #0000ff, #00ff00, #ffff00, #ff7f00, #ff0000);
         }
+
         .input-card {
-            @apply bg-slate-50 border-2 border-slate-100 rounded-xl px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none transition-all text-lg font-medium w-full;
+            @apply bg-[#0f172a] border border-slate-700 rounded-md px-4 py-2 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none transition-all text-lg font-normal w-full shadow-inner text-white;
+        }
+
+        .section-title {
+            @apply text-sm font-bold uppercase tracking-widest mb-4 flex items-center border-b pb-2 border-slate-700;
+            color: #60a5fa; /* Light blue accent for titles */
+        }
+
+        .container-card {
+            background-color: var(--navy-card);
+            border: 1px solid #334155;
         }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen font-sans text-slate-900">
+<body class="min-h-screen py-12 px-4">
 
-<div class="max-w-5xl mx-auto px-4 py-12">
-    <header class="mb-12 text-center">
-        <h1 class="text-4xl font-extrabold text-slate-800 tracking-tight mb-3">
-            Unit converter
-        </h1>
-        <p class="text-slate-600 text-lg max-w-2xl mx-auto">
-            High-precision conversions for wavelength, frequency, energy, and cycle time using CODATA 2018 constants.
+<div class="max-w-5xl mx-auto">
+    <header class="mb-10 text-left border-b-2 border-slate-800 pb-6">
+        <h1 class="text-3xl font-bold text-white mb-2">Unit Conversion Tool</h1>
+        <p class="text-slate-400 text-base">
+            High-precision utility for ultrafast physics: convert between wavelength, energy, and cycle duration using CODATA 2018.
         </p>
     </header>
 
-    <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 p-8 border border-slate-100">
-        <div id="converter-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="container-card rounded-xl shadow-2xl p-8">
+        <div id="converter-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
             
             <!-- Spatial Units -->
-            <div class="space-y-4">
-                <h2 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2 flex items-center">
-                    <span class="mr-2">📏</span> Spatial Units
-                </h2>
+            <div class="space-y-5">
+                <h2 class="section-title">Spatial Units</h2>
                 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Wavelength (nm)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Wavelength (nm)</label>
                     <div class="relative">
-                        <input type="number" id="nm" step="any" placeholder="532" class="input-card focus:border-blue-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">nm</span>
+                        <input type="number" id="nm" step="any" placeholder="532" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">nm</span>
                     </div>
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Wavelength (µm)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Wavelength (µm)</label>
                     <div class="relative">
-                        <input type="number" id="um" step="any" placeholder="0.532" class="input-card focus:border-blue-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">µm</span>
+                        <input type="number" id="um" step="any" placeholder="0.532" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">µm</span>
                     </div>
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Wavenumber (cm⁻¹)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Wavenumber (cm⁻¹)</label>
                     <div class="relative">
-                        <input type="number" id="cminv" step="any" placeholder="18797" class="input-card focus:border-blue-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">cm⁻¹</span>
+                        <input type="number" id="cminv" step="any" placeholder="18797" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">cm⁻¹</span>
                     </div>
                 </div>
             </div>
 
             <!-- Energy & Frequency -->
-            <div class="space-y-4 border-x border-slate-50 px-0 md:px-4">
-                <h2 class="text-xs font-bold uppercase tracking-widest text-emerald-600 mb-2 flex items-center">
-                    <span class="mr-2">⚡</span> Energy & Frequency
-                </h2>
+            <div class="space-y-5">
+                <h2 class="section-title">Energy & Frequency</h2>
                 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Photon Energy (eV)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Photon Energy (eV)</label>
                     <div class="relative">
-                        <input type="number" id="ev" step="any" placeholder="2.33" class="input-card focus:border-emerald-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">eV</span>
+                        <input type="number" id="ev" step="any" placeholder="2.33" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">eV</span>
                     </div>
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Atomic Unit (Hartree)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Atomic Unit (Hartree)</label>
                     <div class="relative">
-                        <input type="number" id="hartree" step="any" placeholder="0.085" class="input-card focus:border-emerald-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">Eₕ</span>
+                        <input type="number" id="hartree" step="any" placeholder="0.085" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">Eₕ</span>
                     </div>
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Frequency (THz)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Frequency (THz)</label>
                     <div class="relative">
-                        <input type="number" id="thz" step="any" placeholder="563" class="input-card focus:border-emerald-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">THz</span>
+                        <input type="number" id="thz" step="any" placeholder="563" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">THz</span>
                     </div>
                 </div>
             </div>
 
             <!-- Temporal Units -->
-            <div class="space-y-4">
-                <h2 class="text-xs font-bold uppercase tracking-widest text-orange-600 mb-2 flex items-center">
-                    <span class="mr-2">⏱️</span> Temporal Cycle
-                </h2>
+            <div class="space-y-5">
+                <h2 class="section-title">Temporal Cycle</h2>
                 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Period (fs)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Period (fs)</label>
                     <div class="relative">
-                        <input type="number" id="fs" step="any" placeholder="1.77" class="input-card focus:border-orange-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">fs</span>
+                        <input type="number" id="fs" step="any" placeholder="1.77" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">fs</span>
                     </div>
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Period (ps)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Period (ps)</label>
                     <div class="relative">
-                        <input type="number" id="ps" step="any" placeholder="0.00177" class="input-card focus:border-orange-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">ps</span>
+                        <input type="number" id="ps" step="any" placeholder="0.00177" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">ps</span>
                     </div>
                 </div>
 
                 <div class="group">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 ml-1">Energy (Joules)</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-1 uppercase">Energy (Joules)</label>
                     <div class="relative">
-                        <input type="number" id="joules" step="any" class="input-card focus:border-slate-500">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">J</span>
+                        <input type="number" id="joules" step="any" class="input-card">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-bold">J</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Spectrum Visualizer -->
-        <div class="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+        <div class="mt-12 p-6 bg-[#0f172a] rounded-lg border border-slate-700">
             <div class="flex justify-between items-end mb-4">
                 <div>
-                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Electromagnetic Spectrum</span>
-                    <h3 id="range-label" class="text-xl font-bold text-slate-700">Select a value...</h3>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">EM Spectrum Positioning</span>
+                    <h3 id="range-label" class="text-lg font-bold text-blue-400">Select a value...</h3>
                 </div>
-                <button id="reset-btn" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">Clear All</button>
+                <button id="reset-btn" class="text-xs font-bold text-slate-500 hover:text-red-400 transition-colors uppercase tracking-widest">Reset All</button>
             </div>
-            <div class="relative h-6 w-full bg-slate-200 rounded-full overflow-hidden flex">
-                <div class="h-full bg-slate-300 w-[40%] flex items-center justify-center text-[10px] text-white font-bold">UV</div>
-                <div class="h-full bg-visible-spectrum w-[15%] flex items-center justify-center text-[10px] text-white font-bold">VIS</div>
-                <div class="h-full bg-slate-400 w-[45%] flex items-center justify-center text-[10px] text-white font-bold">IR</div>
-                <div id="spectrum-marker" class="absolute top-0 bottom-0 w-1 bg-black shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-500 opacity-0" style="left: 50%;"></div>
+            <div class="relative h-4 w-full bg-slate-800 rounded overflow-hidden flex">
+                <div class="h-full bg-slate-700 w-[40%] flex items-center justify-center text-[9px] text-slate-400 font-bold">UV</div>
+                <div class="h-full bg-visible-spectrum w-[15%]"></div>
+                <div class="h-full bg-slate-600 w-[45%] flex items-center justify-center text-[9px] text-slate-400 font-bold">IR</div>
+                <div id="spectrum-marker" class="absolute top-0 bottom-0 w-1 bg-white transition-all duration-500 opacity-0 shadow-[0_0_8px_white]" style="left: 50%;"></div>
             </div>
-            <div class="flex justify-between text-[10px] text-slate-400 mt-2 font-mono">
+            <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-mono uppercase tracking-tighter">
                 <span>100 nm</span>
                 <span>400 nm</span>
                 <span>700 nm</span>
@@ -156,28 +176,27 @@
         </div>
     </div>
 
-    <footer class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-slate-500">
-        <div>
-            <h4 class="font-bold text-slate-700 mb-2">Fundamental Constants</h4>
-            <ul class="space-y-1 font-mono text-[11px]">
-                <li>h (Planck) = 6.62607015 × 10⁻³⁴ J·s</li>
-                <li>c (Light) = 299,792,458 m/s</li>
-                <li>Eₕ (Hartree) = 4.359744722 × 10⁻¹⁸ J</li>
+    <footer class="mt-12 flex flex-col md:flex-row justify-between text-xs text-slate-500 border-t border-slate-800 pt-6">
+        <div class="mb-4 md:mb-0">
+            <h4 class="font-bold text-slate-400 mb-1">CODATA 2018 Constants</h4>
+            <ul class="space-y-0.5 font-mono">
+                <li>h: 6.62607015e-34 J·s</li>
+                <li>c: 299,792,458 m/s</li>
+                <li>Eₕ: 4.35974472e-18 J</li>
             </ul>
         </div>
-        <div class="text-right">
-            <p>© 2024 · All calculations use CODATA 2018 standards.</p>
+        <div class="md:text-right">
+            <p>© 2025 · Unit Conversion Tool</p>
             <p class="mt-1 italic">Temporal units represent the 1/ν cycle duration.</p>
         </div>
     </footer>
 </div>
 
 <script>
-    // Constants (CODATA 2018)
     const H = 6.62607015e-34;
     const C = 299792458;
     const E_CHARGE = 1.602176634e-19;
-    const HARTREE = 4.3597447222071e-18; // Hartree in Joules
+    const HARTREE = 4.3597447222071e-18;
 
     const inputs = {
         nm: document.getElementById('nm'),
@@ -240,7 +259,7 @@
     function updateVisuals(wavelengthNm) {
         marker.style.opacity = '1';
         let label = "";
-        let color = "text-slate-700";
+        let color = "text-blue-400";
 
         let percent = 0;
         if (wavelengthNm < 100) percent = 0;
@@ -252,18 +271,17 @@
         }
         marker.style.left = `${percent}%`;
 
-        if (wavelengthNm < 10) { label = "X-Ray / Deep UV"; color = "text-purple-800"; }
-        else if (wavelengthNm < 400) { label = "Ultraviolet (UV)"; color = "text-purple-600"; }
-        else if (wavelengthNm < 750) { label = "Visible Light"; color = "text-blue-600"; }
-        else if (wavelengthNm < 1400) { label = "Near-Infrared (NIR)"; color = "text-rose-700"; }
-        else if (wavelengthNm < 3000) { label = "Short-Wavelength IR"; color = "text-rose-900"; }
-        else { label = "Mid/Far-Infrared / Radio"; color = "text-slate-900"; }
+        if (wavelengthNm < 10) label = "X-Ray / Deep UV";
+        else if (wavelengthNm < 400) label = "Ultraviolet (UV)";
+        else if (wavelengthNm < 750) label = "Visible Light";
+        else if (wavelengthNm < 1400) label = "Near-Infrared (NIR)";
+        else if (wavelengthNm < 3000) label = "Short-Wavelength IR";
+        else label = "Mid/Far-Infrared / Radio";
 
         rangeLabel.innerText = label;
-        rangeLabel.className = `text-xl font-bold transition-colors ${color}`;
+        rangeLabel.className = `text-lg font-bold transition-colors ${color}`;
     }
 
-    // Input Logic (Simplified via Central Energy)
     inputs.nm.oninput = (e) => { currentEnergy = (H * C) / (parseFloat(e.target.value) / 1e9); updateAll('nm'); };
     inputs.um.oninput = (e) => { currentEnergy = (H * C) / (parseFloat(e.target.value) / 1e6); updateAll('um'); };
     inputs.cminv.oninput = (e) => { currentEnergy = (H * C) / (1 / (parseFloat(e.target.value) * 100)); updateAll('cminv'); };

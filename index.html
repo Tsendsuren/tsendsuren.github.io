@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Marked.js for parsing Markdown files -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -36,6 +38,23 @@
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                               linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
+
+        /* Styles for dynamically loaded Markdown content */
+        .markdown-body p { margin-bottom: 1.25rem; line-height: 1.75; }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 { color: #f8fafc; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.5rem; }
+        .markdown-body h1 { font-size: 1.875rem; }
+        .markdown-body h2 { font-size: 1.5rem; }
+        .markdown-body h3 { font-size: 1.25rem; border-bottom: none; }
+        .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+        .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+        .markdown-body li { margin-bottom: 0.5rem; }
+        .markdown-body a { color: #22d3ee; text-decoration: underline; transition: color 0.2s; }
+        .markdown-body a:hover { color: #67e8f9; }
+        .markdown-body strong { color: #f1f5f9; font-weight: 600; }
+        .markdown-body code { background-color: #0f172a; padding: 0.2rem 0.4rem; border-radius: 0.25rem; color: #67e8f9; font-family: monospace; font-size: 0.875em; border: 1px solid #1e293b; }
+        .markdown-body pre { background-color: #0f172a; padding: 1.25rem; border-radius: 0.5rem; overflow-x: auto; border: 1px solid #1e293b; margin-bottom: 1.25rem; }
+        .markdown-body pre code { background-color: transparent; padding: 0; border: none; color: #a5f3fc; font-size: 0.875em; }
+        .markdown-body blockquote { border-left: 4px solid #22d3ee; padding-left: 1rem; font-style: italic; color: #94a3b8; margin-bottom: 1.25rem; background: #0f172a55; padding-top: 0.5rem; padding-bottom: 0.5rem;}
     </style>
 </head>
 <body class="bg-slate-950 text-slate-300 font-sans antialiased selection:bg-cyan-900 selection:text-cyan-100">
@@ -144,7 +163,6 @@
                 <!-- Card 1 -->
                 <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'ultrafast')">
                     <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <!-- Local Image: ubr.png -->
                         <img src="web_gallery/ubr.png" alt="Ultrafast Electron Dynamics" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
                     </div>
@@ -160,7 +178,6 @@
                 <!-- Card 2 -->
                 <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'pulses')">
                     <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <!-- Local Image: fig4.png -->
                         <img src="web_gallery/fig4.png" alt="Ultrashort pulse generation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
                     </div>
@@ -176,7 +193,6 @@
                 <!-- Card 3 -->
                 <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'strong-field')">
                     <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <!-- Local Image: fig1.png -->
                         <img src="web_gallery/fig1.png" alt="Strong Field Physics" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
                     </div>
@@ -192,7 +208,6 @@
                 <!-- Card 4 -->
                 <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'metrology')">
                     <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <!-- Local Image -->
                         <img src="web_gallery/pmd.png" alt="Quantum Metrology" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
                     </div>
@@ -311,30 +326,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Publication Item 5 -->
-                <div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">
-                            2020
-                        </div>
-                        <div class="flex-1 w-full">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">High-contrast, intense single-cycle pulses from an all thin-solid-plate setup</h3>
-                            <p class="text-slate-400 mb-4 font-light leading-relaxed">
-                                M. Seo, <span class="text-slate-200 font-medium">K. Tsendsuren</span>, S. Mitra, M. Kling, D. Kim.
-                                <br/>
-                                <em class="text-slate-500 text-sm">Optics Letters</em>, 45 (2), 367-370.
-                            </p>
-                            <div class="flex flex-wrap gap-4 items-center">
-                                <button id="btn-pub-5" onclick="explainResearch('High-contrast, intense single-cycle pulses from an all thin-solid-plate setup', 'explain-pub-5', 'btn-pub-5')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50">
-                                    <i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨
-                                </button>
-                            </div>
-                            <!-- AI Explanation Container -->
-                            <div id="explain-pub-5" class="hidden mt-4 w-full"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
             
             <div class="mt-12 text-center">
@@ -356,6 +347,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Note Card 1 -->
+                <!-- Notice we pass the ID 'note1' which links to the JavaScript data below -->
                 <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note1')">
                     <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="notebook-pen" class="w-6 h-6"></i>
@@ -411,7 +403,7 @@
                 
                 <!-- Image Item 1 (Spans 2 columns and 2 rows for visual interest) -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer md:col-span-2 md:row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image: fig1.png -->
+                    <!-- Local Image -->
                     <img src="web_gallery/fig1.png" alt="Attosecond Beamline" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
@@ -420,7 +412,7 @@
 
                 <!-- Image Item 2 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image: fig2.png -->
+                    <!-- Local Image -->
                     <img src="web_gallery/fig2.png" alt="Data Analysis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
@@ -429,7 +421,7 @@
 
                 <!-- Image Item 3 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image: fig3.png -->
+                    <!-- Local Image -->
                     <img src="web_gallery/fig3.png" alt="Laser Alignment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
@@ -438,7 +430,7 @@
 
                 <!-- Image Item 4 (Spans 2 rows) -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image: fig5.png -->
+                    <!-- Local Image -->
                     <img src="web_gallery/fig5.png" alt="Optics Setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
@@ -447,7 +439,7 @@
 
                 <!-- Image Item 5 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image: fig6.png -->
+                    <!-- Local Image -->
                     <img src="web_gallery/fig6.png" alt="Equipment Control" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
@@ -456,7 +448,7 @@
 
                 <!-- Image Item 6 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image: fig7.png -->
+                    <!-- Local Image -->
                     <img src="web_gallery/fig7.png" alt="VMI Chamber" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
@@ -520,7 +512,8 @@
                     <span id="note-modal-date">Date</span>
                 </div>
                 <h3 id="note-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6 border-b border-slate-800 pb-4">Title</h3>
-                <div id="note-modal-content" class="text-slate-300 leading-relaxed font-light space-y-5">
+                <!-- Notice the markdown-body class added here for styling -->
+                <div id="note-modal-content" class="markdown-body text-slate-300 font-light">
                     Content goes here.
                 </div>
             </div>
@@ -544,27 +537,31 @@
             'note1': {
                 date: 'Apr 15, 2026',
                 title: 'Calibrating a VMI Spectrometer',
-                content: '<p>Calibrating a Velocity Map Imaging (VMI) spectrometer is crucial for obtaining accurate electron momentum distributions. The process generally involves introducing a well-known calibration gas (like Xenon or Argon) and performing multiphoton ionization.</p><p>By analyzing the resulting photoelectron spectrum and comparing the ring radii to the known kinetic energies of the photoelectrons, we can establish a precise pixel-to-momentum conversion factor. Common pitfalls include non-uniform extraction fields and detector inhomogeneities, which must be carefully accounted for during the inverse Abel transformation.</p>'
+                // Pointing to a local Markdown file!
+                file: 'notes/calibrating-vmi.md' 
             },
             'note2': {
                 date: 'Mar 28, 2026',
                 title: 'Python Script: Attosecond Streaking',
-                content: '<p>Analyzing attosecond streaking spectrograms can be computationally heavy. I typically use a combination of <code>scipy.optimize</code> for center-of-mass extraction and custom <code>numpy</code> routines to quickly map the streaking trace.</p><div class="bg-slate-950 p-4 rounded-lg font-mono text-sm border border-slate-800 text-cyan-200 overflow-x-auto"># Extract center of mass<br>com = np.average(energy_axis, weights=spectrogram, axis=0)<br>vector_potential = -com / atomic_units.c</div><p>This simple robust approach works wonderfully as a first pass before running more complex quantum mechanical retrieval algorithms or ptychography routines.</p>'
+                file: 'notes/attosecond-streaking.md'
             },
             'note3': {
                 date: 'Feb 10, 2026',
                 title: 'Quick Ref: Phase-matching in HHG',
-                content: '<p>Optimizing High Harmonic Generation (HHG) flux is all about phase matching. The macroscopic yield is maximized when the phase velocity of the driving fundamental laser matches the phase velocity of the generated XUV light.</p><div class="bg-slate-950 p-4 rounded-lg font-mono text-sm border border-slate-800 text-cyan-200">&Delta;k = &Delta;k_neutral + &Delta;k_plasma + &Delta;k_Gouy = 0</div><p>For Argon driven by 800nm, phase matching typically occurs around 30-50 mbar, depending on the focus geometry and peak intensity. Always remember to tweak the gas pressure dynamically while monitoring the XUV spectrometer to find the sweet spot!</p>'
+                file: 'notes/phase-matching.md'
             }
         };
 
-        function openNoteModal(id) {
+        async function openNoteModal(id) {
             const data = notesData[id];
             if (!data) return;
             
             document.getElementById('note-modal-title').textContent = data.title;
             document.getElementById('note-modal-date').textContent = data.date;
-            document.getElementById('note-modal-content').innerHTML = data.content;
+            const contentDiv = document.getElementById('note-modal-content');
+            
+            // Show a loading spinner immediately
+            contentDiv.innerHTML = '<div class="flex items-center justify-center py-10"><i data-lucide="loader-2" class="w-8 h-8 animate-spin text-cyan-500"></i></div>';
             
             const modal = document.getElementById('note-modal');
             modal.classList.remove('hidden');
@@ -575,6 +572,30 @@
             }, 10);
             
             document.body.style.overflow = 'hidden';
+            lucide.createIcons(); // Re-initialize icons so the loader spins
+
+            try {
+                // Fetch the external markdown file
+                const response = await fetch(data.file);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
+                }
+                
+                const markdownText = await response.text();
+                
+                // Parse the markdown into HTML using marked.js
+                contentDiv.innerHTML = marked.parse(markdownText);
+                
+            } catch (error) {
+                console.error("Error loading note:", error);
+                contentDiv.innerHTML = `
+                    <div class="text-red-400 p-4 bg-red-950/30 rounded-lg border border-red-800/50 flex flex-col gap-2">
+                        <strong><i data-lucide="alert-circle" class="w-5 h-5 inline"></i> Error loading note content.</strong>
+                        <p class="text-sm">Could not fetch the file <code>${data.file}</code>. Make sure the 'notes' folder and the .md file exist in your repository.</p>
+                    </div>`;
+                lucide.createIcons();
+            }
         }
 
         function closeNoteModal() {

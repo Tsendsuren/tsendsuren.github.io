@@ -52,6 +52,7 @@
                 <a href="#research" class="hover:text-cyan-400 transition-colors">Research</a>
                 <a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a>
                 <a href="#notes" class="hover:text-cyan-400 transition-colors">Notes</a>
+                <a href="#gallery" class="hover:text-cyan-400 transition-colors">Gallery</a>
             </div>
         </div>
     </nav>
@@ -104,7 +105,7 @@
                         <div class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-[spin_10s_linear_infinite]"></div>
                         <div class="absolute inset-4 rounded-full border border-blue-500/20 animate-[spin_15s_linear_infinite_reverse]"></div>
                         <!-- Local Image Source for Profile -->
-                        <img src="images/profile.jpg" alt="Tsendsuren Khurelbaatar" class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full shadow-2xl z-10 border-4 border-slate-900 grayscale hover:grayscale-0 transition-all duration-500">
+                        <img src="images/profile.png" alt="Tsendsuren Khurelbaatar" class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full shadow-2xl z-10 border-4 border-slate-900 grayscale hover:grayscale-0 transition-all duration-500">
                     </div>
                 </div>
             </div>
@@ -144,7 +145,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col">
+                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'femto')">
                     <div class="h-40 overflow-hidden relative bg-slate-800">
                         <!-- High-Quality Placeholder Image -->
                         <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800" crossorigin="anonymous" alt="Femtosecond Technology" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
@@ -153,11 +154,14 @@
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Femtosecond Technology</h3>
                         <p class="text-slate-400 text-sm leading-relaxed font-light">Proficient in state-of-the-art CEP-stabilized technology for ultrafast pulse generation.</p>
+                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col">
+                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'post-comp')">
                     <div class="h-40 overflow-hidden relative bg-slate-800">
                         <!-- High-Quality Placeholder Image -->
                         <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800" crossorigin="anonymous" alt="Post-Compression" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
@@ -166,11 +170,14 @@
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Post-Compression</h3>
                         <p class="text-slate-400 text-sm leading-relaxed font-light">Achieving single-cycle optical pulses crucial for high-precision experiments.</p>
+                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col">
+                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'spectro')">
                     <div class="h-40 overflow-hidden relative bg-slate-800">
                         <!-- High-Quality Placeholder Image -->
                         <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800" crossorigin="anonymous" alt="Imaging Spectroscopy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
@@ -179,11 +186,14 @@
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Imaging Spectroscopy</h3>
                         <p class="text-slate-400 text-sm leading-relaxed font-light">Velocity map imaging spectroscopy for detailed insights into ultrafast phenomena.</p>
+                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Card 4 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col">
+                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'dynamics')">
                     <div class="h-40 overflow-hidden relative bg-slate-800">
                         <!-- High-Quality Placeholder Image -->
                         <img src="https://images.unsplash.com/photo-1614729939124-03290b56c9ce?auto=format&fit=crop&q=80&w=800" crossorigin="anonymous" alt="Electron Dynamics" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
@@ -192,6 +202,9 @@
                     <div class="p-6 flex-1 flex flex-col">
                         <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Electron Dynamics</h3>
                         <p class="text-slate-400 text-sm leading-relaxed font-light">Unraveling the interplay of electrons in atoms, focusing on charge migration.</p>
+                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -336,8 +349,73 @@
         </div>
     </section>
 
+    <!-- Lab Gallery Section -->
+    <section id="gallery" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 md:text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">Lab Gallery</h2>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">Glimpses into the experimental setups, beamlines, and day-to-day life in the attosecond physics lab.</p>
+            </div>
+
+            <!-- Responsive Image Grid -->
+            <!-- To add more photos, simply copy and paste one of the "Image Item" blocks -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
+                
+                <!-- Image Item 1 (Spans 2 columns and 2 rows for visual interest) -->
+                <div class="relative overflow-hidden rounded-xl group cursor-pointer md:col-span-2 md:row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&q=80&w=800" crossorigin="anonymous" alt="Attosecond Beamline" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Image Item 2 -->
+                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" crossorigin="anonymous" alt="Data Analysis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Image Item 3 -->
+                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1614729939124-03290b56c9ce?auto=format&fit=crop&q=80&w=600" crossorigin="anonymous" alt="Laser Alignment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Image Item 4 (Spans 2 rows) -->
+                <div class="relative overflow-hidden rounded-xl group cursor-pointer row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=600" crossorigin="anonymous" alt="Optics Setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Image Item 5 -->
+                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=600" crossorigin="anonymous" alt="Equipment Control" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
+                    </div>
+                </div>
+
+                <!-- Image Item 6 -->
+                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
+                    <!-- Example of how you would link your local file here later -->
+                    <!-- <img src="images/gallery-1.jpg" alt="My Lab" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"> -->
+                    <img src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?auto=format&fit=crop&q=80&w=600" crossorigin="anonymous" alt="VMI Chamber" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- My Notes Section -->
-    <section id="notes" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
+    <section id="notes" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
         <div class="max-w-6xl mx-auto">
             <div class="mb-16 md:text-center">
                 <h2 class="text-3xl font-bold text-white mb-4">My Notes</h2>
@@ -406,9 +484,141 @@
         </div>
     </footer>
 
+    <!-- Research Details Modal (Hidden by default) -->
+    <div id="research-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeResearchModal()">
+        <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+            <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeResearchModal()">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="h-48 sm:h-64 w-full relative bg-slate-800 shrink-0 border-b border-slate-800">
+                <img id="research-modal-img" src="" alt="Research Area" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+            </div>
+            <div class="p-6 sm:p-10 overflow-y-auto">
+                <div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-wider">
+                    <i data-lucide="microscope" class="w-3 h-3"></i>
+                    <span>Research Focus</span>
+                </div>
+                <h3 id="research-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6">Title</h3>
+                <div id="research-modal-desc" class="text-slate-300 leading-relaxed font-light space-y-4">
+                    Description goes here.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Lightbox Modal (Hidden by default) -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-slate-400 hover:text-cyan-400 transition-colors p-2" onclick="closeLightbox()">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Expanded Lab Photo" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain border border-slate-800" onclick="event.stopPropagation()">
+    </div>
+
     <!-- Initialize Icons -->
     <script>
         lucide.createIcons();
+
+        // --- Research Modal Functions ---
+        const researchData = {
+            'femto': {
+                title: 'Femtosecond Technology',
+                desc: '<p>My work involves the intricate design, construction, and optimization of state-of-the-art carrier-envelope phase (CEP) stabilized femtosecond laser systems.</p><p>These systems form the backbone of our attosecond physics experiments. By precisely controlling the electric field of the laser pulses, we can reliably trigger and probe ultrafast phenomena with unprecedented temporal resolution. I specialize in pushing the boundaries of pulse duration, stability, and intensity to enable groundbreaking new research directions.</p>'
+            },
+            'post-comp': {
+                title: 'Post-Compression',
+                desc: '<p>Generating single-cycle or few-cycle optical pulses requires advanced post-compression techniques. I utilize methods such as gas-filled hollow-core fibers and multi-plate continuum generation setups.</p><p>By spectrally broadening the output of a standard femtosecond amplifier and carefully compensating for dispersion using chirped mirrors and wedges, we achieve high-contrast, intense single-cycle pulses. These are crucial for isolating single attosecond bursts and conducting high-precision time-resolved experiments.</p>'
+            },
+            'spectro': {
+                title: 'Imaging Spectroscopy',
+                desc: '<p>To observe the intricate details of electron and ion dynamics, I employ advanced imaging techniques, most notably Velocity Map Imaging (VMI) spectroscopy.</p><p>This powerful technique allows us to project 3D momentum distributions of charged particles onto a 2D detector. I am experienced in designing VMI spectrometers, calibrating them for high resolution, and applying sophisticated inversion algorithms (like Abel inversion) to reconstruct the full 3D momentum spheres, giving us a direct view into molecular fragmentation and ionization dynamics.</p>'
+            },
+            'dynamics': {
+                title: 'Electron Dynamics',
+                desc: '<p>At the core of my research is the pursuit to unravel the complex interplay of electrons in atoms and molecules on their natural, attosecond timescale.</p><p>My specific interests include studying strong-field ionization processes, under-the-barrier electron tunneling, and observing charge migration—the purely electronic response of a molecule following sudden ionization before the heavy nuclei have time to move. Understanding these fundamental dynamics is key to controlling chemical reactions with light.</p>'
+            }
+        };
+
+        function openResearchModal(element, id) {
+            const data = researchData[id];
+            if(!data) return;
+            
+            // Extract the image source dynamically from the clicked card
+            const imgSrc = element.querySelector('img').src;
+            
+            document.getElementById('research-modal-title').textContent = data.title;
+            document.getElementById('research-modal-img').src = imgSrc;
+            document.getElementById('research-modal-desc').innerHTML = data.desc;
+            
+            const modal = document.getElementById('research-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Allow display change before animating opacity
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden'; // prevent background scrolling
+        }
+
+        function closeResearchModal() {
+            const modal = document.getElementById('research-modal');
+            modal.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                // Only restore scrolling if lightbox is also closed
+                if(document.getElementById('lightbox').classList.contains('hidden')) {
+                    document.body.style.overflow = '';
+                }
+            }, 300);
+        }
+        // --- End Research Modal Functions ---
+
+        // --- Lightbox Functions ---
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = imgSrc;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            
+            // Small delay to allow CSS display change before animating opacity
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+            }, 10);
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('opacity-0');
+            
+            // Wait for fade out transition before hiding
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+                // Only restore scrolling if research modal is also closed
+                if(document.getElementById('research-modal').classList.contains('hidden')) {
+                    document.body.style.overflow = ''; 
+                }
+            }, 300);
+        }
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeLightbox();
+                closeResearchModal();
+            }
+        });
+        // --- End Lightbox Functions ---
 
         // --- Quantum Node Animation ---
         const canvas = document.getElementById('quantum-canvas');

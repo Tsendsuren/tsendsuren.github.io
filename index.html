@@ -196,7 +196,7 @@
                 <!-- Card 4 -->
                 <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'metrology')">
                     <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <!-- Local Image: fig2.png (You can update to fig3 or fig7 if preferred) -->
+                        <!-- Local Image -->
                         <img src="web_gallery/pmd.png" alt="Quantum Metrology" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
                     </div>
@@ -256,7 +256,7 @@
                         <div class="flex-1 w-full">
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Unveiling under-the-barrier electron dynamics in strong field tunneling</h3>
                             <p class="text-slate-400 mb-4 font-light leading-relaxed">
-                                <span class="text-slate-200 font-medium">T. Khurelbaatar</span>, M. Klaiber, S. Sukiasyan, K.Z. Hatsagortsyan, C.H. Keitel, et al.
+                                <span class="text-slate-200 font-medium">T. Khurelbaatar</span>, M. Klaiber, S. Sukiasyan, K.Z. Hatsagortsyan, CH. Keitel, et al.
                                 <br/>
                                 <em class="text-slate-500 text-sm">Physical Review Letters</em>, 134 (21), 213201.
                             </p>
@@ -350,8 +350,59 @@
         </div>
     </section>
 
+    <!-- My Notes Section -->
+    <section id="notes" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 md:text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">My Notes</h2>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A personal notebook of blog posts, technical references, and code snippets useful for experimental physics.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Note Card 1 -->
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note1')">
+                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="notebook-pen" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Apr 15, 2026</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Calibrating a VMI Spectrometer</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A step-by-step guide and troubleshooting reference for calibrating Velocity Map Imaging detectors for optimal electron momentum resolution.</p>
+                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
+                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Note Card 2 -->
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note2')">
+                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="code-2" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Mar 28, 2026</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Python Script: Attosecond Streaking</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A handy matplotlib and numpy snippet I use for quickly plotting and analyzing attosecond streaking spectrograms from experimental data.</p>
+                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
+                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Note Card 3 -->
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note3')">
+                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Feb 10, 2026</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Quick Ref: Phase-matching in HHG</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A cheat sheet of essential formulas and pressure dependencies for achieving optimal phase-matching in High Harmonic Generation setups.</p>
+                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
+                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Lab Gallery Section -->
-    <section id="gallery" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
+    <section id="gallery" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
         <div class="max-w-6xl mx-auto">
             <div class="mb-16 md:text-center">
                 <h2 class="text-3xl font-bold text-white mb-4">Lab Gallery</h2>
@@ -419,57 +470,6 @@
         </div>
     </section>
 
-    <!-- My Notes Section -->
-    <section id="notes" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16 md:text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">My Notes</h2>
-                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A personal notebook of blog posts, technical references, and code snippets useful for experimental physics.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Note Card 1 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="notebook-pen" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Apr 15, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Calibrating a VMI Spectrometer</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A step-by-step guide and troubleshooting reference for calibrating Velocity Map Imaging detectors for optimal electron momentum resolution.</p>
-                    <a href="#" class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-
-                <!-- Note Card 2 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="code-2" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Mar 28, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Python Script: Attosecond Streaking</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A handy matplotlib and numpy snippet I use for quickly plotting and analyzing attosecond streaking spectrograms from experimental data.</p>
-                    <a href="#" class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-
-                <!-- Note Card 3 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="lightbulb" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Feb 10, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Quick Ref: Phase-matching in HHG</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A cheat sheet of essential formulas and pressure dependencies for achieving optimal phase-matching in High Harmonic Generation setups.</p>
-                    <a href="#" class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Simple Footer -->
     <footer id="contact" class="bg-slate-950 border-t border-slate-900 py-12 px-6">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
@@ -480,7 +480,7 @@
             <div class="flex space-x-6">
                 <a href="https://github.com/tsendsuren" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
                 <a href="https://orcid.org/" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="book-open" class="w-5 h-5"></i></a>
-                <a href="mailto:email@example.com" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a>
+                <a href="mailto:your.email@example.com" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a>
             </div>
         </div>
         <div class="max-w-6xl mx-auto mt-8 pt-8 border-t border-slate-800 text-sm text-slate-500 text-center md:text-left flex flex-col md:flex-row justify-between">
@@ -512,6 +512,25 @@
         </div>
     </div>
 
+    <!-- Note Details Modal (Hidden by default) -->
+    <div id="note-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeNoteModal()">
+        <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+            <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeNoteModal()">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="p-6 sm:p-10 overflow-y-auto mt-6">
+                <div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-wider">
+                    <i data-lucide="notebook-pen" class="w-3 h-3"></i>
+                    <span id="note-modal-date">Date</span>
+                </div>
+                <h3 id="note-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6 border-b border-slate-800 pb-4">Title</h3>
+                <div id="note-modal-content" class="text-slate-300 leading-relaxed font-light space-y-5">
+                    Content goes here.
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Fullscreen Lightbox Modal (Hidden by default) -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeLightbox()">
         <button class="absolute top-6 right-6 text-slate-400 hover:text-cyan-400 transition-colors p-2" onclick="closeLightbox()">
@@ -524,147 +543,164 @@
     <script>
         lucide.createIcons();
 
+        // --- Notes Modal Data & Functions ---
+        const notesData = {
+            'note1': {
+                date: 'Apr 15, 2026',
+                title: 'Calibrating a VMI Spectrometer',
+                content: '<p>Calibrating a Velocity Map Imaging (VMI) spectrometer is crucial for obtaining accurate electron momentum distributions. The process generally involves introducing a well-known calibration gas (like Xenon or Argon) and performing multiphoton ionization.</p><p>By analyzing the resulting photoelectron spectrum and comparing the ring radii to the known kinetic energies of the photoelectrons, we can establish a precise pixel-to-momentum conversion factor. Common pitfalls include non-uniform extraction fields and detector inhomogeneities, which must be carefully accounted for during the inverse Abel transformation.</p>'
+            },
+            'note2': {
+                date: 'Mar 28, 2026',
+                title: 'Python Script: Attosecond Streaking',
+                content: '<p>Analyzing attosecond streaking spectrograms can be computationally heavy. I typically use a combination of <code>scipy.optimize</code> for center-of-mass extraction and custom <code>numpy</code> routines to quickly map the streaking trace.</p><div class="bg-slate-950 p-4 rounded-lg font-mono text-sm border border-slate-800 text-cyan-200 overflow-x-auto"># Extract center of mass<br>com = np.average(energy_axis, weights=spectrogram, axis=0)<br>vector_potential = -com / atomic_units.c</div><p>This simple robust approach works wonderfully as a first pass before running more complex quantum mechanical retrieval algorithms or ptychography routines.</p>'
+            },
+            'note3': {
+                date: 'Feb 10, 2026',
+                title: 'Quick Ref: Phase-matching in HHG',
+                content: '<p>Optimizing High Harmonic Generation (HHG) flux is all about phase matching. The macroscopic yield is maximized when the phase velocity of the driving fundamental laser matches the phase velocity of the generated XUV light.</p><div class="bg-slate-950 p-4 rounded-lg font-mono text-sm border border-slate-800 text-cyan-200">&Delta;k = &Delta;k_neutral + &Delta;k_plasma + &Delta;k_Gouy = 0</div><p>For Argon driven by 800nm, phase matching typically occurs around 30-50 mbar, depending on the focus geometry and peak intensity. Always remember to tweak the gas pressure dynamically while monitoring the XUV spectrometer to find the sweet spot!</p>'
+            }
+        };
+
+        function openNoteModal(id) {
+            const data = notesData[id];
+            if (!data) return;
+            
+            document.getElementById('note-modal-title').textContent = data.title;
+            document.getElementById('note-modal-date').textContent = data.date;
+            document.getElementById('note-modal-content').innerHTML = data.content;
+            
+            const modal = document.getElementById('note-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNoteModal() {
+            const modal = document.getElementById('note-modal');
+            modal.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                // Only restore scrolling if no other modals are active
+                if (document.getElementById('research-modal').classList.contains('hidden') && 
+                    document.getElementById('lightbox').classList.contains('hidden')) {
+                    document.body.style.overflow = '';
+                }
+            }, 300);
+        }
+
         // --- Research Modal Functions ---
         const researchData = {
             'ultrafast': {
                 title: 'Ultrafast Electron Dynamics',
-                desc: '<p>At the core of my research is the pursuit to unravel the complex interplay of electrons in atoms and molecules on their natural, attosecond timescale.</p><p>My specific interests include studying strong-field ionization processes, under-the-barrier electron tunneling dynamics, and observing charge migration—the purely electronic response of a molecule following sudden ionization before the heavy nuclei have time to move. Understanding these fundamental dynamics is key to controlling chemical reactions with light.</p>'
+                desc: '<p>At the core of my research is the pursuit to unravel the complex interplay of electrons in atoms and molecules on their natural, attosecond timescale.</p><p>My specific interests include studying strong-field ionization processes, under-the-barrier electron tunneling dynamics, and observing charge migration—the purely electronic response of a molecule following sudden ionization before the heavy nuclei have time to move.</p>'
             },
             'pulses': {
                 title: 'Ultrashort Pulse Generation',
-                desc: '<p>My work involves the intricate design, construction, and optimization of state-of-the-art carrier-envelope phase (CEP) stabilized femtosecond laser systems.</p><p>Generating single-cycle or few-cycle optical pulses requires advanced post-compression techniques. By spectrally broadening the output of a standard amplifier and carefully compensating for dispersion, we achieve high-contrast, intense pulses. These are absolutely crucial for isolating single attosecond bursts and conducting high-precision time-resolved experiments.</p>'
+                desc: '<p>My work involves the intricate design, construction, and optimization of state-of-the-art carrier-envelope phase (CEP) stabilized femtosecond laser systems.</p><p>Generating single-cycle or few-cycle optical pulses requires advanced post-compression techniques. By spectrally broadening the output of a standard amplifier and carefully compensating for dispersion, we achieve high-contrast, intense pulses.</p>'
             },
             'strong-field': {
                 title: 'Strong Field Physics',
-                desc: '<p>I investigate the fundamental physical processes that occur when atoms and molecules are exposed to intense, ultrashort laser fields.</p><p>This includes exploring high-order harmonic generation (HHG), strong-field photoelectron holography, and quantum metrology beyond the standard quantum limit. By leveraging sophisticated beamlines and velocity map imaging (VMI) spectroscopy, we can deeply probe quantum dynamics and push the boundaries of strong-field science.</p>'
+                desc: '<p>I investigate the fundamental physical processes that occur when atoms and molecules are exposed to intense, ultrashort laser fields.</p><p>This includes exploring high-order harmonic generation (HHG), strong-field photoelectron holography, and quantum metrology beyond the standard quantum limit.</p>'
             },
             'metrology': {
                 title: 'Quantum Metrology',
-                desc: '<p>Quantum metrology aims to enhance measurement precision beyond classical limits by harnessing quantum properties.</p><p>My recent work explores strong-field quantum metrology, aiming to surpass the standard quantum limit. By utilizing ultrafast laser fields, advanced detection schemes, and sub-cycle pulse control, we can push the boundaries of precision measurements of electron dynamics and fundamental physical constants at unprecedented timescales.</p>'
+                desc: '<p>Quantum metrology aims to enhance measurement precision beyond classical limits by harnessing quantum properties.</p><p>My recent work explores strong-field quantum metrology, aiming to surpass the standard quantum limit. By utilizing ultrafast laser fields and advanced detection schemes, we can push the boundaries of precision measurements.</p>'
             }
         };
 
         function openResearchModal(element, id) {
             const data = researchData[id];
             if(!data) return;
-            
-            // Extract the image source dynamically from the clicked card
             const imgSrc = element.querySelector('img').src;
-            
             document.getElementById('research-modal-title').textContent = data.title;
             document.getElementById('research-modal-img').src = imgSrc;
             document.getElementById('research-modal-desc').innerHTML = data.desc;
-            
             const modal = document.getElementById('research-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            
-            // Allow display change before animating opacity
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
-            
-            document.body.style.overflow = 'hidden'; // prevent background scrolling
+            setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
+            document.body.style.overflow = 'hidden';
         }
 
         function closeResearchModal() {
             const modal = document.getElementById('research-modal');
             modal.classList.add('opacity-0');
-            
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
-                // Only restore scrolling if lightbox is also closed
-                if(document.getElementById('lightbox').classList.contains('hidden')) {
+                if (document.getElementById('note-modal').classList.contains('hidden') && 
+                    document.getElementById('lightbox').classList.contains('hidden')) {
                     document.body.style.overflow = '';
                 }
             }, 300);
         }
-        // --- End Research Modal Functions ---
 
         // --- Lightbox Functions ---
         function openLightbox(element) {
             const imgSrc = element.querySelector('img').src;
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
-            
             lightboxImg.src = imgSrc;
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
-            
-            // Small delay to allow CSS display change before animating opacity
-            setTimeout(() => {
-                lightbox.classList.remove('opacity-0');
-            }, 10);
-            
-            // Prevent body scrolling
+            setTimeout(() => { lightbox.classList.remove('opacity-0'); }, 10);
             document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.add('opacity-0');
-            
-            // Wait for fade out transition before hiding
             setTimeout(() => {
                 lightbox.classList.add('hidden');
                 lightbox.classList.remove('flex');
-                // Only restore scrolling if research modal is also closed
-                if(document.getElementById('research-modal').classList.contains('hidden')) {
-                    document.body.style.overflow = ''; 
+                if (document.getElementById('research-modal').classList.contains('hidden') && 
+                    document.getElementById('note-modal').classList.contains('hidden')) {
+                    document.body.style.overflow = '';
                 }
             }, 300);
         }
 
-        // Close modals on Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
+        // Global key escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
                 closeLightbox();
                 closeResearchModal();
+                closeNoteModal();
             }
         });
-        // --- End Lightbox Functions ---
 
         // --- Quantum Node Animation ---
         const canvas = document.getElementById('quantum-canvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
             let particlesArray = [];
-
             function resizeCanvas() {
                 canvas.width = canvas.parentElement.offsetWidth;
                 canvas.height = canvas.parentElement.offsetHeight;
             }
             resizeCanvas();
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                initParticles();
-            });
-
+            window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
             class Particle {
                 constructor(x, y, directionX, directionY, size, color) {
-                    this.x = x;
-                    this.y = y;
-                    this.directionX = directionX;
-                    this.directionY = directionY;
-                    this.size = size;
-                    this.color = color;
+                    this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
                 }
                 draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill();
                 }
                 update() {
                     if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
                     if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-                    this.x += this.directionX;
-                    this.y += this.directionY;
-                    this.draw();
+                    this.x += this.directionX; this.y += this.directionY; this.draw();
                 }
             }
-
             function initParticles() {
                 particlesArray = [];
                 let numberOfParticles = (canvas.height * canvas.width) / 12000;
@@ -674,50 +710,33 @@
                     let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
                     let directionX = (Math.random() * 0.6) - 0.3;
                     let directionY = (Math.random() * 0.6) - 0.3;
-                    let color = '#22d3ee'; // cyan-400
-                    particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                    particlesArray.push(new Particle(x, y, directionX, directionY, size, '#22d3ee'));
                 }
             }
-
             function connect() {
-                let opacityValue = 1;
                 for (let a = 0; a < particlesArray.length; a++) {
                     for (let b = a; b < particlesArray.length; b++) {
-                        let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-                                     + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                        let distance = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
                         if (distance < 15000) {
-                            opacityValue = 1 - (distance / 15000);
-                            ctx.strokeStyle = `rgba(34, 211, 238, ${opacityValue * 0.5})`; // subtle cyan lines
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                            ctx.stroke();
+                            ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - (distance / 15000)) * 0.5})`;
+                            ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
                         }
                     }
                 }
             }
-
             function animate() {
-                requestAnimationFrame(animate);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particlesArray.length; i++) {
-                    particlesArray[i].update();
-                }
+                requestAnimationFrame(animate); ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
                 connect();
             }
-
-            initParticles();
-            animate();
+            initParticles(); animate();
         }
-        // --- End Quantum Animation ---
 
         // Gemini API Integration
-        const apiKey = ""; // API key is injected by the environment
+        const apiKey = "";
         const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
 
-        // Exponential backoff retry logic for robust API calls
         async function fetchWithRetry(url, options, retries = 5) {
             const delays = [1000, 2000, 4000, 8000, 16000];
             for (let i = 0; i < retries; i++) {
@@ -735,50 +754,24 @@
         async function explainResearch(title, containerId, btnId) {
             const container = document.getElementById(containerId);
             const btn = document.getElementById(btnId);
-            
-            // Set UI to loading state
             btn.disabled = true;
             btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Explaining...`;
             lucide.createIcons();
-            
             container.classList.remove('hidden');
-            container.innerHTML = `
-                <div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse flex items-center gap-3 border border-slate-800">
-                    <i data-lucide="brain-circuit" class="w-5 h-5"></i> Consulting the AI to simplify this research...
-                </div>`;
+            container.innerHTML = `<div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse flex items-center gap-3 border border-slate-800"><i data-lucide="brain-circuit" class="w-5 h-5"></i> Consulting the AI...</div>`;
             lucide.createIcons();
-
-            const prompt = `You are an enthusiastic and highly skilled science communicator. Explain the following experimental physics research paper title in simple, engaging terms that a high schooler or non-scientist could understand. Focus on the 'why it matters'. Keep it brief (2-3 sentences max). Paper title: "${title}"`;
-
+            const prompt = `Explain research paper: "${title}" in simple terms (2-3 sentences). Focus on impact.`;
             try {
                 const data = await fetchWithRetry(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
-
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate an explanation right now.";
-                
-                // Display the result
-                container.innerHTML = `
-                    <div class="p-5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 border border-cyan-800/30 rounded-lg text-slate-300 text-sm flex gap-4 items-start shadow-inner">
-                        <div class="bg-cyan-900/50 p-2 rounded-full text-cyan-400 shrink-0">
-                            <i data-lucide="sparkles" class="w-5 h-5"></i>
-                        </div>
-                        <div class="leading-relaxed">
-                            <strong class="text-cyan-400 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>
-                            ${text}
-                        </div>
-                    </div>`;
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Couldn't generate explanation.";
+                container.innerHTML = `<div class="p-5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 border border-cyan-800/30 rounded-lg text-slate-300 text-sm flex gap-4 items-start shadow-inner"><div class="bg-cyan-900/50 p-2 rounded-full text-cyan-400 shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div><div class="leading-relaxed"><strong class="text-cyan-400 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>${text}</div></div>`;
             } catch (error) {
-                container.innerHTML = `
-                    <div class="p-4 bg-red-950/30 border border-red-800/50 rounded-lg text-red-400 text-sm flex items-center gap-3">
-                        <i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation. Please try again later.
-                    </div>`;
+                container.innerHTML = `<div class="p-4 bg-red-950/30 border border-red-800/50 rounded-lg text-red-400 text-sm flex items-center gap-3"><i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation.</div>`;
             } finally {
-                // Reset button state
                 btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨`;
                 btn.disabled = false;
                 lucide.createIcons();

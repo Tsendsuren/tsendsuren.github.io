@@ -58,6 +58,9 @@
 
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 overflow-hidden bg-grid min-h-[90vh] flex items-center">
+        <!-- Quantum Dynamics Canvas -->
+        <canvas id="quantum-canvas" class="absolute inset-0 z-0 opacity-40 pointer-events-none"></canvas>
+
         <!-- Glow Effect -->
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
@@ -101,7 +104,7 @@
                         <div class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-[spin_10s_linear_infinite]"></div>
                         <div class="absolute inset-4 rounded-full border border-blue-500/20 animate-[spin_15s_linear_infinite_reverse]"></div>
                         <!-- Local Image Source for Profile -->
-                        <img src="images/profile.png" alt="Tsendsuren Khurelbaatar" class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full shadow-2xl z-10 border-4 border-slate-900 grayscale hover:grayscale-0 transition-all duration-500">
+                        <img src="images/profile.jpg" alt="Tsendsuren Khurelbaatar" class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full shadow-2xl z-10 border-4 border-slate-900 grayscale hover:grayscale-0 transition-all duration-500">
                     </div>
                 </div>
             </div>
@@ -406,6 +409,93 @@
     <!-- Initialize Icons -->
     <script>
         lucide.createIcons();
+
+        // --- Quantum Node Animation ---
+        const canvas = document.getElementById('quantum-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                initParticles();
+            });
+
+            class Particle {
+                constructor(x, y, directionX, directionY, size, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.directionX = directionX;
+                    this.directionY = directionY;
+                    this.size = size;
+                    this.color = color;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+                update() {
+                    if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                    if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                    this.x += this.directionX;
+                    this.y += this.directionY;
+                    this.draw();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 12000;
+                for (let i = 0; i < numberOfParticles; i++) {
+                    let size = (Math.random() * 1.5) + 0.5;
+                    let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
+                    let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
+                    let directionX = (Math.random() * 0.6) - 0.3;
+                    let directionY = (Math.random() * 0.6) - 0.3;
+                    let color = '#22d3ee'; // cyan-400
+                    particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                }
+            }
+
+            function connect() {
+                let opacityValue = 1;
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a; b < particlesArray.length; b++) {
+                        let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                                     + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                        if (distance < 15000) {
+                            opacityValue = 1 - (distance / 15000);
+                            ctx.strokeStyle = `rgba(34, 211, 238, ${opacityValue * 0.5})`; // subtle cyan lines
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                }
+                connect();
+            }
+
+            initParticles();
+            animate();
+        }
+        // --- End Quantum Animation ---
 
         // Gemini API Integration
         const apiKey = ""; // API key is injected by the environment

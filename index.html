@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsendsuren Khurelbaatar | Experimental Physicist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Elegant Font Combination: Lora (Serif for headings) & Inter (Sans for body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                    },
+                    colors: {
+                        accent: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb', // Sophisticated academic blue
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-neutral-800 font-sans antialiased selection:bg-accent-100 selection:text-accent-900">
+
+    <!-- Fixed Left Sidebar -->
+    <aside class="md:fixed top-0 left-0 w-full md:w-[320px] lg:w-[380px] h-auto md:h-screen bg-neutral-50 border-r border-neutral-200 p-10 lg:p-12 flex flex-col justify-between z-50 md:overflow-y-auto">
+        
+        <div>
+            <!-- Profile Image -->
+            <div class="mb-8 relative w-32 h-32 md:w-40 md:h-40">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" alt="Tsendsuren Khurelbaatar" class="rounded-full object-cover w-full h-full shadow-md border-4 border-white grayscale hover:grayscale-0 transition-all duration-500" crossorigin="anonymous">
+            </div>
+
+            <!-- Identity -->
+            <h1 class="font-serif text-3xl font-bold text-neutral-900 mb-2 leading-tight">
+                Tsendsuren <br/> Khurelbaatar
+            </h1>
+            <p class="text-accent-600 font-medium text-sm mb-6 uppercase tracking-wider">Experimental Physicist</p>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-10">
+                Research Fellow at Griffith University, Brisbane. Unraveling the mysteries of the ultrafast world through attosecond physics.
+            </p>
+
+            <!-- Navigation -->
+            <nav class="hidden md:block">
+                <ul class="space-y-4 text-sm font-medium text-neutral-600">
+                    <li><a href="#about" class="hover:text-accent-600 transition-colors flex items-center gap-3"><span class="w-6 h-[1px] bg-neutral-300 block transition-all group-hover:w-10 group-hover:bg-accent-600"></span> About</a></li>
+                    <li><a href="#research" class="hover:text-accent-600 transition-colors flex items-center gap-3"><span class="w-6 h-[1px] bg-neutral-300 block transition-all group-hover:w-10 group-hover:bg-accent-600"></span> Research Interests</a></li>
+                    <li><a href="#publications" class="hover:text-accent-600 transition-colors flex items-center gap-3"><span class="w-6 h-[1px] bg-neutral-300 block transition-all group-hover:w-10 group-hover:bg-accent-600"></span> Publications</a></li>
+                    <li><a href="#notes" class="hover:text-accent-600 transition-colors flex items-center gap-3"><span class="w-6 h-[1px] bg-neutral-300 block transition-all group-hover:w-10 group-hover:bg-accent-600"></span> My Notes</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Contact & Social -->
+        <div class="mt-12 md:mt-8 pt-8 border-t border-neutral-200">
+            <div class="flex space-x-5 text-neutral-400">
+                <a href="mailto:email@example.com" class="hover:text-accent-600 transition-colors" title="Email"><i data-lucide="mail" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-accent-600 transition-colors" title="Google Scholar"><i data-lucide="graduation-cap" class="w-5 h-5"></i></a>
+                <a href="https://orcid.org" class="hover:text-accent-600 transition-colors" title="ORCID"><i data-lucide="book-open" class="w-5 h-5"></i></a>
+                <a href="https://github.com/tsendsuren" class="hover:text-accent-600 transition-colors" title="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+            </div>
+            <p class="text-xs text-neutral-400 mt-6">&copy; 2026 T. Khurelbaatar.</p>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="w-full md:ml-[320px] lg:ml-[380px] p-8 md:p-16 lg:p-24 max-w-5xl">
+        
+        <!-- About Section -->
+        <section id="about" class="mb-32 pt-8">
+            <h2 class="font-serif text-4xl font-bold text-neutral-900 mb-8 relative inline-block">
+                Biography
+                <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-accent-600 rounded-full"></span>
+            </h2>
+            <div class="prose prose-lg text-neutral-600 font-light leading-relaxed max-w-none">
+                <p class="mb-6">
+                    I am an experimental physicist with a focus on attosecond physics. With extensive expertise in cutting-edge CEP-stabilized femtosecond technology, I excel in generating single-cycle optical pulses through precise post-compression techniques.
+                </p>
+                <p class="mb-6">
+                    My skills extend to the construction and optimization of attosecond beamlines, where I harness the power of advanced instrumentation to explore the fundamental dynamics of atoms and molecules on ultrafast timescales.
+                </p>
+                <p>
+                    I thrive on the challenges of pushing the boundaries of ultrafast science and am committed to advancing our understanding of fundamental physical processes at the shortest timescales imaginable. I am currently based at Griffith University in Brisbane, Australia.
+                </p>
+            </div>
+        </section>
+
+        <!-- Research Interests Section -->
+        <section id="research" class="mb-32">
+            <h2 class="font-serif text-3xl font-bold text-neutral-900 mb-10 relative inline-block">
+                Research Interests
+                <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-accent-600 rounded-full"></span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Interest 1 -->
+                <div class="p-8 border border-neutral-200 rounded-xl bg-neutral-50/50 hover:bg-white hover:shadow-xl hover:shadow-accent-500/10 hover:border-accent-200 transition-all duration-300 group">
+                    <div class="w-10 h-10 bg-white border border-neutral-200 text-accent-600 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-sm">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-3">Femtosecond Technology</h3>
+                    <p class="text-neutral-600 text-sm leading-relaxed">Proficient in state-of-the-art CEP-stabilized technology, enabling the generation of ultrafast pulses for groundbreaking research.</p>
+                </div>
+
+                <!-- Interest 2 -->
+                <div class="p-8 border border-neutral-200 rounded-xl bg-neutral-50/50 hover:bg-white hover:shadow-xl hover:shadow-accent-500/10 hover:border-accent-200 transition-all duration-300 group">
+                    <div class="w-10 h-10 bg-white border border-neutral-200 text-accent-600 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-sm">
+                        <i data-lucide="waves" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-3">Post-Compression</h3>
+                    <p class="text-neutral-600 text-sm leading-relaxed">Extensive experience achieving single-cycle optical pulses crucial for high-precision experiments via precise post-compression techniques.</p>
+                </div>
+
+                <!-- Interest 3 -->
+                <div class="p-8 border border-neutral-200 rounded-xl bg-neutral-50/50 hover:bg-white hover:shadow-xl hover:shadow-accent-500/10 hover:border-accent-200 transition-all duration-300 group">
+                    <div class="w-10 h-10 bg-white border border-neutral-200 text-accent-600 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-sm">
+                        <i data-lucide="target" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-3">Imaging Spectroscopy</h3>
+                    <p class="text-neutral-600 text-sm leading-relaxed">Specialized in velocity map imaging spectroscopy for electron and ion detection, providing detailed insights into ultrafast phenomena.</p>
+                </div>
+
+                <!-- Interest 4 -->
+                <div class="p-8 border border-neutral-200 rounded-xl bg-neutral-50/50 hover:bg-white hover:shadow-xl hover:shadow-accent-500/10 hover:border-accent-200 transition-all duration-300 group">
+                    <div class="w-10 h-10 bg-white border border-neutral-200 text-accent-600 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shadow-sm">
+                        <i data-lucide="atom" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-3">Electron Dynamics</h3>
+                    <p class="text-neutral-600 text-sm leading-relaxed">Research interests centered on unraveling the complex interplay of electrons in atoms and molecules, focusing on charge migration.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section (with AI Feature) -->
+        <section id="publications" class="mb-32">
+            <div class="flex justify-between items-end mb-10">
+                <h2 class="font-serif text-3xl font-bold text-neutral-900 relative inline-block">
+                    Selected Publications
+                    <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-accent-600 rounded-full"></span>
+                </h2>
+                <a href="#" class="text-sm font-medium text-accent-600 hover:text-accent-800 flex items-center gap-1">View Full CV <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+            </div>
+
+            <div class="space-y-12">
+                <!-- Pub 1 -->
+                <article class="group relative">
+                    <div class="absolute -left-6 top-1.5 w-1.5 h-1.5 rounded-full bg-neutral-300 group-hover:bg-accent-600 transition-colors"></div>
+                    <div class="flex flex-col lg:flex-row gap-2 lg:gap-6 items-start">
+                        <span class="text-neutral-400 font-mono text-sm pt-1 w-16 shrink-0">2025</span>
+                        <div class="flex-1">
+                            <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-2 leading-snug">Observation of Ultrafast Charge Migration via Velocity Map Imaging</h3>
+                            <p class="text-neutral-600 mb-3 text-sm">
+                                <strong class="text-neutral-900 font-medium">T. Khurelbaatar</strong>, A. Researcher, J. Doe. <br/>
+                                <em class="text-neutral-500">Nature Physics</em>, Vol 21, 104-112.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 mt-4">
+                                <a href="#" class="text-accent-600 hover:text-accent-800 text-sm font-medium flex items-center gap-1.5 border border-accent-200 px-3 py-1 rounded-full bg-accent-50"><i data-lucide="file-text" class="w-4 h-4"></i> PDF PDF</a>
+                                <a href="#" class="text-neutral-500 hover:text-neutral-800 text-sm font-medium flex items-center gap-1.5"><i data-lucide="external-link" class="w-4 h-4"></i> DOI</a>
+                                
+                                <!-- AI Feature Button -->
+                                <button id="btn-pub-1" onclick="explainResearch('Observation of Ultrafast Charge Migration via Velocity Map Imaging', 'explain-pub-1', 'btn-pub-1')" class="ml-auto text-sm font-medium text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition-colors group/btn">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400 group-hover/btn:text-indigo-600"></i> Explain with AI
+                                </button>
+                            </div>
+                            <!-- AI Result Container -->
+                            <div id="explain-pub-1" class="hidden mt-4 w-full"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Pub 2 -->
+                <article class="group relative">
+                    <div class="absolute -left-6 top-1.5 w-1.5 h-1.5 rounded-full bg-neutral-300 group-hover:bg-accent-600 transition-colors"></div>
+                    <div class="flex flex-col lg:flex-row gap-2 lg:gap-6 items-start">
+                        <span class="text-neutral-400 font-mono text-sm pt-1 w-16 shrink-0">2024</span>
+                        <div class="flex-1">
+                            <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-2 leading-snug">High-efficiency generation of single-cycle optical pulses using advanced post-compression</h3>
+                            <p class="text-neutral-600 mb-3 text-sm">
+                                J. Doe, <strong class="text-neutral-900 font-medium">T. Khurelbaatar</strong>, S. Scientist. <br/>
+                                <em class="text-neutral-500">Optics Express</em>, Vol 32, Issue 8.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 mt-4">
+                                <a href="#" class="text-accent-600 hover:text-accent-800 text-sm font-medium flex items-center gap-1.5 border border-accent-200 px-3 py-1 rounded-full bg-accent-50"><i data-lucide="file-text" class="w-4 h-4"></i> PDF</a>
+                                <a href="#" class="text-neutral-500 hover:text-neutral-800 text-sm font-medium flex items-center gap-1.5"><i data-lucide="external-link" class="w-4 h-4"></i> DOI</a>
+                                
+                                <!-- AI Feature Button -->
+                                <button id="btn-pub-2" onclick="explainResearch('High-efficiency generation of single-cycle optical pulses using advanced post-compression', 'explain-pub-2', 'btn-pub-2')" class="ml-auto text-sm font-medium text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition-colors group/btn">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400 group-hover/btn:text-indigo-600"></i> Explain with AI
+                                </button>
+                            </div>
+                            <!-- AI Result Container -->
+                            <div id="explain-pub-2" class="hidden mt-4 w-full"></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- My Notes Section -->
+        <section id="notes" class="mb-20">
+            <h2 class="font-serif text-3xl font-bold text-neutral-900 mb-10 relative inline-block">
+                My Notes
+                <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-accent-600 rounded-full"></span>
+            </h2>
+            
+            <div class="flex flex-col space-y-8">
+                <!-- Note 1 -->
+                <a href="#" class="group block border-b border-neutral-200 pb-8 hover:border-accent-600 transition-colors">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="font-serif text-2xl font-semibold text-neutral-900 group-hover:text-accent-600 transition-colors">Calibrating a VMI Spectrometer</h3>
+                        <span class="font-mono text-sm text-neutral-400 hidden sm:block">Apr 15, 2026</span>
+                    </div>
+                    <p class="text-neutral-600 font-light leading-relaxed mb-4">A step-by-step guide and troubleshooting reference for calibrating Velocity Map Imaging detectors for optimal electron momentum resolution in the lab.</p>
+                    <span class="text-accent-600 font-medium text-sm flex items-center gap-2">Read post <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i></span>
+                </a>
+
+                <!-- Note 2 -->
+                <a href="#" class="group block border-b border-neutral-200 pb-8 hover:border-accent-600 transition-colors">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="font-serif text-2xl font-semibold text-neutral-900 group-hover:text-accent-600 transition-colors">Python Script: Attosecond Streaking</h3>
+                        <span class="font-mono text-sm text-neutral-400 hidden sm:block">Mar 28, 2026</span>
+                    </div>
+                    <p class="text-neutral-600 font-light leading-relaxed mb-4">A handy matplotlib and numpy snippet I use for quickly plotting and analyzing attosecond streaking spectrograms from experimental raw data.</p>
+                    <span class="text-accent-600 font-medium text-sm flex items-center gap-2">Read post <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i></span>
+                </a>
+                
+                <!-- Note 3 -->
+                <a href="#" class="group block pb-8">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="font-serif text-2xl font-semibold text-neutral-900 group-hover:text-accent-600 transition-colors">Phase-matching in HHG</h3>
+                        <span class="font-mono text-sm text-neutral-400 hidden sm:block">Feb 10, 2026</span>
+                    </div>
+                    <p class="text-neutral-600 font-light leading-relaxed mb-4">A cheat sheet of essential formulas and pressure dependencies for achieving optimal phase-matching in High Harmonic Generation setups.</p>
+                    <span class="text-accent-600 font-medium text-sm flex items-center gap-2">Read post <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i></span>
+                </a>
+            </div>
+            
+            <div class="mt-8 text-center sm:text-left">
+                 <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-lg font-medium hover:bg-neutral-800 transition-colors shadow-sm hover:shadow-md">
+                     View all notes
+                 </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+
+        // Gemini API Integration
+        const apiKey = ""; // API key is injected by the environment
+        const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
+
+        // Exponential backoff retry logic
+        async function fetchWithRetry(url, options, retries = 5) {
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        }
+
+        async function explainResearch(title, containerId, btnId) {
+            const container = document.getElementById(containerId);
+            const btn = document.getElementById(btnId);
+            
+            // Set UI to loading state (Light theme adapted)
+            btn.disabled = true;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin text-indigo-400"></i> Thinking...`;
+            lucide.createIcons();
+            
+            container.classList.remove('hidden');
+            container.innerHTML = `
+                <div class="p-4 bg-indigo-50/50 rounded-lg text-indigo-600 text-sm animate-pulse flex items-center gap-3 border border-indigo-100">
+                    <i data-lucide="brain-circuit" class="w-5 h-5"></i> Consulting AI to simplify this research...
+                </div>`;
+            lucide.createIcons();
+
+            const prompt = `You are an enthusiastic and highly skilled science communicator. Explain the following experimental physics research paper title in simple, engaging terms that a high schooler or non-scientist could understand. Focus on the 'why it matters'. Keep it brief (2-3 sentences max). Paper title: "${title}"`;
+
+            try {
+                const data = await fetchWithRetry(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate an explanation right now.";
+                
+                // Display the result (Light theme adapted)
+                container.innerHTML = `
+                    <div class="p-5 bg-indigo-50/80 border border-indigo-100 rounded-xl text-neutral-700 text-sm flex gap-4 items-start relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-indigo-400"></div>
+                        <div class="bg-white p-2 rounded-full text-indigo-600 shrink-0 shadow-sm border border-indigo-50">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <div class="leading-relaxed font-light">
+                            <strong class="text-indigo-900 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>
+                            ${text}
+                        </div>
+                    </div>`;
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="p-4 bg-red-50 border border-red-100 rounded-lg text-red-600 text-sm flex items-center gap-3">
+                        <i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation. Please try again later.
+                    </div>`;
+            } finally {
+                // Reset button state
+                btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 text-indigo-400 group-hover/btn:text-indigo-600"></i> Explain with AI`;
+                btn.disabled = false;
+                lucide.createIcons();
+            }
+        }
+    </script>
+</body>
+</html>

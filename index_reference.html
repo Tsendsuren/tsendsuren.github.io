@@ -11,56 +11,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Marked.js for parsing Markdown files -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
-    <!-- Firebase for Visitor Counter -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        async function initVisitorCount() {
-            const counterElement = document.getElementById('visitor-count');
-            const container = document.getElementById('visitor-container');
-            
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                
-                const counterDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'visitorStats');
-                const docSnap = await getDoc(counterDocRef);
-                
-                if (docSnap.exists()) {
-                    await updateDoc(counterDocRef, { count: increment(1) });
-                } else {
-                    await setDoc(counterDocRef, { count: 1 });
-                }
-
-                const updatedSnap = await getDoc(counterDocRef);
-                const count = updatedSnap.data().count;
-                
-                if (counterElement) {
-                    counterElement.textContent = count.toLocaleString();
-                    container.classList.replace('opacity-0', 'opacity-100');
-                    container.classList.add('border-cyan-500/50');
-                }
-            } catch (error) {
-                console.error("Counter Error:", error);
-                if (counterElement) counterElement.textContent = "Live";
-            }
-        }
-
-        window.addEventListener('load', initVisitorCount);
-    </script>
-
     <script>
         tailwind.config = {
             theme: {
@@ -141,8 +91,8 @@
                 <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
                 <a href="#research" class="hover:text-cyan-400 transition-colors">Research</a>
                 <a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a>
-                <a href="#tools" class="hover:text-cyan-400 transition-colors">Tools</a>
                 <a href="#notes" class="hover:text-cyan-400 transition-colors">Notes</a>
+                <a href="#tools" class="hover:text-cyan-400 transition-colors">Tools</a>
                 <a href="#gallery" class="hover:text-cyan-400 transition-colors">Gallery</a>
             </div>
         </div>
@@ -189,14 +139,8 @@
                 <!-- Profile Image -->
                 <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
                     <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
-                        <!-- Outer Orbit -->
-                        <div class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-[spin_10s_linear_infinite]">
-                            <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"></div>
-                        </div>
-                        <!-- Inner Orbit -->
-                        <div class="absolute inset-4 rounded-full border border-blue-500/20 animate-[spin_15s_linear_infinite_reverse]">
-                            <div class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_8px_#3b82f6]"></div>
-                        </div>
+                        <div class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-[spin_10s_linear_infinite]"></div>
+                        <div class="absolute inset-4 rounded-full border border-blue-500/20 animate-[spin_15s_linear_infinite_reverse]"></div>
                         <!-- Local Image Source for Profile -->
                         <img src="images/profile.png" alt="Tsendsuren Khurelbaatar" class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full shadow-2xl z-10 border-4 border-slate-900 grayscale hover:grayscale-0 transition-all duration-500">
                     </div>
@@ -236,6 +180,7 @@
                 <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A breakdown of my core technical competencies and research areas in experimental physics.</p>
             </div>
 
+            <!-- Adjusted grid to support 4 columns nicely on large screens -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1 -->
                 <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'ultrafast')">
@@ -414,6 +359,31 @@
         </div>
     </section>
 
+    <!-- My Notes Section -->
+    <section id="notes" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 md:text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">My Notes</h2>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A personal notebook of blog posts, technical references, and code snippets useful for experimental physics.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Note Card 1 -->
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note1')">
+                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="notebook-pen" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Apr 15, 2026</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">PhD Dissertation</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">My PhD research focused on the development of advanced techniques for generating and characterizing attosecond pulses in the deep ultraviolet and extreme ultraviolet regimes.</p>
+                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
+                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Scientific Tools Section (Lab Utilities) -->
     <section id="tools" class="py-24 px-6 bg-slate-900 relative overflow-hidden border-t border-slate-800">
         <div class="max-w-6xl mx-auto relative z-10">
@@ -438,59 +408,8 @@
         </div>
     </section>
 
-    <!-- My Notes Section -->
-    <section id="notes" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16 md:text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">My Notes</h2>
-                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A personal notebook of blog posts, technical references, and code snippets useful for experimental physics.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Note Card 1 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note1')">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="notebook-pen" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Apr 15, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">PhD Dissertation</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">My PhD research focused on the development of advanced techniques for generating and characterizing attosecond pulses in the deep ultraviolet and extreme ultraviolet regimes.</p>
-                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <!-- Note Card 2 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note2')">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="code" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Mar 28, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Python Script: Attosecond Streaking</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A simple script used to simulate attosecond streaking spectrograms based on the Strong Field Approximation (SFA).</p>
-                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <!-- Note Card 3 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note3')">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="file-text" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Feb 10, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Quick Ref: Phase-matching in HHG</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A cheat sheet of phase-matching conditions, pressure gradients, and absorption limits for High Harmonic Generation in various rare gases.</p>
-                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Lab Gallery Section -->
-    <section id="gallery" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
+    <section id="gallery" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
         <div class="max-w-6xl mx-auto">
             <div class="mb-16 md:text-center">
                 <h2 class="text-3xl font-bold text-white mb-4">Lab Gallery</h2>
@@ -550,20 +469,10 @@
                 <p class="text-white font-bold text-lg mb-1">Tsendsuren Khurelbaatar</p>
                 <p class="text-sm text-slate-400">Research Fellow in Attosecond Physics</p>
             </div>
-            <div class="flex flex-col items-center md:items-end gap-3">
-                <div class="flex space-x-6">
-                    <a href="https://github.com/tsendsuren" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
-                    <a href="https://orcid.org/0000-0001-7785-0415" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="book-open" class="w-5 h-5"></i></a>
-                    <a href="mailto:t.khurelbaatar@griffith.edu.au" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a>
-                </div>
-                <!-- Real-time Visitor Counter UI -->
-                <div id="visitor-container" class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full text-[10px] font-mono tracking-wider text-slate-400 opacity-0 transition-opacity duration-700 shadow-inner">
-                    <span class="flex h-1.5 w-1.5 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-500"></span>
-                    </span>
-                    VISITORS: <span id="visitor-count" class="text-cyan-400 font-bold">...</span>
-                </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/tsendsuren" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                <a href="https://orcid.org/0000-0001-7785-0415" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="book-open" class="w-5 h-5"></i></a>
+                <a href="mailto:t.khurelbaatar@griffith.edu.au" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a>
             </div>
         </div>
         <div class="max-w-6xl mx-auto mt-8 pt-8 border-t border-slate-800 text-sm text-slate-500 text-center md:text-left flex flex-col md:flex-row justify-between">
@@ -572,7 +481,8 @@
         </div>
     </footer>
 
-    <!-- Research Details Modal -->
+    <!-- Modals (Research, Notes, Lightbox) -->
+    <!-- (Retained from original code for functionality) -->
     <div id="research-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeResearchModal()">
         <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
             <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeResearchModal()">
@@ -595,7 +505,6 @@
         </div>
     </div>
 
-    <!-- Note Details Modal -->
     <div id="note-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeNoteModal()">
         <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
             <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeNoteModal()">
@@ -607,14 +516,11 @@
                     <span id="note-modal-date">Date</span>
                 </div>
                 <h3 id="note-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6 border-b border-slate-800 pb-4">Title</h3>
-                <div id="note-modal-content" class="markdown-body text-slate-300 font-light">
-                    Content goes here.
-                </div>
+                <div id="note-modal-content" class="markdown-body text-slate-300 font-light"></div>
             </div>
         </div>
     </div>
 
-    <!-- Fullscreen Lightbox Modal -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeLightbox()">
         <button class="absolute top-6 right-6 text-slate-400 hover:text-cyan-400 transition-colors p-2" onclick="closeLightbox()">
             <i data-lucide="x" class="w-8 h-8"></i>
@@ -632,53 +538,29 @@
                 date: 'May 26, 2024',
                 title: 'My PhD Dissertation: Exploring Attosecond Chemical Physics',
                 file: 'notes/phd-dissertation.md' 
-            },
-            'note2': {
-                date: 'Mar 28, 2026',
-                title: 'Python Script: Attosecond Streaking',
-                file: 'notes/attosecond-streaking.md'
-            },
-            'note3': {
-                date: 'Feb 10, 2026',
-                title: 'Quick Ref: Phase-matching in HHG',
-                file: 'notes/phase-matching.md'
             }
         };
 
         async function openNoteModal(id) {
             const data = notesData[id];
             if (!data) return;
-            
             document.getElementById('note-modal-title').textContent = data.title;
             document.getElementById('note-modal-date').textContent = data.date;
             const contentDiv = document.getElementById('note-modal-content');
-            
             contentDiv.innerHTML = '<div class="flex items-center justify-center py-10"><i data-lucide="loader-2" class="w-8 h-8 animate-spin text-cyan-500"></i></div>';
-            
             const modal = document.getElementById('note-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
-            
+            setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
             document.body.style.overflow = 'hidden';
-            lucide.createIcons(); 
-
+            lucide.createIcons();
             try {
                 const response = await fetch(data.file);
-                if (!response.ok) throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
+                if (!response.ok) throw new Error(`Failed to load`);
                 const markdownText = await response.text();
                 contentDiv.innerHTML = marked.parse(markdownText);
             } catch (error) {
-                console.error("Error loading note:", error);
-                contentDiv.innerHTML = `
-                    <div class="text-red-400 p-4 bg-red-950/30 rounded-lg border border-red-800/50 flex flex-col gap-2">
-                        <strong><i data-lucide="alert-circle" class="w-5 h-5 inline"></i> Error loading note content.</strong>
-                        <p class="text-sm">Could not fetch the file <code>${data.file}</code>. Make sure the 'notes' folder and the .md file exist in your repository.</p>
-                    </div>`;
-                lucide.createIcons();
+                contentDiv.innerHTML = `<div class="text-red-400 p-4 bg-red-950/30 rounded-lg border border-red-800/50">Error loading content.</div>`;
             }
         }
 
@@ -688,30 +570,16 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
-                if (document.getElementById('research-modal').classList.contains('hidden') && document.getElementById('lightbox').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
+                document.body.style.overflow = '';
             }, 300);
         }
 
-        // --- Research Modal Functions ---
+        // --- Research Data ---
         const researchData = {
-            'ultrafast': {
-                title: 'Ultrafast Electron Dynamics',
-                desc: '<p>At the core of my research is the pursuit to unravel the complex interplay of electrons in atoms and molecules on their natural, attosecond timescale.</p><p>My specific interests include studying strong-field ionization processes, under-the-barrier electron tunneling dynamics, and observing charge migration—the purely electronic response of a molecule following sudden ionization before the heavy nuclei have time to move.</p>'
-            },
-            'pulses': {
-                title: 'Ultrashort Pulse Generation',
-                desc: '<p>My work involves the intricate design, construction, and optimization of state-of-the-art carrier-envelope phase (CEP) stabilized femtosecond laser systems.</p><p>Generating single-cycle or few-cycle optical pulses requires advanced post-compression techniques. By spectrally broadening the output of a standard amplifier and carefully compensating for dispersion, we achieve high-contrast, intense pulses.</p>'
-            },
-            'strong-field': {
-                title: 'Strong Field Physics',
-                desc: '<p>I investigate the fundamental physical processes that occur when atoms and molecules are exposed to intense, ultrashort laser fields.</p><p>This includes exploring high-order harmonic generation (HHG), strong-field photoelectron holography, and quantum metrology beyond the standard quantum limit.</p>'
-            },
-            'metrology': {
-                title: 'Quantum Metrology',
-                desc: '<p>Quantum metrology aims to enhance measurement precision beyond classical limits by harnessing quantum properties.</p><p>My recent work explores strong-field quantum metrology, aiming to surpass the standard quantum limit. By utilizing ultrafast laser fields and advanced detection schemes, we can push the boundaries of precision measurements.</p>'
-            }
+            'ultrafast': { title: 'Ultrafast Electron Dynamics', desc: '<p>Studying charge migration and sub-cycle electron motion in atomic systems.</p>' },
+            'pulses': { title: 'Ultrashort Pulse Generation', desc: '<p>Design and optimization of CEP-stabilized femtosecond laser systems.</p>' },
+            'strong-field': { title: 'Strong Field Physics', desc: '<p>Investigating fundamental processes in intense laser fields.</p>' },
+            'metrology': { title: 'Quantum Metrology', desc: '<p>Pushing precision measurements beyond the standard quantum limit.</p>' }
         };
 
         function openResearchModal(element, id) {
@@ -734,18 +602,14 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
-                if (document.getElementById('note-modal').classList.contains('hidden') && document.getElementById('lightbox').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
+                document.body.style.overflow = '';
             }, 300);
         }
 
-        // --- Lightbox Functions ---
         function openLightbox(element) {
             const imgSrc = element.querySelector('img').src;
             const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = imgSrc;
+            document.getElementById('lightbox-img').src = imgSrc;
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
             setTimeout(() => { lightbox.classList.remove('opacity-0'); }, 10);
@@ -758,20 +622,9 @@
             setTimeout(() => {
                 lightbox.classList.add('hidden');
                 lightbox.classList.remove('flex');
-                if (document.getElementById('research-modal').classList.contains('hidden') && document.getElementById('note-modal').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
+                document.body.style.overflow = '';
             }, 300);
         }
-
-        // Global key escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") {
-                closeLightbox();
-                closeResearchModal();
-                closeNoteModal();
-            }
-        });
 
         // --- Quantum Node Animation ---
         const canvas = document.getElementById('quantum-canvas');
@@ -788,9 +641,7 @@
                 constructor(x, y, directionX, directionY, size, color) {
                     this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
                 }
-                draw() {
-                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill();
-                }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
                 update() {
                     if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
                     if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
@@ -802,19 +653,19 @@
                 let numberOfParticles = (canvas.height * canvas.width) / 12000;
                 for (let i = 0; i < numberOfParticles; i++) {
                     let size = (Math.random() * 1.5) + 0.5;
-                    let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
-                    let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-                    let directionX = (Math.random() * 0.6) - 0.3;
-                    let directionY = (Math.random() * 0.6) - 0.3;
+                    let x = Math.random() * canvas.width;
+                    let y = Math.random() * canvas.height;
+                    let directionX = (Math.random() * 0.4) - 0.2;
+                    let directionY = (Math.random() * 0.4) - 0.2;
                     particlesArray.push(new Particle(x, y, directionX, directionY, size, '#22d3ee'));
                 }
             }
             function connect() {
                 for (let a = 0; a < particlesArray.length; a++) {
                     for (let b = a; b < particlesArray.length; b++) {
-                        let distance = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
-                        if (distance < 15000) {
-                            ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - (distance / 15000)) * 0.5})`;
+                        let dist = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
+                        if (dist < 15000) {
+                            ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - (dist / 15000)) * 0.3})`;
                             ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
                         }
                     }
@@ -828,52 +679,29 @@
             initParticles(); animate();
         }
 
-        // --- Gemini API Integration (Restored with Retry & Styling) ---
+        // Gemini API Interaction (Helper)
         const apiKey = "";
         const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
-
-        async function fetchWithRetry(url, options, retries = 5) {
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return await response.json();
-                } catch (error) {
-                    if (i === retries - 1) throw error;
-                    await new Promise(resolve => setTimeout(resolve, delays[i]));
-                }
-            }
-        }
 
         async function explainResearch(title, containerId, btnId) {
             const container = document.getElementById(containerId);
             const btn = document.getElementById(btnId);
             btn.disabled = true;
-            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Explaining...`;
-            lucide.createIcons();
-            
             container.classList.remove('hidden');
-            container.innerHTML = `<div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse flex items-center gap-3 border border-slate-800"><i data-lucide="brain-circuit" class="w-5 h-5"></i> Consulting the AI...</div>`;
-            lucide.createIcons();
-            
-            const prompt = `Explain research paper: "${title}" in simple terms (2-3 sentences). Focus on impact.`;
+            container.innerHTML = `<div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse">Consulting AI...</div>`;
             try {
-                const data = await fetchWithRetry(API_URL, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: `Explain: "${title}" in 2 sentences.` }] }] })
                 });
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Couldn't generate explanation.";
-                container.innerHTML = `<div class="p-5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 border border-cyan-800/30 rounded-lg text-slate-300 text-sm flex gap-4 items-start shadow-inner"><div class="bg-cyan-900/50 p-2 rounded-full text-cyan-400 shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div><div class="leading-relaxed"><strong class="text-cyan-400 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>${text}</div></div>`;
-            } catch (error) {
-                container.innerHTML = `<div class="p-4 bg-red-950/30 border border-red-800/50 rounded-lg text-red-400 text-sm flex items-center gap-3"><i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation.</div>`;
-            } finally {
-                btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨`;
-                btn.disabled = false;
-                lucide.createIcons();
-            }
+                const data = await response.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "No summary available.";
+                container.innerHTML = `<div class="p-5 bg-cyan-950/20 border border-cyan-800/30 rounded-lg text-slate-300 text-sm">${text}</div>`;
+            } catch (e) {
+                container.innerHTML = `<div class="p-4 text-red-400">Failed to load.</div>`;
+            } finally { btn.disabled = false; }
         }
     </script>
 </body>

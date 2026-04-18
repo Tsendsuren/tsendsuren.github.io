@@ -56,6 +56,26 @@
         .markdown-body pre { background-color: #0f172a; padding: 1.25rem; border-radius: 0.5rem; overflow-x: auto; border: 1px solid #1e293b; margin-bottom: 1.25rem; }
         .markdown-body pre code { background-color: transparent; padding: 0; border: none; color: #a5f3fc; font-size: 0.875em; }
         .markdown-body blockquote { border-left: 4px solid #22d3ee; padding-left: 1rem; font-style: italic; color: #94a3b8; margin-bottom: 1.25rem; background: #0f172a55; padding-top: 0.5rem; padding-bottom: 0.5rem;}
+
+        /* Modern Tool Button Animation */
+        .tool-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .tool-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .tool-button:hover::before { left: 100%; }
+        .tool-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(8, 145, 178, 0.4);
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-300 font-sans antialiased selection:bg-cyan-900 selection:text-cyan-100">
@@ -72,6 +92,7 @@
                 <a href="#research" class="hover:text-cyan-400 transition-colors">Research</a>
                 <a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a>
                 <a href="#notes" class="hover:text-cyan-400 transition-colors">Notes</a>
+                <a href="#tools" class="hover:text-cyan-400 transition-colors">Tools</a>
                 <a href="#gallery" class="hover:text-cyan-400 transition-colors">Gallery</a>
             </div>
         </div>
@@ -151,20 +172,6 @@
         </div>
     </section>
 
-    <!-- 1. Wrap the button in a container for positioning (e.g., centered) -->
-<div style="display: flex; justify-content: center; margin: 40px 0;">
-    
-    <!-- 2. Use target="_blank" to open in a new tab -->
-    <!-- 3. Use rel="noopener" for security/performance -->
-    <a href="units/index.html" 
-       target="_blank" 
-       rel="noopener" 
-       class="unit-conv-button">
-       Unit Conversion Tool
-    </a>
-
-</div>
-
     <!-- Research Interests Grid -->
     <section id="research" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
         <div class="max-w-6xl mx-auto">
@@ -237,43 +244,6 @@
             </div>
         </div>
     </section>
-
-        <!-- Modern, high-visibility button styling -->
-    <style>
-        .unit-conv-button {
-            display: inline-flex;
-            align-items: center;
-            padding: 14px 28px;
-            background-color: #2563eb; /* Professional Blue */
-            color: white;
-            text-decoration: none;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            font-weight: 600;
-            font-size: 16px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -2px rgba(37, 99, 235, 0.1);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid transparent;
-        }
-
-        .unit-conv-button:hover {
-            background-color: #1d4ed8;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
-        }
-
-        .unit-conv-button:active {
-            transform: translateY(0);
-            background-color: #1e40af;
-        }
-
-        /* Icon prefix (optional) */
-        .unit-conv-button::before {
-            content: "⚡";
-            margin-right: 10px;
-            font-size: 18px;
-        }
-    </style>
 
     <!-- Publications Section (with AI Feature) -->
     <section id="publications" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
@@ -399,7 +369,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Note Card 1 -->
-                <!-- Notice we pass the ID 'note1' which links to the JavaScript data below -->
                 <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note1')">
                     <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i data-lucide="notebook-pen" class="w-6 h-6"></i>
@@ -411,73 +380,79 @@
                         Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
+            </div>
+        </div>
+    </section>
 
-
-
+    <!-- Scientific Tools Section (Lab Utilities) -->
+    <section id="tools" class="py-24 px-6 bg-slate-900 relative overflow-hidden border-t border-slate-800">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="bg-slate-950/60 border border-slate-800 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-md">
+                <div class="max-w-xl text-center md:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+                        <i data-lucide="wrench" class="w-4 h-4"></i>
+                        <span>Scientific Utilities</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-4">Unit Conversion Tool</h2>
+                    <p class="text-slate-400 font-light leading-relaxed">
+                        A specialized laboratory tool for experimental physicists to quickly convert between energy units (eV, nm, Hz, K), pressure, and laser intensity parameters commonly used in attosecond and strong-field science.
+                    </p>
+                </div>
+                
+                <a href="units/index.html" target="_blank" rel="noopener" class="tool-button group flex items-center gap-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-10 py-5 rounded-2xl font-semibold shadow-lg shadow-cyan-900/30 whitespace-nowrap">
+                    <i data-lucide="zap" class="w-6 h-6 group-hover:animate-pulse"></i>
+                    <span>Launch Utility</span>
+                    <i data-lucide="external-link" class="w-4 h-4 opacity-50"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Lab Gallery Section -->
-    <section id="gallery" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
+    <section id="gallery" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
         <div class="max-w-6xl mx-auto">
             <div class="mb-16 md:text-center">
                 <h2 class="text-3xl font-bold text-white mb-4">Lab Gallery</h2>
                 <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">Glimpses into the experimental setups, beamlines, and day-to-day life in the attosecond physics lab.</p>
             </div>
 
-            <!-- Responsive Image Grid -->
-            <!-- To add more photos, simply copy and paste one of the "Image Item" blocks -->
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
-                
-                <!-- Image Item 1 (Spans 2 columns and 2 rows for visual interest) -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer md:col-span-2 md:row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image -->
                     <img src="web_gallery/fig1.png" alt="Attosecond Beamline" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
                     </div>
                 </div>
 
-                <!-- Image Item 2 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image -->
                     <img src="web_gallery/fig2.png" alt="Data Analysis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
                     </div>
                 </div>
 
-                <!-- Image Item 3 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image -->
                     <img src="web_gallery/fig3.png" alt="Laser Alignment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
                     </div>
                 </div>
 
-                <!-- Image Item 4 (Spans 2 rows) -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image -->
                     <img src="web_gallery/fig5.png" alt="Optics Setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
                     </div>
                 </div>
 
-                <!-- Image Item 5 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image -->
                     <img src="web_gallery/fig6.png" alt="Equipment Control" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
                     </div>
                 </div>
 
-                <!-- Image Item 6 -->
                 <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <!-- Local Image -->
                     <img src="web_gallery/fig7.png" alt="VMI Chamber" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
                         <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
@@ -506,7 +481,8 @@
         </div>
     </footer>
 
-    <!-- Research Details Modal (Hidden by default) -->
+    <!-- Modals (Research, Notes, Lightbox) -->
+    <!-- (Retained from original code for functionality) -->
     <div id="research-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeResearchModal()">
         <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
             <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeResearchModal()">
@@ -529,7 +505,6 @@
         </div>
     </div>
 
-    <!-- Note Details Modal (Hidden by default) -->
     <div id="note-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeNoteModal()">
         <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
             <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeNoteModal()">
@@ -541,15 +516,11 @@
                     <span id="note-modal-date">Date</span>
                 </div>
                 <h3 id="note-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6 border-b border-slate-800 pb-4">Title</h3>
-                <!-- Notice the markdown-body class added here for styling -->
-                <div id="note-modal-content" class="markdown-body text-slate-300 font-light">
-                    Content goes here.
-                </div>
+                <div id="note-modal-content" class="markdown-body text-slate-300 font-light"></div>
             </div>
         </div>
     </div>
 
-    <!-- Fullscreen Lightbox Modal (Hidden by default) -->
     <div id="lightbox" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeLightbox()">
         <button class="absolute top-6 right-6 text-slate-400 hover:text-cyan-400 transition-colors p-2" onclick="closeLightbox()">
             <i data-lucide="x" class="w-8 h-8"></i>
@@ -557,7 +528,7 @@
         <img id="lightbox-img" src="" alt="Expanded Lab Photo" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain border border-slate-800" onclick="event.stopPropagation()">
     </div>
 
-    <!-- Initialize Icons -->
+    <!-- Scripts -->
     <script>
         lucide.createIcons();
 
@@ -567,98 +538,48 @@
                 date: 'May 26, 2024',
                 title: 'My PhD Dissertation: Exploring Attosecond Chemical Physics',
                 file: 'notes/phd-dissertation.md' 
-            },
-            'note2': {
-                date: 'Mar 28, 2026',
-                title: 'Python Script: Attosecond Streaking',
-                file: 'notes/attosecond-streaking.md'
-            },
-            'note3': {
-                date: 'Feb 10, 2026',
-                title: 'Quick Ref: Phase-matching in HHG',
-                file: 'notes/phase-matching.md'
             }
         };
 
         async function openNoteModal(id) {
             const data = notesData[id];
             if (!data) return;
-            
             document.getElementById('note-modal-title').textContent = data.title;
             document.getElementById('note-modal-date').textContent = data.date;
             const contentDiv = document.getElementById('note-modal-content');
-            
-            // Show a loading spinner immediately
             contentDiv.innerHTML = '<div class="flex items-center justify-center py-10"><i data-lucide="loader-2" class="w-8 h-8 animate-spin text-cyan-500"></i></div>';
-            
             const modal = document.getElementById('note-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
-            
+            setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
             document.body.style.overflow = 'hidden';
-            lucide.createIcons(); // Re-initialize icons so the loader spins
-
+            lucide.createIcons();
             try {
-                // Fetch the external markdown file
                 const response = await fetch(data.file);
-                
-                if (!response.ok) {
-                    throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
-                }
-                
+                if (!response.ok) throw new Error(`Failed to load`);
                 const markdownText = await response.text();
-                
-                // Parse the markdown into HTML using marked.js
                 contentDiv.innerHTML = marked.parse(markdownText);
-                
             } catch (error) {
-                console.error("Error loading note:", error);
-                contentDiv.innerHTML = `
-                    <div class="text-red-400 p-4 bg-red-950/30 rounded-lg border border-red-800/50 flex flex-col gap-2">
-                        <strong><i data-lucide="alert-circle" class="w-5 h-5 inline"></i> Error loading note content.</strong>
-                        <p class="text-sm">Could not fetch the file <code>${data.file}</code>. Make sure the 'notes' folder and the .md file exist in your repository.</p>
-                    </div>`;
-                lucide.createIcons();
+                contentDiv.innerHTML = `<div class="text-red-400 p-4 bg-red-950/30 rounded-lg border border-red-800/50">Error loading content.</div>`;
             }
         }
 
         function closeNoteModal() {
             const modal = document.getElementById('note-modal');
             modal.classList.add('opacity-0');
-            
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
-                // Only restore scrolling if no other modals are active
-                if (document.getElementById('research-modal').classList.contains('hidden') && 
-                    document.getElementById('lightbox').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
+                document.body.style.overflow = '';
             }, 300);
         }
 
-        // --- Research Modal Functions ---
+        // --- Research Data ---
         const researchData = {
-            'ultrafast': {
-                title: 'Ultrafast Electron Dynamics',
-                desc: '<p>At the core of my research is the pursuit to unravel the complex interplay of electrons in atoms and molecules on their natural, attosecond timescale.</p><p>My specific interests include studying strong-field ionization processes, under-the-barrier electron tunneling dynamics, and observing charge migration—the purely electronic response of a molecule following sudden ionization before the heavy nuclei have time to move.</p>'
-            },
-            'pulses': {
-                title: 'Ultrashort Pulse Generation',
-                desc: '<p>My work involves the intricate design, construction, and optimization of state-of-the-art carrier-envelope phase (CEP) stabilized femtosecond laser systems.</p><p>Generating single-cycle or few-cycle optical pulses requires advanced post-compression techniques. By spectrally broadening the output of a standard amplifier and carefully compensating for dispersion, we achieve high-contrast, intense pulses.</p>'
-            },
-            'strong-field': {
-                title: 'Strong Field Physics',
-                desc: '<p>I investigate the fundamental physical processes that occur when atoms and molecules are exposed to intense, ultrashort laser fields.</p><p>This includes exploring high-order harmonic generation (HHG), strong-field photoelectron holography, and quantum metrology beyond the standard quantum limit.</p>'
-            },
-            'metrology': {
-                title: 'Quantum Metrology',
-                desc: '<p>Quantum metrology aims to enhance measurement precision beyond classical limits by harnessing quantum properties.</p><p>My recent work explores strong-field quantum metrology, aiming to surpass the standard quantum limit. By utilizing ultrafast laser fields and advanced detection schemes, we can push the boundaries of precision measurements.</p>'
-            }
+            'ultrafast': { title: 'Ultrafast Electron Dynamics', desc: '<p>Studying charge migration and sub-cycle electron motion in atomic systems.</p>' },
+            'pulses': { title: 'Ultrashort Pulse Generation', desc: '<p>Design and optimization of CEP-stabilized femtosecond laser systems.</p>' },
+            'strong-field': { title: 'Strong Field Physics', desc: '<p>Investigating fundamental processes in intense laser fields.</p>' },
+            'metrology': { title: 'Quantum Metrology', desc: '<p>Pushing precision measurements beyond the standard quantum limit.</p>' }
         };
 
         function openResearchModal(element, id) {
@@ -681,19 +602,14 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
-                if (document.getElementById('note-modal').classList.contains('hidden') && 
-                    document.getElementById('lightbox').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
+                document.body.style.overflow = '';
             }, 300);
         }
 
-        // --- Lightbox Functions ---
         function openLightbox(element) {
             const imgSrc = element.querySelector('img').src;
             const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = imgSrc;
+            document.getElementById('lightbox-img').src = imgSrc;
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
             setTimeout(() => { lightbox.classList.remove('opacity-0'); }, 10);
@@ -706,21 +622,9 @@
             setTimeout(() => {
                 lightbox.classList.add('hidden');
                 lightbox.classList.remove('flex');
-                if (document.getElementById('research-modal').classList.contains('hidden') && 
-                    document.getElementById('note-modal').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
+                document.body.style.overflow = '';
             }, 300);
         }
-
-        // Global key escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") {
-                closeLightbox();
-                closeResearchModal();
-                closeNoteModal();
-            }
-        });
 
         // --- Quantum Node Animation ---
         const canvas = document.getElementById('quantum-canvas');
@@ -737,9 +641,7 @@
                 constructor(x, y, directionX, directionY, size, color) {
                     this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
                 }
-                draw() {
-                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill();
-                }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
                 update() {
                     if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
                     if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
@@ -751,19 +653,19 @@
                 let numberOfParticles = (canvas.height * canvas.width) / 12000;
                 for (let i = 0; i < numberOfParticles; i++) {
                     let size = (Math.random() * 1.5) + 0.5;
-                    let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
-                    let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-                    let directionX = (Math.random() * 0.6) - 0.3;
-                    let directionY = (Math.random() * 0.6) - 0.3;
+                    let x = Math.random() * canvas.width;
+                    let y = Math.random() * canvas.height;
+                    let directionX = (Math.random() * 0.4) - 0.2;
+                    let directionY = (Math.random() * 0.4) - 0.2;
                     particlesArray.push(new Particle(x, y, directionX, directionY, size, '#22d3ee'));
                 }
             }
             function connect() {
                 for (let a = 0; a < particlesArray.length; a++) {
                     for (let b = a; b < particlesArray.length; b++) {
-                        let distance = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
-                        if (distance < 15000) {
-                            ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - (distance / 15000)) * 0.5})`;
+                        let dist = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
+                        if (dist < 15000) {
+                            ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - (dist / 15000)) * 0.3})`;
                             ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
                         }
                     }
@@ -777,50 +679,29 @@
             initParticles(); animate();
         }
 
-        // Gemini API Integration
+        // Gemini API Interaction (Helper)
         const apiKey = "";
         const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
-
-        async function fetchWithRetry(url, options, retries = 5) {
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return await response.json();
-                } catch (error) {
-                    if (i === retries - 1) throw error;
-                    await new Promise(resolve => setTimeout(resolve, delays[i]));
-                }
-            }
-        }
 
         async function explainResearch(title, containerId, btnId) {
             const container = document.getElementById(containerId);
             const btn = document.getElementById(btnId);
             btn.disabled = true;
-            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Explaining...`;
-            lucide.createIcons();
             container.classList.remove('hidden');
-            container.innerHTML = `<div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse flex items-center gap-3 border border-slate-800"><i data-lucide="brain-circuit" class="w-5 h-5"></i> Consulting the AI...</div>`;
-            lucide.createIcons();
-            const prompt = `Explain research paper: "${title}" in simple terms (2-3 sentences). Focus on impact.`;
+            container.innerHTML = `<div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse">Consulting AI...</div>`;
             try {
-                const data = await fetchWithRetry(API_URL, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: `Explain: "${title}" in 2 sentences.` }] }] })
                 });
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Couldn't generate explanation.";
-                container.innerHTML = `<div class="p-5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 border border-cyan-800/30 rounded-lg text-slate-300 text-sm flex gap-4 items-start shadow-inner"><div class="bg-cyan-900/50 p-2 rounded-full text-cyan-400 shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div><div class="leading-relaxed"><strong class="text-cyan-400 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>${text}</div></div>`;
-            } catch (error) {
-                container.innerHTML = `<div class="p-4 bg-red-950/30 border border-red-800/50 rounded-lg text-red-400 text-sm flex items-center gap-3"><i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation.</div>`;
-            } finally {
-                btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨`;
-                btn.disabled = false;
-                lucide.createIcons();
-            }
+                const data = await response.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "No summary available.";
+                container.innerHTML = `<div class="p-5 bg-cyan-950/20 border border-cyan-800/30 rounded-lg text-slate-300 text-sm">${text}</div>`;
+            } catch (e) {
+                container.innerHTML = `<div class="p-4 text-red-400">Failed to load.</div>`;
+            } finally { btn.disabled = false; }
         }
     </script>
 </body>

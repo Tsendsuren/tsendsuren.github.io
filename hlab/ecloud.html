@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydrogen Orbital Visualizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #020617; font-family: 'Inter', sans-serif; }
+        .sidebar {
+            width: 400px;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        .viewer-container {
+            flex-grow: 1;
+            height: 100vh;
+            position: relative;
+        }
+        canvas { display: block; }
+        .active-btn {
+            background: #3b82f6 !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        select {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 4px 8px;
+            border-radius: 6px;
+            outline: none;
+        }
+        .photon-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        /* Custom scrollbar for sidebar */
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="flex">
+
+    <!-- Left Sidebar: Controls -->
+    <aside class="sidebar p-6 flex flex-col gap-6 shrink-0">
+        <header>
+            <h1 class="text-white text-2xl font-bold mb-2">Hydrogen Lab</h1>
+            <p class="text-slate-400 text-sm leading-relaxed">
+                Visualizing the probability density $|\psi_{nlm}|^2$. 
+            </p>
+        </header>
+        
+        <div class="flex flex-col gap-6">
+            <!-- Quantum Numbers -->
+            <section class="flex flex-col gap-4">
+                <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Manual Configuration</label>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <span class="text-[10px] text-slate-400 uppercase">Principal (n)</span>
+                        <div class="flex gap-1" id="n-controls">
+                            <button onclick="updateN(1)" id="btn-n1" class="active-btn flex-1 py-2 text-xs rounded bg-slate-800 text-slate-300 transition-all">1</button>
+                            <button onclick="updateN(2)" id="btn-n2" class="flex-1 py-2 text-xs rounded bg-slate-800 text-slate-300 transition-all">2</button>
+                            <button onclick="updateN(3)" id="btn-n3" class="flex-1 py-2 text-xs rounded bg-slate-800 text-slate-300 transition-all">3</button>
+                            <button onclick="updateN(4)" id="btn-n4" class="flex-1 py-2 text-xs rounded bg-slate-800 text-slate-300 transition-all">4</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="text-[10px] text-slate-400 uppercase">Angular (l)</span>
+                        <div class="flex gap-1" id="l-controls"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <span class="text-[10px] text-slate-400 uppercase">Magnetic (m)</span>
+                    <select id="m-select" onchange="updateM(this.value)" class="w-full text-sm py-2"></select>
+                </div>
+            </section>
+
+            <!-- Photon Interaction Section -->
+            <section class="pt-6 border-t border-white/10">
+                <label class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4 block">Photon Interaction</label>
+                <div class="bg-black/40 rounded-xl overflow-hidden text-[11px] border border-white/5">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-white/5 text-slate-500 uppercase">
+                            <tr>
+                                <th class="p-3 font-medium">Transition</th>
+                                <th class="p-3 font-medium">λ (nm)</th>
+                                <th class="p-3 font-medium">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-300">
+                            <tr class="photon-row border-b border-white/5">
+                                <td class="p-3">1s → 2p</td>
+                                <td class="p-3 text-purple-400 font-mono">121.6</td>
+                                <td class="p-3 text-right"><button onclick="firePhoton(2, 1, 0, '#a855f7')" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded text-white transition-colors">Fire</button></td>
+                            </tr>
+                            <tr class="photon-row border-b border-white/5">
+                                <td class="p-3">2s → 3p</td>
+                                <td class="p-3 text-red-400 font-mono">656.3</td>
+                                <td class="p-3 text-right"><button onclick="firePhoton(3, 1, 0, '#ef4444')" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded text-white transition-colors">Fire</button></td>
+                            </tr>
+                            <tr class="photon-row">
+                                <td class="p-3">3s → 4p</td>
+                                <td class="p-3 text-orange-400 font-mono">1875</td>
+                                <td class="p-3 text-right"><button onclick="firePhoton(4, 1, 0, '#f97316')" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded text-white transition-colors">Fire</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Current State Info -->
+            <section class="mt-auto pt-6 border-t border-white/10">
+                <div class="bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
+                    <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+                        <span>Current Orbital:</span>
+                        <span id="orbital-label" class="font-bold text-blue-400 uppercase">1s</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs text-slate-400">
+                        <span>Wavefunction:</span>
+                        <span id="formula" class="font-mono text-blue-300">$\psi_{1,0,0}$</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </aside>
+
+    <!-- Right Container: 3D Visualization -->
+    <main class="viewer-container" id="canvas-container">
+        <div class="absolute bottom-6 right-6 text-[10px] text-slate-500 uppercase tracking-[0.2em] pointer-events-none bg-black/20 px-4 py-2 rounded-full backdrop-blur-md">
+            Drag to Rotate • Scroll to Zoom
+        </div>
+    </main>
+
+    <script>
+        // Constants & State
+        const PARTICLE_COUNT = 100000;
+        let currentN = 1, currentL = 0, currentM = 0;
+        let scene, camera, renderer, particles, geometry, material;
+        let targetRotationX = 0, targetRotationY = 0;
+        let isMouseDown = false;
+        let lastMouseX = 0, lastMouseY = 0;
+
+        let activePhoton = null;
+        let photonTargetState = null;
+
+        const { sin, cos, PI, sqrt, exp, pow, atan2, acos } = Math;
+
+        function getAngularDensity(theta, phi, l, m) {
+            if (l === 0) return 1;
+            if (l === 1) {
+                if (m === 0) return cos(theta);
+                if (m === 1) return sin(theta) * cos(phi);
+                if (m === -1) return sin(theta) * sin(phi);
+            }
+            if (l === 2) {
+                if (m === 0) return 3 * cos(theta) ** 2 - 1;
+                if (m === 1) return sin(theta) * cos(theta) * cos(phi);
+                if (m === -1) return sin(theta) * cos(theta) * sin(phi);
+                if (m === 2) return (sin(theta) ** 2) * cos(2 * phi);
+                if (m === -2) return (sin(theta) ** 2) * sin(2 * phi);
+            }
+            if (l === 3) {
+                if (m === 0) return cos(theta) * (5 * cos(theta) ** 2 - 3);
+                if (m === 1) return sin(theta) * (5 * cos(theta) ** 2 - 1) * cos(phi);
+                if (m === -1) return sin(theta) * (5 * cos(theta) ** 2 - 1) * sin(phi);
+                if (m === 2) return cos(theta) * sin(theta) ** 2 * cos(2 * phi);
+                if (m === -2) return cos(theta) * sin(theta) ** 2 * sin(2 * phi);
+                if (m === 3) return sin(theta) ** 3 * cos(3 * phi);
+                if (m === -3) return sin(theta) ** 3 * sin(3 * phi);
+            }
+            return 1;
+        }
+
+        function getRadialDensity(r, n, l) {
+            const a0 = 1.0;
+            const rho = (2 * r) / (n * a0);
+            let R = 1.0;
+            if (n === 1) { R = exp(-rho / 2); } 
+            else if (n === 2) {
+                if (l === 0) R = (2 - rho) * exp(-rho / 2);
+                if (l === 1) R = rho * exp(-rho / 2);
+            } else if (n === 3) {
+                if (l === 0) R = (6 - 6 * rho + rho * rho) * exp(-rho / 2);
+                if (l === 1) R = rho * (4 - rho) * exp(-rho / 2);
+                if (l === 2) R = rho * rho * exp(-rho / 2);
+            } else if (n === 4) {
+                if (l === 0) R = (24 - 36 * rho + 12 * rho * rho - rho ** 3 / 1) * exp(-rho / 2);
+                if (l === 1) R = rho * (20 - 10 * rho + rho * rho) * exp(-rho / 2);
+                if (l === 2) R = rho * rho * (6 - rho) * exp(-rho / 2);
+                if (l === 3) R = pow(rho, 3) * exp(-rho / 2);
+            }
+            return R * R;
+        }
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.z = 25;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            updateLControls();
+            createParticles();
+
+            document.addEventListener('mousedown', () => isMouseDown = true);
+            document.addEventListener('mouseup', () => isMouseDown = false);
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('wheel', onMouseWheel);
+            window.addEventListener('resize', onWindowResize);
+
+            animate();
+        }
+
+        function createParticles() {
+            if (particles) scene.remove(particles);
+            geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(PARTICLE_COUNT * 3);
+            const colors = new Float32Array(PARTICLE_COUNT * 3);
+            const sizes = new Float32Array(PARTICLE_COUNT);
+            let i = 0;
+            const scaleFactor = 6;
+            const maxR = currentN * scaleFactor;
+            let attempts = 0;
+            const maxAttempts = PARTICLE_COUNT * 50;
+
+            while (i < PARTICLE_COUNT && attempts < maxAttempts) {
+                attempts++;
+                const x = (Math.random() - 0.5) * maxR * 2;
+                const y = (Math.random() - 0.5) * maxR * 2;
+                const z = (Math.random() - 0.5) * maxR * 2;
+                const r = sqrt(x*x + y*y + z*z);
+                const theta = acos(z / (r || 1e-6));
+                const phi = atan2(y, x);
+                const prob = getRadialDensity(r, currentN, currentL) * pow(getAngularDensity(theta, phi, currentL, currentM), 2);
+                
+                if (Math.random() < prob * 1.5) {
+                    positions[i * 3] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
+                    const phaseColor = (getAngularDensity(theta, phi, currentL, currentM) >= 0) ? 0.6 : 0.05;
+                    const color = new THREE.Color().setHSL(phaseColor, 0.7, 0.4 + (prob * 0.6));
+                    colors[i * 3] = color.r; colors[i * 3 + 1] = color.g; colors[i * 3 + 2] = color.b;
+                    sizes[i] = 0.05 + Math.random() * 0.1;
+                    i++;
+                }
+            }
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            material = new THREE.PointsMaterial({ size: 0.12, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, sizeAttenuation: true });
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+        }
+
+        function firePhoton(n, l, m, colorStr) {
+            if (activePhoton) return;
+            const photonGeo = new THREE.SphereGeometry(0.3, 16, 16);
+            const photonMat = new THREE.MeshBasicMaterial({ color: colorStr, transparent: true, opacity: 1 });
+            activePhoton = new THREE.Mesh(photonGeo, photonMat);
+            const glow = new THREE.PointLight(colorStr, 2, 10);
+            activePhoton.add(glow);
+            activePhoton.position.set(-30, 10, 5);
+            scene.add(activePhoton);
+            photonTargetState = { n, l, m };
+        }
+
+        function handlePhotonArrival() {
+            if (!photonTargetState) return;
+            updateN(photonTargetState.n);
+            updateL(photonTargetState.l);
+            updateM(photonTargetState.m);
+            scene.remove(activePhoton);
+            activePhoton = null;
+            photonTargetState = null;
+            renderer.setClearColor(0x333333, 1);
+            setTimeout(() => renderer.setClearColor(0x000000, 0), 50);
+        }
+
+        function updateN(n) {
+            currentN = n;
+            if (currentL >= n) currentL = n - 1;
+            document.querySelectorAll('#n-controls button').forEach(btn => btn.classList.remove('active-btn'));
+            const targetBtn = document.getElementById(`btn-n${n}`);
+            if(targetBtn) targetBtn.classList.add('active-btn');
+            updateLControls();
+            refreshOrbital();
+        }
+
+        function updateL(l) {
+            currentL = parseInt(l);
+            currentM = 0;
+            updateMControls();
+            refreshOrbital();
+        }
+
+        function updateM(m) {
+            currentM = parseInt(m);
+            refreshOrbital();
+        }
+
+        function updateLControls() {
+            const container = document.getElementById('l-controls');
+            container.innerHTML = '';
+            const labels = ['s', 'p', 'd', 'f'];
+            for (let i = 0; i < currentN && i < 4; i++) {
+                const btn = document.createElement('button');
+                btn.innerText = labels[i];
+                btn.className = `flex-1 py-2 text-xs rounded bg-slate-800 text-slate-300 transition-all ${currentL === i ? 'active-btn' : ''}`;
+                btn.onclick = () => updateL(i);
+                container.appendChild(btn);
+            }
+            updateMControls();
+        }
+
+        function updateMControls() {
+            const select = document.getElementById('m-select');
+            select.innerHTML = '';
+            for (let i = -currentL; i <= currentL; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.text = i === 0 ? '0' : (i > 0 ? `+${i}` : i);
+                if (i === currentM) opt.selected = true;
+                select.appendChild(opt);
+            }
+        }
+
+        function refreshOrbital() {
+            const labels = ['s', 'p', 'd', 'f'];
+            document.getElementById('orbital-label').innerText = `${currentN}${labels[currentL]} (m=${currentM})`;
+            document.getElementById('formula').innerText = `\\psi_{${currentN},${currentL},${currentM}}`;
+            createParticles();
+        }
+
+        function onMouseMove(event) {
+            if (isMouseDown) {
+                targetRotationY += (event.clientX - lastMouseX) * 0.01;
+                targetRotationX += (event.clientY - lastMouseY) * 0.01;
+            }
+            lastMouseX = event.clientX;
+            lastMouseY = event.clientY;
+        }
+
+        function onMouseWheel(event) {
+            camera.position.z = Math.max(5, Math.min(80, camera.position.z + event.deltaY * 0.02));
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (particles) {
+                particles.rotation.y += (targetRotationY - particles.rotation.y) * 0.1;
+                particles.rotation.x += (targetRotationX - particles.rotation.x) * 0.1;
+                particles.rotation.y += 0.001;
+            }
+
+            if (activePhoton) {
+                activePhoton.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
+                activePhoton.position.y += Math.sin(Date.now() * 0.02) * 0.2;
+                if (activePhoton.position.length() < 0.5) handlePhotonArrival();
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

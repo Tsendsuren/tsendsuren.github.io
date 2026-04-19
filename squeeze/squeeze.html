@@ -8,10 +8,9 @@
     <style>
         body { margin: 0; overflow: hidden; background-color: #000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white; }
         #container { width: 100vw; height: 100vh; position: relative; }
-        #ui {
+        
+        .ui-panel {
             position: absolute;
-            top: 20px;
-            left: 20px;
             background: rgba(0, 0, 0, 0.85);
             padding: 20px;
             border-radius: 12px;
@@ -21,24 +20,30 @@
             backdrop-filter: blur(10px);
             z-index: 10;
         }
-        h1 { margin: 0 0 5px 0; font-size: 14px; color: #00d4ff; text-transform: uppercase; letter-spacing: 1.5px; }
-        .subtitle { font-size: 10px; color: #666; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+
+        #ui-bottom-left { bottom: 20px; left: 20px; width: 250px; }
+        
+        h1 { margin: 0 0 5px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.3s ease; }
+        .subtitle { font-size: 10px; color: #666; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px; line-height: 1.4; }
+        .subtitle span.sql-label { color: #fff; font-weight: bold; border-bottom: 1px dashed #fff; }
+        
         .control-group { margin-bottom: 10px; }
         label { display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 5px; color: #aaa; text-transform: uppercase; }
-        label span { color: #00ff88; font-family: monospace; }
+        label span { color: #00ff88; font-family: monospace; font-size: 12px; }
         input[type=range] { width: 100%; cursor: pointer; accent-color: #00d4ff; background: #222; height: 4px; border-radius: 2px; appearance: none; }
         
         /* Heisenberg Check */
         .uncertainty-box {
-            margin-top: 15px;
+            margin-top: 5px;
             padding: 10px;
-            background: rgba(0, 212, 255, 0.05);
-            border: 1px dashed #333;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed #444;
+            border-radius: 6px;
             font-family: monospace;
             font-size: 11px;
         }
         .check-line { display: flex; justify-content: space-between; margin-bottom: 4px; }
-        .check-line.highlight { color: #00ff88; border-top: 1px solid #222; padding-top: 4px; margin-top: 4px; }
+        .check-line.highlight { color: #fff; border-top: 1px solid #333; padding-top: 6px; margin-top: 6px; font-weight: bold; }
 
         /* Profile Canvases */
         .profile-container {
@@ -52,6 +57,7 @@
             transform: translateX(-50%);
             width: 400px;
             height: 80px;
+            max-width: calc(100vw - 320px); /* Prevent overlap with bottom-left UI */
         }
         #profile-p-box {
             right: 40px;
@@ -65,14 +71,18 @@
             height: 100%;
         }
 
-        .axis-label { position: absolute; font-size: 10px; font-weight: bold; color: rgba(0, 212, 255, 0.4); pointer-events: none; text-transform: uppercase; letter-spacing: 2px; }
+        .axis-label { position: absolute; font-size: 10px; font-weight: bold; color: rgba(255, 255, 255, 0.5); pointer-events: none; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-    <div id="ui">
-        <h1>Quantum Squeezing</h1>
-        <div class="subtitle">Wigner Marginals (ħ = 0.5)</div>
-        
+    <!-- Bottom Left UI: Controls & Status -->
+    <div id="ui-bottom-left" class="ui-panel">
+        <h1 id="state-title" style="color: #00d4ff;">Coherent State</h1>
+        <div class="subtitle">
+            Wigner Marginals (ħ = 0.5)<br>
+            <span class="sql-label">Dashed Ring: SQL Boundary</span>
+        </div>
+
         <div class="control-group">
             <label>Squeeze (r) <span id="v-squeeze">0.00</span></label>
             <input type="range" id="squeeze-slider" min="0" max="1.5" step="0.01" value="0.00">
@@ -82,23 +92,23 @@
             <label>Angle (θ) <span id="v-angle">0°</span></label>
             <input type="range" id="angle-slider" min="0" max="90" step="1" value="0">
         </div>
-
+        
         <div class="uncertainty-box">
             <div class="check-line"><span>Δq:</span> <span id="val-dq">0.500</span></div>
             <div class="check-line"><span>Δp:</span> <span id="val-dp">0.500</span></div>
             <div class="check-line highlight"><span>Δq·Δp:</span> <span id="val-prod">0.250</span></div>
-            <div class="check-line" style="color: #666; font-size: 9px;"><span>Limit (ħ/2):</span> <span>0.250</span></div>
+            <div class="check-line" style="color: #888; font-size: 9px;"><span>Heisenberg Limit:</span> <span>0.250</span></div>
         </div>
     </div>
     
     <div id="profile-q-box" class="profile-container">
         <canvas id="canvas-q" class="profile-canvas"></canvas>
-        <div style="text-align: center; width: 100%; margin-top: 5px;" class="axis-label">Position P(q)</div>
+        <div style="text-align: center; width: 100%; margin-top: 5px;" class="axis-label">Phase</div>
     </div>
     
     <div id="profile-p-box" class="profile-container">
         <canvas id="canvas-p" class="profile-canvas"></canvas>
-        <div style="position: absolute; left: 85px; top: 50%; transform: rotate(90deg) translateX(-50%); white-space: nowrap;" class="axis-label">Momentum P(p)</div>
+        <div style="position: absolute; right: 85px; top: 50%; transform: translateY(-50%) rotate(-90deg); white-space: nowrap;" class="axis-label">Amplitude</div>
     </div>
 
     <div id="container"></div>
@@ -109,11 +119,10 @@
         let clock = new THREE.Clock();
         
         const params = {
-            jitter: 0,
-            width: 0.5,
+            width: 0.5,     // equivalent to hbar in this scaling
             squeeze: 0.0,
             angle: 0.0,
-            pCount: 5000
+            pCount: 6000
         };
 
         function init() {
@@ -121,7 +130,7 @@
             
             const aspect = window.innerWidth / window.innerHeight;
             camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-            camera.position.set(0, 15, 0); 
+            camera.position.set(0, 12, 0); 
             camera.lookAt(0, 0, 0);
 
             renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -135,11 +144,15 @@
             ctxP = canvasP.getContext('2d');
             resizeProfileCanvases();
 
-            createPointCloud();
             createGrid();
+            createSQLCircle(); // Draw the static Standard Quantum Limit circle
+            createPointCloud();
 
             window.addEventListener('resize', onWindowResize, false);
             setupUI();
+            
+            // Start the rendering and animation loop
+            animate();
         }
 
         function resizeProfileCanvases() {
@@ -147,6 +160,45 @@
             canvasQ.height = canvasQ.clientHeight * window.devicePixelRatio;
             canvasP.width = canvasP.clientWidth * window.devicePixelRatio;
             canvasP.height = canvasP.clientHeight * window.devicePixelRatio;
+        }
+
+        function createSQLCircle() {
+            // The Standard Quantum Limit implies varQ = varP = h/2.
+            // With h = 0.5, variance = 0.25 -> Standard Deviation = 0.5
+            const sqlRadius = 0.5;
+
+            // Dashed outline
+            const circleGeometry = new THREE.BufferGeometry();
+            const points = [];
+            for (let i = 0; i <= 100; i++) {
+                const a = (i / 100) * Math.PI * 2;
+                points.push(new THREE.Vector3(Math.cos(a) * sqlRadius, 0, Math.sin(a) * sqlRadius));
+            }
+            circleGeometry.setFromPoints(points);
+
+            const circleMaterial = new THREE.LineDashedMaterial({
+                color: 0xffffff,
+                dashSize: 0.08,
+                gapSize: 0.06,
+                transparent: true,
+                opacity: 0.7
+            });
+            const circleLine = new THREE.Line(circleGeometry, circleMaterial);
+            circleLine.computeLineDistances(); // Required for dashed lines
+            scene.add(circleLine);
+
+            // Faint inner fill
+            const fillGeo = new THREE.CircleGeometry(sqlRadius, 64);
+            fillGeo.rotateX(-Math.PI / 2);
+            const fillMat = new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.03,
+                side: THREE.DoubleSide,
+                depthWrite: false
+            });
+            const fillMesh = new THREE.Mesh(fillGeo, fillMat);
+            scene.add(fillMesh);
         }
 
         function createPointCloud() {
@@ -170,8 +222,9 @@
                 size: 0.04, 
                 vertexColors: true, 
                 transparent: true, 
-                opacity: 0.7,
-                blending: THREE.AdditiveBlending 
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
             });
 
             pointCloud = new THREE.Points(geometry, material);
@@ -179,7 +232,7 @@
         }
 
         function createGrid() {
-            const grid = new THREE.GridHelper(14, 14, 0x222222, 0x111111);
+            const grid = new THREE.GridHelper(14, 14, 0x222222, 0x151515);
             scene.add(grid);
         }
 
@@ -191,7 +244,7 @@
         }
 
         function drawProfiles(sigmaQ, sigmaP) {
-            // Draw Q (Horizontal)
+            // Draw Position Profile (Horizontal)
             ctxQ.clearRect(0, 0, canvasQ.width, canvasQ.height);
             ctxQ.beginPath();
             ctxQ.strokeStyle = '#00ff88';
@@ -204,10 +257,10 @@
             }
             ctxQ.stroke();
 
-            // Draw P (Vertical)
+            // Draw Momentum Profile (Vertical)
             ctxP.clearRect(0, 0, canvasP.width, canvasP.height);
             ctxP.beginPath();
-            ctxP.strokeStyle = '#00ff88';
+            ctxP.strokeStyle = '#ffaa00';
             ctxP.lineWidth = 2 * window.devicePixelRatio;
             for(let y = 0; y < canvasP.height; y++) {
                 const normY = (y / canvasP.height - 0.5) * 10;
@@ -243,19 +296,47 @@
             document.getElementById('val-dp').innerText = sigmaP.toFixed(3);
             document.getElementById('val-prod').innerText = (sigmaQ * sigmaP).toFixed(3);
 
+            // Update Dynamic Title based on state
+            const titleEl = document.getElementById('state-title');
+            if (params.squeeze === 0) {
+                titleEl.innerText = "Coherent State";
+                titleEl.style.color = "#00d4ff";
+            } else {
+                if (sigmaQ < sigmaP - 0.005) {
+                    titleEl.innerText = "Phase Squeezed";
+                    titleEl.style.color = "#00ff88"; // Matches Phase graph color
+                } else if (sigmaP < sigmaQ - 0.005) {
+                    titleEl.innerText = "Amplitude Squeezed";
+                    titleEl.style.color = "#ffaa00"; // Matches Amplitude graph color
+                } else {
+                    titleEl.innerText = "Squeezed State";
+                    titleEl.style.color = "#ff55ff"; // Intermediate angle
+                }
+            }
+
+            // Scatter sampling
             for(let i = 0; i < params.pCount; i++) {
-                // Stochastic sampling replacement
                 if (Math.random() > 0.90) { 
                     const g1 = randomGaussian() * Math.sqrt(h * 0.5);
                     const g2 = randomGaussian() * Math.sqrt(h * 0.5);
                     const sq1 = g1 * s1;
                     const sq2 = g2 * s2;
+                    // Rotate
                     const q = sq1 * Math.cos(-theta) + sq2 * Math.sin(-theta);
                     const p = -sq1 * Math.sin(-theta) + sq2 * Math.cos(-theta);
                     pPos.setXYZ(i, q, 0, p);
+                    
                     const dist = Math.sqrt(q*q + p*p);
                     const alpha = Math.max(0.1, 0.8 - dist / 6);
-                    pCols.setXYZ(i, 0.1, 0.7 * alpha, 1.0 * alpha);
+                    
+                    // Dynamic coloring of points based on angle
+                    if (params.squeeze === 0) {
+                        pCols.setXYZ(i, 0.1, 0.7 * alpha, 1.0 * alpha);
+                    } else {
+                        // Mix colors depending on amplitude/phase dominance
+                        const mixQ = (sigmaP / (sigmaQ + sigmaP)); 
+                        pCols.setXYZ(i, 0.1, mixQ * alpha, (1 - mixQ) * alpha + 0.3);
+                    }
                 }
             }
             pPos.needsUpdate = true;
@@ -292,7 +373,6 @@
         }
 
         window.onload = init;
-        animate();
     </script>
 </body>
 </html>

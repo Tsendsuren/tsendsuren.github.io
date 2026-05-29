@@ -334,8 +334,10 @@
         }
         marker.style.left = `${percent}%`;
 
-        if (wavelengthNm < 1) label = "X-Ray";
-        else if (wavelengthNm < 10) label = "Extreme UV (XUV)";
+        if (wavelengthNm < 10) label = "X-Ray";
+        else if (wavelengthNm < 100) label = "Extreme UV (XUV)";
+        else if (wavelengthNm < 200) label = "Vacuum UV (VUV)";
+        else if (wavelengthNm < 300) label = "Deep UV (DUV)";
         else if (wavelengthNm < 400) label = "Ultraviolet (UV)";
         else if (wavelengthNm < 750) label = "Visible Spectrum";
         else if (wavelengthNm < 1400) label = "Near-Infrared (NIR)";

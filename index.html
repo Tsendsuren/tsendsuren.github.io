@@ -1,1111 +1,405 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tsendsuren Khurelbaatar | Experimental Physicist</title>
-
-    <!-- SEO -->
-    <meta name="description" content="Tsendsuren Khurelbaatar — experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation. Publications, research, and tools.">
-    <meta name="author" content="Tsendsuren Khurelbaatar">
-    <meta name="keywords" content="Tsendsuren Khurelbaatar, attosecond physics, strong-field physics, high-harmonic generation, ultrafast science, quantum metrology, experimental physicist">
-    <link rel="canonical" href="https://tsendsuren.github.io/">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Tsendsuren Khurelbaatar | Experimental Physicist">
-    <meta property="og:description" content="Experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation.">
-    <meta property="og:url" content="https://tsendsuren.github.io/">
-    <meta property="og:site_name" content="Tsendsuren Khurelbaatar">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Tsendsuren Khurelbaatar | Experimental Physicist">
-    <meta name="twitter:description" content="Experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation.">
-
-    <!-- Tailwind via CDN. For a production build (smaller, no runtime compile) consider
-         compiling Tailwind to a static stylesheet, but the CDN keeps this a single self-
-         contained file. Suppress the CDN's dev-only console warning: -->
-    <script>
-        (function () {
-            const warn = console.warn;
-            console.warn = function (msg) {
-                if (typeof msg === 'string' && msg.includes('cdn.tailwindcss.com')) return;
-                warn.apply(console, arguments);
-            };
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Modern Sans-Serif Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Marked.js for parsing Markdown files -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
-    <!-- Firebase for Visitor Counter -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // To enable the visitor counter, paste your Firebase web config object below.
-        // Leave as null to disable (the counter widget will simply stay hidden).
-        // Example:
-        // const firebaseConfig = { apiKey: "...", authDomain: "...", projectId: "...", appId: "..." };
-        const firebaseConfig = {
-            apiKey: "AIzaSyA-HyRj4B6cwAfYz__aOM8CvkhAjQC1MoY",
-            authDomain: "tsegit-5ad7b.firebaseapp.com",
-            projectId: "tsegit-5ad7b",
-            storageBucket: "tsegit-5ad7b.firebasestorage.app",
-            messagingSenderId: "271800867813",
-            appId: "1:271800867813:web:20d2bd5151823db8acad0c"
-        };
-        const appId = (typeof __app_id !== 'undefined') ? __app_id : 'tsendsuren-site';
-
-        async function initVisitorCount() {
-            const counterElement = document.getElementById('visitor-count');
-            const container = document.getElementById('visitor-container');
-
-            // No config -> feature disabled. Hide the widget instead of showing a broken state.
-            if (!firebaseConfig) {
-                if (container) container.style.display = 'none';
-                return;
-            }
-
-            try {
-                const app = initializeApp(firebaseConfig);
-                const auth = getAuth(app);
-                const db = getFirestore(app);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                const counterDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'visitorStats');
-
-                // Mark this browser as the owner: visit the site once with #iamowner in the URL
-                // (e.g. https://tsendsuren.github.io/#iamowner). After that this browser never
-                // increments the counter. To undo, visit with #notowner.
-                if (location.hash === '#iamowner') localStorage.setItem('counterOwner', 'true');
-                if (location.hash === '#notowner') localStorage.removeItem('counterOwner');
-                const isOwner = localStorage.getItem('counterOwner') === 'true';
-
-                // Only increment once per browser, and never for the owner.
-                const alreadyCounted = localStorage.getItem('visitorCounted') === 'true';
-
-                const docSnap = await getDoc(counterDocRef);
-                if (!docSnap.exists()) {
-                    await setDoc(counterDocRef, { count: isOwner ? 0 : 1 });
-                    if (!isOwner) localStorage.setItem('visitorCounted', 'true');
-                } else if (!alreadyCounted && !isOwner) {
-                    await updateDoc(counterDocRef, { count: increment(1) });
-                    localStorage.setItem('visitorCounted', 'true');
-                }
-
-                const updatedSnap = await getDoc(counterDocRef);
-                const count = updatedSnap.data().count;
-                
-                if (counterElement) {
-                    counterElement.textContent = count.toLocaleString();
-                    container.classList.replace('opacity-0', 'opacity-100');
-                    container.classList.add('border-cyan-500/50');
-                }
-            } catch (error) {
-                console.error("Counter Error:", error);
-                if (container) container.style.display = 'none';
-            }
-        }
-
-        window.addEventListener('load', initVisitorCount);
-    </script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        physics: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7', 
-                            900: '#0c4a6e',
-                        }
-                    },
-                    animation: {
-                        'spin-slow': 'spin 3s linear infinite',
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        /* Subtle background pattern for a scientific feel */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-
-        /* Styles for dynamically loaded Markdown content */
-        .markdown-body p { margin-bottom: 1.25rem; line-height: 1.75; }
-        .markdown-body h1, .markdown-body h2, .markdown-body h3 { color: #f8fafc; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.5rem; }
-        .markdown-body h1 { font-size: 1.875rem; }
-        .markdown-body h2 { font-size: 1.5rem; }
-        .markdown-body h3 { font-size: 1.25rem; border-bottom: none; }
-        .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
-        .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; }
-        .markdown-body li { margin-bottom: 0.5rem; }
-        .markdown-body a { color: #22d3ee; text-decoration: underline; transition: color 0.2s; }
-        .markdown-body a:hover { color: #67e8f9; }
-        .markdown-body strong { color: #f1f5f9; font-weight: 600; }
-        .markdown-body code { background-color: #0f172a; padding: 0.2rem 0.4rem; border-radius: 0.25rem; color: #67e8f9; font-family: monospace; font-size: 0.875em; border: 1px solid #1e293b; }
-        .markdown-body pre { background-color: #0f172a; padding: 1.25rem; border-radius: 0.5rem; overflow-x: auto; border: 1px solid #1e293b; margin-bottom: 1.25rem; }
-        .markdown-body pre code { background-color: transparent; padding: 0; border: none; color: #a5f3fc; font-size: 0.875em; }
-        .markdown-body blockquote { border-left: 4px solid #22d3ee; padding-left: 1rem; font-style: italic; color: #94a3b8; margin-bottom: 1.25rem; background: #0f172a55; padding-top: 0.5rem; padding-bottom: 0.5rem;}
-
-        /* Modern Tool Button Animation */
-        .tool-button {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .tool-button::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        .tool-button:hover::before { left: 100%; }
-        .tool-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(8, 145, 178, 0.4);
-        }
-        .tool-button-purple:hover {
-            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
-        }
-        .tool-button-emerald:hover {
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-        }
-    </style>
-</head>
-<body class="bg-slate-950 text-slate-300 font-sans antialiased selection:bg-cyan-900 selection:text-cyan-100">
-
-    <!-- Navigation -->
-    <nav class="fixed w-full bg-slate-950/80 backdrop-blur-md z-50 border-b border-slate-800 transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="font-bold text-lg tracking-tight text-white flex items-center gap-2">
-                <i data-lucide="atom" class="w-5 h-5 text-cyan-500"></i>
-                T. Khurelbaatar
-            </a>
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
-                <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
-                <a href="#research" class="hover:text-cyan-400 transition-colors">Research</a>
-                <a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a>
-                <a href="#tools" class="hover:text-cyan-400 transition-colors">Tools</a>
-                <a href="#notes" class="hover:text-cyan-400 transition-colors">Notes</a>
-                <a href="#gallery" class="hover:text-cyan-400 transition-colors">Gallery</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 overflow-hidden bg-grid min-h-[90vh] flex items-center">
-        <!-- Quantum Dynamics Canvas -->
-        <canvas id="quantum-canvas" class="absolute inset-0 z-0 opacity-40 pointer-events-none"></canvas>
-
-        <!-- Glow Effect -->
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <div class="max-w-6xl mx-auto relative z-10 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Text Content -->
-                <div class="order-2 lg:order-1">
-                    <div class="inline-flex items-center space-x-2 bg-slate-900 border border-slate-700 text-cyan-400 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-                        <i data-lucide="microscope" class="w-4 h-4"></i>
-                        <span>Research Fellow @ Griffith Uni, Brisbane</span>
-                    </div>
-                    
-                    <h2 class="text-xl md:text-2xl text-slate-400 font-light mb-2">Hello, I am</h2>
-                    <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-4 leading-tight">
-                        Tsendsuren <br/> Khurelbaatar.
-                    </h1>
-                    <h2 class="text-2xl lg:text-3xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-8">
-                        Experimental Physicist in Attosecond Physics.
-                    </h2>
-                    
-                    <p class="text-lg text-slate-400 max-w-xl mb-10 leading-relaxed font-light">
-                        Passionate about exploring the uncharted territories of the electron world.
-                    </p>
-
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#contact" class="flex items-center space-x-2 bg-cyan-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-cyan-500 transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)] hover:shadow-[0_0_25px_rgba(8,145,178,0.6)]">
-                            <i data-lucide="mail" class="w-5 h-5"></i>
-                            <span>Get in touch</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Profile Image -->
-                <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
-                    <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96" id="profile-container">
-                        <!-- Outer Orbit -->
-                        <div class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-[spin_10s_linear_infinite]">
-                            <div id="electron-outer" class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"></div>
-                        </div>
-                        <!-- Inner Orbit -->
-                        <div class="absolute inset-4 rounded-full border border-blue-500/20 animate-[spin_15s_linear_infinite_reverse]">
-                            <div id="electron-inner" class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_8px_#3b82f6]"></div>
-                        </div>
-                        <!-- Local Image Source for Profile -->
-                        <img src="images/profile.png" alt="Tsendsuren Khurelbaatar" class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full shadow-2xl z-10 border-4 border-slate-900 grayscale hover:grayscale-0 transition-all duration-500">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-24 px-6 bg-slate-900 relative">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-12 gap-12 items-start">
-                <div class="md:col-span-4 sticky top-24">
-                    <h2 class="text-3xl font-bold text-white mb-2">About Me</h2>
-                    <div class="w-12 h-1 bg-cyan-500 rounded-full"></div>
-                </div>
-                <div class="md:col-span-8 space-y-6 text-lg text-slate-300 leading-relaxed font-light">
-                    <p>
-                        Born and raised in Mongolia, my primary interest is exploring the microcosm on its natural timescale when interacting with extremely short and intense classical/quantum light. I obtained an MS in theoretical quantum optics from the National University of Mongolia and a PhD in experimental attosecond physics from POSTECH in South Korea. Today, I am a Research Fellow at Quantum and Advanced Technologies Research Institute (QUATRI), Griffith University in Brisbane, bridging theory with cutting-edge experimentation.
-                    </p>
-                    <p>
-                        My expertise includes few-cycle pulse generation, high-harmonic generation (HHG), and utilizing CEP-stabilized femtosecond technology with precise post-compression techniques. I also specialize in the end-to-end construction and optimization of attosecond beamlines to explore these fundamental dynamics.
-                    </p>
-                    <p>
-                        Outside of academia, I am a nature lover. I enjoy being outdoors, traveling, capturing moments through photography, and cycling around Brisbane. I also spend a fair amount of time exploring local cafes in search of a great coffee.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Research Interests Grid -->
-    <section id="research" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16 md:text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">Research Interests</h2>
-                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A breakdown of my core technical competencies and research areas in experimental physics.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'ultrafast')">
-                    <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <img src="web_gallery/ubr.png" alt="Ultrafast Electron Dynamics" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Ultrafast Electron Dynamics</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed font-light">Unraveling the interplay of electrons in atoms, focusing on charge migration and under-the-barrier dynamics.</p>
-                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'pulses')">
-                    <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <img src="web_gallery/fig4.png" alt="Ultrashort pulse generation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Ultrashort Pulse Generation</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed font-light">Achieving single-cycle optical pulses crucial for high-precision time-resolved experiments.</p>
-                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'strong-field')">
-                    <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <img src="web_gallery/fig1.png" alt="Strong Field Physics" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Strong Field Physics</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed font-light">Investigating fundamental physical processes and quantum dynamics in intense laser fields.</p>
-                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'metrology')">
-                    <div class="h-48 overflow-hidden relative bg-slate-800">
-                        <img src="web_gallery/pmd.png" alt="Quantum Metrology" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Quantum Metrology</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed font-light">Pushing the boundaries of precision measurement beyond the standard quantum limit using strong fields.</p>
-                        <div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                            Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Publications Section -->
-    <section id="publications" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
-        <div class="max-w-4xl mx-auto">
-            <div class="mb-16 md:text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">Selected Publications</h2>
-                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">Recent research articles, journal papers, and contributions to attosecond physics.</p>
-            </div>
-
-            <div class="space-y-6">
-                <!-- Publication Item 0 -->
-                <div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">
-                            2026
-                        </div>
-                        <div class="flex-1 w-full">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Nonclassical Cutoff Fluctuations in Squeezed-Light-Driven High-Harmonic Generation</h3>
-                            <p class="text-slate-400 mb-4 font-light leading-relaxed">
-                                <span class="text-slate-200 font-medium">T. Khurelbaatar</span>, R.T. Sang, I. Litvinyuk.
-                                <br/>
-                                <em class="text-slate-500 text-sm">arXiv preprint</em>, arXiv:2605.21925.
-                            </p>
-                            <div class="flex flex-wrap gap-4 items-center">
-                                <a href="https://arxiv.org/abs/2605.21925" target="_blank" class="inline-flex items-center gap-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors font-medium">
-                                    <i data-lucide="external-link" class="w-4 h-4"></i> arXiv
-                                </a>
-                                <button id="btn-pub-0" onclick="explainResearch('Nonclassical Cutoff Fluctuations in Squeezed-Light-Driven High-Harmonic Generation', 'explain-pub-0', 'btn-pub-0')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50">
-                                    <i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨
-                                </button>
-                            </div>
-                            <div id="explain-pub-0" class="hidden mt-4 w-full"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Publication Item 1 -->
-                <div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">
-                            2026
-                        </div>
-                        <div class="flex-1 w-full">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Strong-Field Quantum Metrology Beyond the Standard Quantum Limit</h3>
-                            <p class="text-slate-400 mb-4 font-light leading-relaxed">
-                                <span class="text-slate-200 font-medium">T. Khurelbaatar</span>, R.T. Sang, I. Litvinyuk.
-                                <br/>
-                                <em class="text-slate-500 text-sm">arXiv preprint</em>, arXiv:2602.13667.
-                            </p>
-                            <div class="flex flex-wrap gap-4 items-center">
-                                <a href="https://arxiv.org/abs/2602.13667" target="_blank" class="inline-flex items-center gap-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors font-medium">
-                                    <i data-lucide="external-link" class="w-4 h-4"></i> arXiv
-                                </a>
-                                <button id="btn-pub-1" onclick="explainResearch('Strong-Field Quantum Metrology Beyond the Standard Quantum Limit', 'explain-pub-1', 'btn-pub-1')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50">
-                                    <i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨
-                                </button>
-                            </div>
-                            <div id="explain-pub-1" class="hidden mt-4 w-full"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Publication Item 2 -->
-                <div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">
-                            2025
-                        </div>
-                        <div class="flex-1 w-full">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Unveiling under-the-barrier electron dynamics in strong field tunneling</h3>
-                            <p class="text-slate-400 mb-4 font-light leading-relaxed">
-                                <span class="text-slate-200 font-medium">T. Khurelbaatar</span>, M. Klaiber, S. Sukiasyan, K.Z. Hatsagortsyan, CH. Keitel, et al.
-                                <br/>
-                                <em class="text-slate-500 text-sm">Physical Review Letters</em>, 134 (21), 213201.
-                            </p>
-                            <div class="flex flex-wrap gap-4 items-center">
-                                <button id="btn-pub-2" onclick="explainResearch('Unveiling under-the-barrier electron dynamics in strong field tunneling', 'explain-pub-2', 'btn-pub-2')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50">
-                                    <i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨
-                                </button>
-                            </div>
-                            <div id="explain-pub-2" class="hidden mt-4 w-full"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Publication Item 3 -->
-                <div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">
-                            2024
-                        </div>
-                        <div class="flex-1 w-full">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Strong-field photoelectron holography in the subcycle limit</h3>
-                            <p class="text-slate-400 mb-4 font-light leading-relaxed">
-                                <span class="text-slate-200 font-medium">T. Khurelbaatar</span>, J. Heo, S.G. Yu, X.Y. Lai, X.J. Liu, D.E. Kim.
-                                <br/>
-                                <em class="text-slate-500 text-sm">Light: Science & Applications</em>, 13 (1), 108.
-                            </p>
-                            <div class="flex flex-wrap gap-4 items-center">
-                                <button id="btn-pub-3" onclick="explainResearch('Strong-field photoelectron holography in the subcycle limit', 'explain-pub-3', 'btn-pub-3')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50">
-                                    <i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨
-                                </button>
-                            </div>
-                            <div id="explain-pub-3" class="hidden mt-4 w-full"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Publication Item 4 -->
-                <div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">
-                            2021
-                        </div>
-                        <div class="flex-1 w-full">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Realization of a continuously phase-locked few-cycle deep-UV/XUV pump-probe beamline with attosecond precision for ultrafast spectroscopy</h3>
-                            <p class="text-slate-400 mb-4 font-light leading-relaxed">
-                                <span class="text-slate-200 font-medium">T. Khurelbaatar</span>, A. Gliserin, J.H. Mun, J. Heo, Y. Lee, D.E. Kim.
-                                <br/>
-                                <em class="text-slate-500 text-sm">Applied Sciences</em>, 11 (15), 6840.
-                            </p>
-                            <div class="flex flex-wrap gap-4 items-center">
-                                <button id="btn-pub-4" onclick="explainResearch('Realization of a continuously phase-locked few-cycle deep-UV/XUV pump-probe beamline with attosecond precision for ultrafast spectroscopy', 'explain-pub-4', 'btn-pub-4')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50">
-                                    <i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨
-                                </button>
-                            </div>
-                            <div id="explain-pub-4" class="hidden mt-4 w-full"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-12 text-center">
-                <a href="https://scholar.google.com/citations?user=GCZCpxsAAAAJ&hl=en" target="_blank" class="inline-flex items-center space-x-2 bg-transparent text-cyan-400 border border-cyan-500/50 px-6 py-3 rounded-lg font-medium hover:bg-cyan-900/30 transition-all">
-                    <span>View full list on Google Scholar</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Scientific Tools Section (Lab Utilities) -->
-    <section id="tools" class="py-24 px-6 bg-slate-900 relative overflow-hidden border-t border-slate-800">
-        <div class="max-w-5xl mx-auto relative z-10 flex flex-col gap-4">
-            
-            <!-- Tool 1: Unit Conversion -->
-            <div class="bg-slate-950/60 border border-slate-800 hover:border-cyan-500/30 transition-colors rounded-2xl py-4 px-5 md:py-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md">
-                <div class="max-w-2xl text-center md:text-left">
-                    <div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
-                        <i data-lucide="wrench" class="w-3 h-3"></i>
-                        <span>Scientific Utilities</span>
-                    </div>
-                    <h2 class="text-xl md:text-2xl font-bold text-white mb-2">Unit Conversion Tool</h2>
-                    <p class="text-slate-400 font-light text-sm leading-relaxed">
-                        A specialized laboratory tool for experimental physicists to quickly convert between energy units (eV, nm, Hz, K), pressure, and laser intensity parameters commonly used in attosecond and strong-field science.
-                    </p>
-                </div>
-                
-                <a href="units/index.html" target="_blank" rel="noopener" class="tool-button group flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-cyan-900/30 whitespace-nowrap shrink-0 w-full md:w-auto">
-                    <i data-lucide="zap" class="w-4 h-4 group-hover:animate-pulse"></i>
-                    <span>Launch Utility</span>
-                    <i data-lucide="external-link" class="w-3 h-3 opacity-50"></i>
-                </a>
-            </div>
-
-            <!-- Tool 2: H-Lab Electron Cloud -->
-            <div class="bg-slate-950/60 border border-slate-800 hover:border-purple-500/30 transition-colors rounded-2xl py-4 px-5 md:py-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md">
-                <div class="max-w-2xl text-center md:text-left">
-                    <div class="inline-flex items-center space-x-2 bg-purple-900/30 border border-purple-800/50 text-purple-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
-                        <i data-lucide="test-tube" class="w-3 h-3"></i>
-                        <span>Simulation</span>
-                    </div>
-                    <h2 class="text-xl md:text-2xl font-bold text-white mb-2">H-Lab: Electron Cloud Viewer</h2>
-                    <p class="text-slate-400 font-light text-sm leading-relaxed">
-                        An interactive 3D simulation tool for visualizing hydrogenic electron probability density clouds and atomic orbitals in real-time right in your browser.
-                    </p>
-                </div>
-                
-                <a href="hlab/ecloud.html" target="_blank" rel="noopener" class="tool-button tool-button-purple group flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-purple-900/30 whitespace-nowrap shrink-0 w-full md:w-auto">
-                    <i data-lucide="atom" class="w-4 h-4 group-hover:animate-spin-slow"></i>
-                    <span>Launch H-Lab</span>
-                    <i data-lucide="external-link" class="w-3 h-3 opacity-50"></i>
-                </a>
-            </div>
-
-            <!-- Tool 3: Quantum Squeeze (NEW) -->
-            <div class="bg-slate-950/60 border border-slate-800 hover:border-emerald-500/30 transition-colors rounded-2xl py-4 px-5 md:py-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md">
-                <div class="max-w-2xl text-center md:text-left">
-                    <div class="inline-flex items-center space-x-2 bg-emerald-900/30 border border-emerald-800/50 text-emerald-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
-                        <i data-lucide="waves" class="w-3 h-3"></i>
-                        <span>Quantum Optics</span>
-                    </div>
-                    <h2 class="text-xl md:text-2xl font-bold text-white mb-2">Squeezed Light Simulator</h2>
-                    <p class="text-slate-400 font-light text-sm leading-relaxed">
-                        Visualize phase-space distributions, quantum noise reduction, and uncertainty principle dynamics in squeezed states of light.
-                    </p>
-                </div>
-                
-                <a href="squeeze/squeeze.html" target="_blank" rel="noopener" class="tool-button tool-button-emerald group flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-emerald-900/30 whitespace-nowrap shrink-0 w-full md:w-auto">
-                    <i data-lucide="activity" class="w-4 h-4 group-hover:animate-pulse"></i>
-                    <span>Launch Squeeze</span>
-                    <i data-lucide="external-link" class="w-3 h-3 opacity-50"></i>
-                </a>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- My Notes Section -->
-    <section id="notes" class="py-32 px-6 bg-slate-950 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16 md:text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">My Notes</h2>
-                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A personal notebook of blog posts, technical references, and code snippets useful for experimental physics.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Note Card 1 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note1')">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="notebook-pen" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Apr 15, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">PhD Dissertation</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">My PhD research focused on the development of advanced techniques for generating and characterizing attosecond pulses in the deep ultraviolet and extreme ultraviolet regimes.</p>
-                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <!-- Note Card 2 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note2')">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="code" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Mar 28, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Python Script: Attosecond Streaking</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A simple script used to simulate attosecond streaking spectrograms based on the Strong Field Approximation (SFA).</p>
-                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <!-- Note Card 3 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note3')">
-                    <div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="file-text" class="w-6 h-6"></i>
-                    </div>
-                    <div class="text-sm text-cyan-400/80 mb-2 font-mono">Feb 10, 2026</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Quick Ref: Phase-matching in HHG</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A cheat sheet of phase-matching conditions, pressure gradients, and absorption limits for High Harmonic Generation in various rare gases.</p>
-                    <button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">
-                        Read post <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Lab Gallery Section -->
-    <section id="gallery" class="py-32 px-6 bg-slate-900 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16 md:text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">Lab Gallery</h2>
-                <p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">Glimpses into the experimental setups, beamlines, and day-to-day life in the attosecond physics lab.</p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
-                <div class="relative overflow-hidden rounded-xl group cursor-pointer md:col-span-2 md:row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <img src="web_gallery/fig1.png" alt="Attosecond Beamline" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
-                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
-                    </div>
-                </div>
-
-                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <img src="web_gallery/fig2.png" alt="Data Analysis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
-                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
-                    </div>
-                </div>
-
-                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <img src="web_gallery/fig3.png" alt="Laser Alignment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
-                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
-                    </div>
-                </div>
-
-                <div class="relative overflow-hidden rounded-xl group cursor-pointer row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <img src="web_gallery/fig5.png" alt="Optics Setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
-                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
-                    </div>
-                </div>
-
-                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <img src="web_gallery/fig6.png" alt="Equipment Control" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
-                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
-                    </div>
-                </div>
-
-                <div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)">
-                    <img src="web_gallery/fig7.png" alt="VMI Chamber" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
-                        <i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Simple Footer -->
-    <footer id="contact" class="bg-slate-950 border-t border-slate-900 py-12 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-                <p class="text-white font-bold text-lg mb-1">Tsendsuren Khurelbaatar</p>
-                <p class="text-sm text-slate-400">Research Fellow in Attosecond Physics</p>
-            </div>
-            <div class="flex flex-col items-center md:items-end gap-3">
-                <div class="flex space-x-6">
-                    <a href="https://github.com/tsendsuren" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
-                    <a href="https://orcid.org/0000-0001-7785-0415" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="book-open" class="w-5 h-5"></i></a>
-                    <a href="mailto:t.khurelbaatar@griffith.edu.au" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a>
-                </div>
-                <!-- Real-time Visitor Counter UI -->
-                <div id="visitor-container" class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full text-[10px] font-mono tracking-wider text-slate-400 opacity-0 transition-opacity duration-700 shadow-inner">
-                    <span class="flex h-1.5 w-1.5 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-500"></span>
-                    </span>
-                    VISITORS: <span id="visitor-count" class="text-cyan-400 font-bold">...</span>
-                </div>
-            </div>
-        </div>
-        <div class="max-w-6xl mx-auto mt-8 pt-8 border-t border-slate-800 text-sm text-slate-500 text-center md:text-left flex flex-col md:flex-row justify-between">
-            <span>&copy; 2026 Tsendsuren Khurelbaatar. All rights reserved.</span>
-            <span class="mt-2 md:mt-0">Brisbane, QLD, Australia</span>
-        </div>
-    </footer>
-
-    <!-- Research Details Modal -->
-    <div id="research-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeResearchModal()">
-        <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
-            <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeResearchModal()">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <div class="h-48 sm:h-64 w-full relative bg-slate-800 shrink-0 border-b border-slate-800">
-                <img id="research-modal-img" src="" alt="Research Area" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-            </div>
-            <div class="p-6 sm:p-10 overflow-y-auto">
-                <div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-wider">
-                    <i data-lucide="microscope" class="w-3 h-3"></i>
-                    <span>Research Focus</span>
-                </div>
-                <h3 id="research-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6">Title</h3>
-                <div id="research-modal-desc" class="text-slate-300 leading-relaxed font-light space-y-4">
-                    Description goes here.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Note Details Modal -->
-    <div id="note-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeNoteModal()">
-        <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
-            <button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeNoteModal()">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <div class="p-6 sm:p-10 overflow-y-auto mt-6">
-                <div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-wider">
-                    <i data-lucide="notebook-pen" class="w-3 h-3"></i>
-                    <span id="note-modal-date">Date</span>
-                </div>
-                <h3 id="note-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6 border-b border-slate-800 pb-4">Title</h3>
-                <div id="note-modal-content" class="markdown-body text-slate-300 font-light">
-                    Content goes here.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Fullscreen Lightbox Modal -->
-    <div id="lightbox" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeLightbox()">
-        <button class="absolute top-6 right-6 text-slate-400 hover:text-cyan-400 transition-colors p-2" onclick="closeLightbox()">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
-        <img id="lightbox-img" src="" alt="Expanded Lab Photo" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain border border-slate-800" onclick="event.stopPropagation()">
-    </div>
-
-    <!-- Scripts -->
-    <script>
-        lucide.createIcons();
-
-        // --- Notes Modal Data & Functions ---
-        const notesData = {
-            'note1': {
-                date: 'May 26, 2024',
-                title: 'My PhD Dissertation: Exploring Attosecond Chemical Physics',
-                file: 'notes/phd-dissertation.md' 
-            },
-            'note2': {
-                date: 'Mar 28, 2026',
-                title: 'Python Script: Attosecond Streaking',
-                file: 'notes/attosecond-streaking.md'
-            },
-            'note3': {
-                date: 'Feb 10, 2026',
-                title: 'Quick Ref: Phase-matching in HHG',
-                file: 'notes/phase-matching.md'
-            }
-        };
-
-        async function openNoteModal(id) {
-            const data = notesData[id];
-            if (!data) return;
-            
-            document.getElementById('note-modal-title').textContent = data.title;
-            document.getElementById('note-modal-date').textContent = data.date;
-            const contentDiv = document.getElementById('note-modal-content');
-            
-            contentDiv.innerHTML = '<div class="flex items-center justify-center py-10"><i data-lucide="loader-2" class="w-8 h-8 animate-spin text-cyan-500"></i></div>';
-            
-            const modal = document.getElementById('note-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
-            
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons(); 
-
-            try {
-                const response = await fetch(data.file);
-                if (!response.ok) throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
-                const markdownText = await response.text();
-                contentDiv.innerHTML = marked.parse(markdownText);
-            } catch (error) {
-                console.error("Error loading note:", error);
-                contentDiv.innerHTML = `
-                    <div class="text-red-400 p-4 bg-red-950/30 rounded-lg border border-red-800/50 flex flex-col gap-2">
-                        <strong><i data-lucide="alert-circle" class="w-5 h-5 inline"></i> Error loading note content.</strong>
-                        <p class="text-sm">Could not fetch the file <code>${data.file}</code>. Make sure the 'notes' folder and the .md file exist in your repository.</p>
-                    </div>`;
-                lucide.createIcons();
-            }
-        }
-
-        function closeNoteModal() {
-            const modal = document.getElementById('note-modal');
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                if (document.getElementById('research-modal').classList.contains('hidden') && document.getElementById('lightbox').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
-            }, 300);
-        }
-
-        // --- Research Modal Functions ---
-        const researchData = {
-            'ultrafast': {
-                title: 'Ultrafast Electron Dynamics',
-                desc: '<p>At the core of my research is the pursuit to unravel the complex interplay of electrons in atoms and molecules on their natural, attosecond timescale.</p><p>My specific interests include studying strong-field ionization processes, under-the-barrier electron tunneling dynamics, and observing charge migration—the purely electronic response of a molecule following sudden ionization before the heavy nuclei have time to move.</p>'
-            },
-            'pulses': {
-                title: 'Ultrashort Pulse Generation',
-                desc: '<p>My work involves the intricate design, construction, and optimization of state-of-the-art carrier-envelope phase (CEP) stabilized femtosecond laser systems.</p><p>Generating single-cycle or few-cycle optical pulses requires advanced post-compression techniques. By spectrally broadening the output of a standard amplifier and carefully compensating for dispersion, we achieve high-contrast, intense pulses.</p>'
-            },
-            'strong-field': {
-                title: 'Strong Field Physics',
-                desc: '<p>I investigate the fundamental physical processes that occur when atoms and molecules are exposed to intense, ultrashort laser fields.</p><p>This includes exploring high-order harmonic generation (HHG), strong-field photoelectron holography, and quantum metrology beyond the standard quantum limit.</p>'
-            },
-            'metrology': {
-                title: 'Quantum Metrology',
-                desc: '<p>Quantum metrology aims to enhance measurement precision beyond classical limits by harnessing quantum properties.</p><p>My recent work explores strong-field quantum metrology, aiming to surpass the standard quantum limit. By utilizing ultrafast laser fields and advanced detection schemes, we can push the boundaries of precision measurements.</p>'
-            }
-        };
-
-        function openResearchModal(element, id) {
-            const data = researchData[id];
-            if(!data) return;
-            const imgSrc = element.querySelector('img').src;
-            document.getElementById('research-modal-title').textContent = data.title;
-            document.getElementById('research-modal-img').src = imgSrc;
-            document.getElementById('research-modal-desc').innerHTML = data.desc;
-            const modal = document.getElementById('research-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeResearchModal() {
-            const modal = document.getElementById('research-modal');
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                if (document.getElementById('note-modal').classList.contains('hidden') && document.getElementById('lightbox').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
-            }, 300);
-        }
-
-        // --- Lightbox Functions ---
-        function openLightbox(element) {
-            const imgSrc = element.querySelector('img').src;
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = imgSrc;
-            lightbox.classList.remove('hidden');
-            lightbox.classList.add('flex');
-            setTimeout(() => { lightbox.classList.remove('opacity-0'); }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.add('opacity-0');
-            setTimeout(() => {
-                lightbox.classList.add('hidden');
-                lightbox.classList.remove('flex');
-                if (document.getElementById('research-modal').classList.contains('hidden') && document.getElementById('note-modal').classList.contains('hidden')) {
-                    document.body.style.overflow = '';
-                }
-            }, 300);
-        }
-
-        // Global key escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") {
-                closeLightbox();
-                closeResearchModal();
-                closeNoteModal();
-            }
-        });
-
-        // --- Quantum Node Animation ---
-        const canvas = document.getElementById('quantum-canvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            let particlesArray = [];
-            function resizeCanvas() {
-                canvas.width = canvas.parentElement.offsetWidth;
-                canvas.height = canvas.parentElement.offsetHeight;
-            }
-            resizeCanvas();
-            window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
-            class Particle {
-                constructor(x, y, directionX, directionY, size, color) {
-                    this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
-                }
-                draw() {
-                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill();
-                }
-                update() {
-                    if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-                    if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-                    this.x += this.directionX; this.y += this.directionY; this.draw();
-                }
-            }
-            function initParticles() {
-                particlesArray = [];
-                let numberOfParticles = (canvas.height * canvas.width) / 12000;
-                for (let i = 0; i < numberOfParticles; i++) {
-                    let size = (Math.random() * 1.5) + 0.5;
-                    let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
-                    let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-                    let directionX = (Math.random() * 0.6) - 0.3;
-                    let directionY = (Math.random() * 0.6) - 0.3;
-                    particlesArray.push(new Particle(x, y, directionX, directionY, size, '#22d3ee'));
-                }
-            }
-            function connect() {
-                for (let a = 0; a < particlesArray.length; a++) {
-                    for (let b = a; b < particlesArray.length; b++) {
-                        let distance = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
-                        if (distance < 15000) {
-                            ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - (distance / 15000)) * 0.5})`;
-                            ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
-                        }
-                    }
-                }
-            }
-            function animate() {
-                requestAnimationFrame(animate); ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
-                connect();
-            }
-            initParticles(); animate();
-        }
-
-        // --- Photon Emission on Profile Hover ---
-        const profileContainer = document.getElementById('profile-container');
-
-        if (profileContainer) {
-            profileContainer.addEventListener('mouseenter', () => {
-                // Emit 2-3 photons on hover
-                const numPhotons = Math.floor(Math.random() * 2) + 2; 
-                for(let i=0; i < numPhotons; i++) {
-                    setTimeout(emitPhoton, i * 150);
-                }
-            });
-
-            function emitPhoton() {
-                // Vibrant, diverse photon colors
-                const shadowColors = ['#e879f9', '#22d3ee', '#34d399', '#a78bfa', '#fbbf24'];
-                const color = shadowColors[Math.floor(Math.random() * shadowColors.length)];
-                
-                // Create SVG element for the sine wave photon
-                const svgNS = "http://www.w3.org/2000/svg";
-                const svg = document.createElementNS(svgNS, "svg");
-                svg.setAttribute("width", "40");
-                svg.setAttribute("height", "16");
-                svg.setAttribute("viewBox", "0 0 40 16");
-                svg.className = "absolute top-1/2 left-1/2 pointer-events-none z-20";
-                svg.style.filter = `drop-shadow(0 0 4px ${color}) drop-shadow(0 0 8px ${color})`;
-
-                // Create the sine wave path
-                const path = document.createElementNS(svgNS, "path");
-                path.setAttribute("d", "M 0 8 Q 5 0, 10 8 T 20 8 T 30 8 T 40 8");
-                path.setAttribute("fill", "transparent");
-                path.setAttribute("stroke", color);
-                path.setAttribute("stroke-width", "2.5");
-                path.setAttribute("stroke-linecap", "round");
-                
-                svg.appendChild(path);
-                profileContainer.appendChild(svg);
-
-                // Base angle for straight-line emission
-                const angle = Math.random() * Math.PI * 2;
-                const containerRadius = profileContainer.offsetWidth / 2;
-                
-                // Start exactly at either the outer ring (inset-0) or inner ring (inset-4 = 16px)
-                const isOuterRing = Math.random() > 0.5;
-                const startRadius = isOuterRing ? containerRadius : (containerRadius - 16);
-                
-                // Fly outward from the ring
-                const endRadius = startRadius + 100 + Math.random() * 100;
-                
-                // Calculate Start and End coordinates
-                const startX = Math.cos(angle) * startRadius;
-                const startY = Math.sin(angle) * startRadius;
-                const endX = Math.cos(angle) * endRadius;
-                const endY = Math.sin(angle) * endRadius;
-                
-                // Rotate the SVG wave so it points in the direction of travel
-                const rotationDeg = angle * (180 / Math.PI);
-
-                // Animate using Web Animations API (straight path)
-                const animation = svg.animate([
-                    { 
-                        transform: `translate(calc(-50% + ${startX}px), calc(-50% + ${startY}px)) rotate(${rotationDeg}deg) scale(0)`, 
-                        opacity: 0 
-                    },
-                    { 
-                        transform: `translate(calc(-50% + ${startX + (endX-startX)*0.2}px), calc(-50% + ${startY + (endY-startY)*0.2}px)) rotate(${rotationDeg}deg) scale(1)`, 
-                        opacity: 1 
-                    },
-                    { 
-                        transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) rotate(${rotationDeg}deg) scale(0.5)`, 
-                        opacity: 0 
-                    }
-                ], {
-                    duration: 1000 + Math.random() * 400, // 1s to 1.4s duration
-                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)' 
-                });
-
-                // Clean up element after animation finishes
-                animation.onfinish = () => svg.remove();
-            }
-        }
-
-        // --- "Explain this" AI Integration ---
-        // SECURITY: never put an API key in client-side code on a public site.
-        // Instead, deploy a tiny serverless proxy (Cloudflare Worker / Netlify / Vercel
-        // function) that holds the key and forwards the prompt to Gemini, then set its
-        // URL here. The proxy should accept { prompt } and return { text }.
-        // While EXPLAIN_ENDPOINT is empty, the "Explain this" buttons are hidden.
-        const EXPLAIN_ENDPOINT = ""; // e.g. "https://your-worker.workers.dev/explain"
-
-        // Hide all "Explain this" buttons until a backend is configured.
-        window.addEventListener('load', () => {
-            if (!EXPLAIN_ENDPOINT) {
-                document.querySelectorAll('[id^="btn-pub-"]').forEach(b => b.style.display = 'none');
-            }
-        });
-
-        async function fetchWithRetry(url, options, retries = 5) {
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return await response.json();
-                } catch (error) {
-                    if (i === retries - 1) throw error;
-                    await new Promise(resolve => setTimeout(resolve, delays[i]));
-                }
-            }
-        }
-
-        async function explainResearch(title, containerId, btnId) {
-            const container = document.getElementById(containerId);
-            const btn = document.getElementById(btnId);
-            btn.disabled = true;
-            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Explaining...`;
-            lucide.createIcons();
-            
-            container.classList.remove('hidden');
-            container.innerHTML = `<div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse flex items-center gap-3 border border-slate-800"><i data-lucide="brain-circuit" class="w-5 h-5"></i> Consulting the AI...</div>`;
-            lucide.createIcons();
-            
-            const prompt = `Explain research paper: "${title}" in simple terms (2-3 sentences). Focus on impact.`;
-            try {
-                const data = await fetchWithRetry(EXPLAIN_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt })
-                });
-                const text = data.text || data.candidates?.[0]?.content?.parts?.[0]?.text || "Couldn't generate explanation.";
-                container.innerHTML = `<div class="p-5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 border border-cyan-800/30 rounded-lg text-slate-300 text-sm flex gap-4 items-start shadow-inner"><div class="bg-cyan-900/50 p-2 rounded-full text-cyan-400 shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div><div class="leading-relaxed"><strong class="text-cyan-400 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>${text}</div></div>`;
-            } catch (error) {
-                container.innerHTML = `<div class="p-4 bg-red-950/30 border border-red-800/50 rounded-lg text-red-400 text-sm flex items-center gap-3"><i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation.</div>`;
-            } finally {
-                btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨`;
-                btn.disabled = false;
-                lucide.createIcons();
-            }
-        }
-    </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en" class="scroll-smooth"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tsendsuren Khurelbaatar | Experimental Physicist</title><meta name="description" content="Tsendsuren Khurelbaatar — experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation. Publications, research, and tools."><meta name="author" content="Tsendsuren Khurelbaatar"><meta name="keywords" content="Tsendsuren Khurelbaatar, attosecond physics, strong-field physics, high-harmonic generation, ultrafast science, quantum metrology, experimental physicist"><link rel="canonical" href="https://tsendsuren.github.io/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%9B%EF%B8%8F%3C/text%3E%3C/svg%3E"><meta property="og:type" content="website"><meta property="og:title" content="Tsendsuren Khurelbaatar | Experimental Physicist"><meta property="og:description" content="Experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation."><meta property="og:url" content="https://tsendsuren.github.io/"><meta property="og:site_name" content="Tsendsuren Khurelbaatar"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Tsendsuren Khurelbaatar | Experimental Physicist"><meta name="twitter:description" content="Experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation."><script>(function () {
+const warn = console.warn;
+console.warn = function (msg) {
+if (typeof msg === 'string' && msg.includes('cdn.tailwindcss.com')) return;
+warn.apply(console, arguments);
+};
+})();</script><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><script src="https://unpkg.com/lucide@latest"></script><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script type="module">import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+const firebaseConfig = {
+apiKey: "AIzaSyA-HyRj4B6cwAfYz__aOM8CvkhAjQC1MoY",
+authDomain: "tsegit-5ad7b.firebaseapp.com",
+projectId: "tsegit-5ad7b",
+storageBucket: "tsegit-5ad7b.firebasestorage.app",
+messagingSenderId: "271800867813",
+appId: "1:271800867813:web:20d2bd5151823db8acad0c"
+};
+const appId = (typeof __app_id !== 'undefined') ? __app_id : 'tsendsuren-site';
+async function initVisitorCount() {
+const counterElement = document.getElementById('visitor-count');
+const container = document.getElementById('visitor-container');
+if (!firebaseConfig) {
+if (container) container.style.display = 'none';
+return;
+}
+try {
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+await signInWithCustomToken(auth, __initial_auth_token);
+} else {
+await signInAnonymously(auth);
+}
+const counterDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'visitorStats');
+if (location.hash === '#iamowner') localStorage.setItem('counterOwner', 'true');
+if (location.hash === '#notowner') localStorage.removeItem('counterOwner');
+const isOwner = localStorage.getItem('counterOwner') === 'true';
+const alreadyCounted = localStorage.getItem('visitorCounted') === 'true';
+const docSnap = await getDoc(counterDocRef);
+if (!docSnap.exists()) {
+await setDoc(counterDocRef, { count: isOwner ? 0 : 1 });
+if (!isOwner) localStorage.setItem('visitorCounted', 'true');
+} else if (!alreadyCounted && !isOwner) {
+await updateDoc(counterDocRef, { count: increment(1) });
+localStorage.setItem('visitorCounted', 'true');
+}
+const updatedSnap = await getDoc(counterDocRef);
+const count = updatedSnap.data().count;
+if (counterElement) {
+counterElement.textContent = count.toLocaleString();
+container.classList.replace('opacity-0', 'opacity-100');
+container.classList.add('border-cyan-500/50');
+}
+} catch (error) {
+console.error("Counter Error:", error);
+if (container) container.style.display = 'none';
+}
+}
+window.addEventListener('load', initVisitorCount);</script><script>tailwind.config = {
+theme: {
+extend: {
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+},
+colors: {
+physics: {
+50: '#f0f9ff',
+100: '#e0f2fe',
+500: '#0ea5e9',
+600: '#0284c7', 
+900: '#0c4a6e',
+}
+},
+animation: {
+'spin-slow': 'spin 3s linear infinite',
+}
+}
+}
+}</script><style>.bg-grid {
+background-size: 40px 40px;
+background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+.markdown-body p { margin-bottom: 1.25rem; line-height: 1.75; }
+.markdown-body h1, .markdown-body h2, .markdown-body h3 { color: #f8fafc; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.5rem; }
+.markdown-body h1 { font-size: 1.875rem; }
+.markdown-body h2 { font-size: 1.5rem; }
+.markdown-body h3 { font-size: 1.25rem; border-bottom: none; }
+.markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.markdown-body li { margin-bottom: 0.5rem; }
+.markdown-body a { color: #22d3ee; text-decoration: underline; transition: color 0.2s; }
+.markdown-body a:hover { color: #67e8f9; }
+.markdown-body strong { color: #f1f5f9; font-weight: 600; }
+.markdown-body code { background-color: #0f172a; padding: 0.2rem 0.4rem; border-radius: 0.25rem; color: #67e8f9; font-family: monospace; font-size: 0.875em; border: 1px solid #1e293b; }
+.markdown-body pre { background-color: #0f172a; padding: 1.25rem; border-radius: 0.5rem; overflow-x: auto; border: 1px solid #1e293b; margin-bottom: 1.25rem; }
+.markdown-body pre code { background-color: transparent; padding: 0; border: none; color: #a5f3fc; font-size: 0.875em; }
+.markdown-body blockquote { border-left: 4px solid #22d3ee; padding-left: 1rem; font-style: italic; color: #94a3b8; margin-bottom: 1.25rem; background: #0f172a55; padding-top: 0.5rem; padding-bottom: 0.5rem;}
+.tool-button {
+position: relative;
+overflow: hidden;
+transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.tool-button::before {
+content: '';
+position: absolute;
+top: 0; left: -100%;
+width: 100%; height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+transition: 0.5s;
+}
+.tool-button:hover::before { left: 100%; }
+.tool-button:hover {
+transform: translateY(-2px);
+box-shadow: 0 0 15px rgba(8, 145, 178, 0.4);
+}
+.tool-button-purple:hover {
+box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+}
+.tool-button-emerald:hover {
+box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}</style></head><body class="bg-slate-950 text-slate-300 font-sans antialiased selection:bg-cyan-900 selection:text-cyan-100"><nav class="fixed w-full bg-slate-950/80 backdrop-blur-md z-50 border-b border-slate-800 transition-all duration-300"><div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center"><a href="#" class="font-bold text-lg tracking-tight text-white flex items-center gap-2"><i data-lucide="atom" class="w-5 h-5 text-cyan-500"></i>T. Khurelbaatar</a><div class="hidden md:flex space-x-8 text-sm font-medium text-slate-400"><a href="#about" class="hover:text-cyan-400 transition-colors">About</a><a href="#research" class="hover:text-cyan-400 transition-colors">Research</a><a href="#publications" class="hover:text-cyan-400 transition-colors">Publications</a><a href="#tools" class="hover:text-cyan-400 transition-colors">Tools</a><a href="#notes" class="hover:text-cyan-400 transition-colors">Notes</a><a href="#gallery" class="hover:text-cyan-400 transition-colors">Gallery</a></div></div></nav><section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 overflow-hidden bg-grid min-h-[90vh] flex items-center"><canvas id="quantum-canvas" class="absolute inset-0 z-0 opacity-40 pointer-events-none"></canvas><div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none"></div><div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div><div class="max-w-6xl mx-auto relative z-10 w-full"><div class="grid lg:grid-cols-2 gap-12 items-center"><div class="order-2 lg:order-1"><div class="inline-flex items-center space-x-2 bg-slate-900 border border-slate-700 text-cyan-400 px-4 py-1.5 rounded-full text-sm font-medium mb-6"><i data-lucide="microscope" class="w-4 h-4"></i><span>Research Fellow @ Griffith Uni, Brisbane</span></div><h2 class="text-xl md:text-2xl text-slate-400 font-light mb-2">Hello, I am</h2><h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-4 leading-tight">Tsendsuren <br/> Khurelbaatar.</h1><h2 class="text-2xl lg:text-3xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-8">Experimental Physicist in Attosecond Physics.</h2><p class="text-lg text-slate-400 max-w-xl mb-10 leading-relaxed font-light">Passionate about exploring the uncharted territories of the electron world.</p><div class="flex flex-wrap gap-4"><a href="#contact" class="flex items-center space-x-2 bg-cyan-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-cyan-500 transition-all shadow-[0_0_20px_rgba(8,145,178,0.4)] hover:shadow-[0_0_25px_rgba(8,145,178,0.6)]"><i data-lucide="mail" class="w-5 h-5"></i><span>Get in touch</span></a></div></div><div class="order-1 lg:order-2 flex justify-center lg:justify-end"><div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96" id="profile-container"><div class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-[spin_10s_linear_infinite]"><div id="electron-outer" class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"></div></div><div class="absolute inset-4 rounded-full border border-blue-500/20 animate-[spin_15s_linear_infinite_reverse]"><div id="electron-inner" class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_8px_#3b82f6]"></div></div><img src="images/profile.png" alt="Tsendsuren Khurelbaatar" class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full shadow-2xl z-10 border-4 border-slate-900 grayscale hover:grayscale-0 transition-all duration-500"></div></div></div></div></section><section id="about" class="py-24 px-6 bg-slate-900 relative"><div class="max-w-6xl mx-auto"><div class="grid md:grid-cols-12 gap-12 items-start"><div class="md:col-span-4 sticky top-24"><h2 class="text-3xl font-bold text-white mb-2">About Me</h2><div class="w-12 h-1 bg-cyan-500 rounded-full"></div></div><div class="md:col-span-8 space-y-6 text-lg text-slate-300 leading-relaxed font-light"><p>Born and raised in Mongolia, my primary interest is exploring the microcosm on its natural timescale when interacting with extremely short and intense classical/quantum light. I obtained an MS in theoretical quantum optics from the National University of Mongolia and a PhD in experimental attosecond physics from POSTECH in South Korea. Today, I am a Research Fellow at Quantum and Advanced Technologies Research Institute (QUATRI), Griffith University in Brisbane, bridging theory with cutting-edge experimentation.</p><p>My expertise includes few-cycle pulse generation, high-harmonic generation (HHG), and utilizing CEP-stabilized femtosecond technology with precise post-compression techniques. I also specialize in the end-to-end construction and optimization of attosecond beamlines to explore these fundamental dynamics.</p><p>Outside of academia, I am a nature lover. I enjoy being outdoors, traveling, capturing moments through photography, and cycling around Brisbane. I also spend a fair amount of time exploring local cafes in search of a great coffee.</p></div></div></div></section><section id="research" class="py-32 px-6 bg-slate-950 border-t border-slate-800"><div class="max-w-6xl mx-auto"><div class="mb-16 md:text-center"><h2 class="text-3xl font-bold text-white mb-4">Research Interests</h2><p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A breakdown of my core technical competencies and research areas in experimental physics.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'ultrafast')"><div class="h-48 overflow-hidden relative bg-slate-800"><img src="web_gallery/ubr.png" alt="Ultrafast Electron Dynamics" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"><div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div></div><div class="p-6 flex-1 flex flex-col"><h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Ultrafast Electron Dynamics</h3><p class="text-slate-400 text-sm leading-relaxed font-light">Unraveling the interplay of electrons in atoms, focusing on charge migration and under-the-barrier dynamics.</p><div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></div></div></div><div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'pulses')"><div class="h-48 overflow-hidden relative bg-slate-800"><img src="web_gallery/fig4.png" alt="Ultrashort pulse generation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"><div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div></div><div class="p-6 flex-1 flex flex-col"><h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Ultrashort Pulse Generation</h3><p class="text-slate-400 text-sm leading-relaxed font-light">Achieving single-cycle optical pulses crucial for high-precision time-resolved experiments.</p><div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></div></div></div><div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'strong-field')"><div class="h-48 overflow-hidden relative bg-slate-800"><img src="web_gallery/fig1.png" alt="Strong Field Physics" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"><div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div></div><div class="p-6 flex-1 flex flex-col"><h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Strong Field Physics</h3><p class="text-slate-400 text-sm leading-relaxed font-light">Investigating fundamental physical processes and quantum dynamics in intense laser fields.</p><div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></div></div></div><div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 hover:border-cyan-500/50 transition-all group flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openResearchModal(this, 'metrology')"><div class="h-48 overflow-hidden relative bg-slate-800"><img src="web_gallery/pmd.png" alt="Quantum Metrology" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"><div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div></div><div class="p-6 flex-1 flex flex-col"><h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Quantum Metrology</h3><p class="text-slate-400 text-sm leading-relaxed font-light">Pushing the boundaries of precision measurement beyond the standard quantum limit using strong fields.</p><div class="mt-auto pt-4 flex items-center text-cyan-400 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">Read details <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></div></div></div></div></div></section><section id="publications" class="py-32 px-6 bg-slate-900 border-t border-slate-800"><div class="max-w-4xl mx-auto"><div class="mb-16 md:text-center"><h2 class="text-3xl font-bold text-white mb-4">Selected Publications</h2><p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">Recent research articles, journal papers, and contributions to attosecond physics.</p></div><div class="space-y-6"><div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20"><div class="flex flex-col md:flex-row gap-6 items-start"><div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">2026</div><div class="flex-1 w-full"><h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Nonclassical Cutoff Fluctuations in Squeezed-Light-Driven High-Harmonic Generation</h3><p class="text-slate-400 mb-4 font-light leading-relaxed"><span class="text-slate-200 font-medium">T. Khurelbaatar</span>, R.T. Sang, I. Litvinyuk.<br/><em class="text-slate-500 text-sm">arXiv preprint</em>, arXiv:2605.21925.</p><div class="flex flex-wrap gap-4 items-center"><a href="https://arxiv.org/abs/2605.21925" target="_blank" class="inline-flex items-center gap-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> arXiv</a><button id="btn-pub-0" onclick="explainResearch('Nonclassical Cutoff Fluctuations in Squeezed-Light-Driven High-Harmonic Generation', 'explain-pub-0', 'btn-pub-0')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50"><i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨</button></div><div id="explain-pub-0" class="hidden mt-4 w-full"></div></div></div></div><div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20"><div class="flex flex-col md:flex-row gap-6 items-start"><div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">2026</div><div class="flex-1 w-full"><h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Strong-Field Quantum Metrology Beyond the Standard Quantum Limit</h3><p class="text-slate-400 mb-4 font-light leading-relaxed"><span class="text-slate-200 font-medium">T. Khurelbaatar</span>, R.T. Sang, I. Litvinyuk.<br/><em class="text-slate-500 text-sm">arXiv preprint</em>, arXiv:2602.13667.</p><div class="flex flex-wrap gap-4 items-center"><a href="https://arxiv.org/abs/2602.13667" target="_blank" class="inline-flex items-center gap-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> arXiv</a><button id="btn-pub-1" onclick="explainResearch('Strong-Field Quantum Metrology Beyond the Standard Quantum Limit', 'explain-pub-1', 'btn-pub-1')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50"><i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨</button></div><div id="explain-pub-1" class="hidden mt-4 w-full"></div></div></div></div><div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20"><div class="flex flex-col md:flex-row gap-6 items-start"><div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">2025</div><div class="flex-1 w-full"><h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Unveiling under-the-barrier electron dynamics in strong field tunneling</h3><p class="text-slate-400 mb-4 font-light leading-relaxed"><span class="text-slate-200 font-medium">T. Khurelbaatar</span>, M. Klaiber, S. Sukiasyan, K.Z. Hatsagortsyan, CH. Keitel, et al.<br/><em class="text-slate-500 text-sm">Physical Review Letters</em>, 134 (21), 213201.</p><div class="flex flex-wrap gap-4 items-center"><button id="btn-pub-2" onclick="explainResearch('Unveiling under-the-barrier electron dynamics in strong field tunneling', 'explain-pub-2', 'btn-pub-2')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50"><i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨</button></div><div id="explain-pub-2" class="hidden mt-4 w-full"></div></div></div></div><div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20"><div class="flex flex-col md:flex-row gap-6 items-start"><div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">2024</div><div class="flex-1 w-full"><h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Strong-field photoelectron holography in the subcycle limit</h3><p class="text-slate-400 mb-4 font-light leading-relaxed"><span class="text-slate-200 font-medium">T. Khurelbaatar</span>, J. Heo, S.G. Yu, X.Y. Lai, X.J. Liu, D.E. Kim.<br/><em class="text-slate-500 text-sm">Light: Science & Applications</em>, 13 (1), 108.</p><div class="flex flex-wrap gap-4 items-center"><button id="btn-pub-3" onclick="explainResearch('Strong-field photoelectron holography in the subcycle limit', 'explain-pub-3', 'btn-pub-3')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50"><i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨</button></div><div id="explain-pub-3" class="hidden mt-4 w-full"></div></div></div></div><div class="bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm hover:shadow-cyan-900/20"><div class="flex flex-col md:flex-row gap-6 items-start"><div class="bg-slate-900 text-cyan-400 font-mono text-sm px-4 py-2 rounded-lg border border-slate-800 shrink-0">2021</div><div class="flex-1 w-full"><h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Realization of a continuously phase-locked few-cycle deep-UV/XUV pump-probe beamline with attosecond precision for ultrafast spectroscopy</h3><p class="text-slate-400 mb-4 font-light leading-relaxed"><span class="text-slate-200 font-medium">T. Khurelbaatar</span>, A. Gliserin, J.H. Mun, J. Heo, Y. Lee, D.E. Kim.<br/><em class="text-slate-500 text-sm">Applied Sciences</em>, 11 (15), 6840.</p><div class="flex flex-wrap gap-4 items-center"><button id="btn-pub-4" onclick="explainResearch('Realization of a continuously phase-locked few-cycle deep-UV/XUV pump-probe beamline with attosecond precision for ultrafast spectroscopy', 'explain-pub-4', 'btn-pub-4')" class="ml-auto inline-flex items-center gap-1.5 text-sm bg-cyan-900/30 text-cyan-400 hover:bg-cyan-800/50 px-3 py-1.5 rounded-md transition-colors font-medium border border-cyan-800/50"><i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨</button></div><div id="explain-pub-4" class="hidden mt-4 w-full"></div></div></div></div></div><div class="mt-12 text-center"><a href="https://scholar.google.com/citations?user=GCZCpxsAAAAJ&hl=en" target="_blank" class="inline-flex items-center space-x-2 bg-transparent text-cyan-400 border border-cyan-500/50 px-6 py-3 rounded-lg font-medium hover:bg-cyan-900/30 transition-all"><span>View full list on Google Scholar</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></div></div></section><section id="tools" class="py-24 px-6 bg-slate-900 relative overflow-hidden border-t border-slate-800"><div class="max-w-5xl mx-auto relative z-10 flex flex-col gap-4"><div class="bg-slate-950/60 border border-slate-800 hover:border-cyan-500/30 transition-colors rounded-2xl py-4 px-5 md:py-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md"><div class="max-w-2xl text-center md:text-left"><div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3"><i data-lucide="wrench" class="w-3 h-3"></i><span>Scientific Utilities</span></div><h2 class="text-xl md:text-2xl font-bold text-white mb-2">Unit Conversion Tool</h2><p class="text-slate-400 font-light text-sm leading-relaxed">A specialized laboratory tool for experimental physicists to quickly convert between energy units (eV, nm, Hz, K), pressure, and laser intensity parameters commonly used in attosecond and strong-field science.</p></div><a href="units/index.html" target="_blank" rel="noopener" class="tool-button group flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-cyan-900/30 whitespace-nowrap shrink-0 w-full md:w-auto"><i data-lucide="zap" class="w-4 h-4 group-hover:animate-pulse"></i><span>Launch Utility</span><i data-lucide="external-link" class="w-3 h-3 opacity-50"></i></a></div><div class="bg-slate-950/60 border border-slate-800 hover:border-purple-500/30 transition-colors rounded-2xl py-4 px-5 md:py-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md"><div class="max-w-2xl text-center md:text-left"><div class="inline-flex items-center space-x-2 bg-purple-900/30 border border-purple-800/50 text-purple-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3"><i data-lucide="test-tube" class="w-3 h-3"></i><span>Simulation</span></div><h2 class="text-xl md:text-2xl font-bold text-white mb-2">H-Lab: Electron Cloud Viewer</h2><p class="text-slate-400 font-light text-sm leading-relaxed">An interactive 3D simulation tool for visualizing hydrogenic electron probability density clouds and atomic orbitals in real-time right in your browser.</p></div><a href="hlab/ecloud.html" target="_blank" rel="noopener" class="tool-button tool-button-purple group flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-purple-900/30 whitespace-nowrap shrink-0 w-full md:w-auto"><i data-lucide="atom" class="w-4 h-4 group-hover:animate-spin-slow"></i><span>Launch H-Lab</span><i data-lucide="external-link" class="w-3 h-3 opacity-50"></i></a></div><div class="bg-slate-950/60 border border-slate-800 hover:border-emerald-500/30 transition-colors rounded-2xl py-4 px-5 md:py-5 md:px-6 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md"><div class="max-w-2xl text-center md:text-left"><div class="inline-flex items-center space-x-2 bg-emerald-900/30 border border-emerald-800/50 text-emerald-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3"><i data-lucide="waves" class="w-3 h-3"></i><span>Quantum Optics</span></div><h2 class="text-xl md:text-2xl font-bold text-white mb-2">Squeezed Light Simulator</h2><p class="text-slate-400 font-light text-sm leading-relaxed">Visualize phase-space distributions, quantum noise reduction, and uncertainty principle dynamics in squeezed states of light.</p></div><a href="squeeze/squeeze.html" target="_blank" rel="noopener" class="tool-button tool-button-emerald group flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-emerald-900/30 whitespace-nowrap shrink-0 w-full md:w-auto"><i data-lucide="activity" class="w-4 h-4 group-hover:animate-pulse"></i><span>Launch Squeeze</span><i data-lucide="external-link" class="w-3 h-3 opacity-50"></i></a></div></div></section><section id="notes" class="py-32 px-6 bg-slate-950 border-t border-slate-800"><div class="max-w-6xl mx-auto"><div class="mb-16 md:text-center"><h2 class="text-3xl font-bold text-white mb-4">My Notes</h2><p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">A personal notebook of blog posts, technical references, and code snippets useful for experimental physics.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note1')"><div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="notebook-pen" class="w-6 h-6"></i></div><div class="text-sm text-cyan-400/80 mb-2 font-mono">Apr 15, 2026</div><h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">PhD Dissertation</h3><p class="text-slate-400 text-sm leading-relaxed font-light flex-1">My PhD research focused on the development of advanced techniques for generating and characterizing attosecond pulses in the deep ultraviolet and extreme ultraviolet regimes.</p><button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">Read post <i data-lucide="arrow-right" class="w-4 h-4"></i></button></div><div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note2')"><div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="code" class="w-6 h-6"></i></div><div class="text-sm text-cyan-400/80 mb-2 font-mono">Mar 28, 2026</div><h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Python Script: Attosecond Streaking</h3><p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A simple script used to simulate attosecond streaking spectrograms based on the Strong Field Approximation (SFA).</p><button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">Read post <i data-lucide="arrow-right" class="w-4 h-4"></i></button></div><div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group shadow-sm flex flex-col cursor-pointer hover:shadow-cyan-900/20 hover:-translate-y-1" onclick="openNoteModal('note3')"><div class="w-12 h-12 bg-slate-950 border border-slate-800 text-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><i data-lucide="file-text" class="w-6 h-6"></i></div><div class="text-sm text-cyan-400/80 mb-2 font-mono">Feb 10, 2026</div><h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Quick Ref: Phase-matching in HHG</h3><p class="text-slate-400 text-sm leading-relaxed font-light flex-1">A cheat sheet of phase-matching conditions, pressure gradients, and absorption limits for High Harmonic Generation in various rare gases.</p><button class="inline-flex items-center gap-2 text-cyan-400 text-sm font-medium mt-6 group-hover:text-cyan-300">Read post <i data-lucide="arrow-right" class="w-4 h-4"></i></button></div></div></div></section><section id="gallery" class="py-32 px-6 bg-slate-900 border-t border-slate-800"><div class="max-w-6xl mx-auto"><div class="mb-16 md:text-center"><h2 class="text-3xl font-bold text-white mb-4">Lab Gallery</h2><p class="text-lg text-slate-400 max-w-2xl mx-auto font-light">Glimpses into the experimental setups, beamlines, and day-to-day life in the attosecond physics lab.</p></div><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]"><div class="relative overflow-hidden rounded-xl group cursor-pointer md:col-span-2 md:row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)"><img src="web_gallery/fig1.png" alt="Attosecond Beamline" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center"><i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i></div></div><div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)"><img src="web_gallery/fig2.png" alt="Data Analysis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center"><i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i></div></div><div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)"><img src="web_gallery/fig3.png" alt="Laser Alignment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center"><i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i></div></div><div class="relative overflow-hidden rounded-xl group cursor-pointer row-span-2 bg-slate-900 border border-slate-800" onclick="openLightbox(this)"><img src="web_gallery/fig5.png" alt="Optics Setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center"><i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i></div></div><div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)"><img src="web_gallery/fig6.png" alt="Equipment Control" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center"><i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i></div></div><div class="relative overflow-hidden rounded-xl group cursor-pointer bg-slate-900 border border-slate-800" onclick="openLightbox(this)"><img src="web_gallery/fig7.png" alt="VMI Chamber" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center"><i data-lucide="zoom-in" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 drop-shadow-lg"></i></div></div></div></div></section><footer id="contact" class="bg-slate-950 border-t border-slate-900 py-12 px-6"><div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6"><div><p class="text-white font-bold text-lg mb-1">Tsendsuren Khurelbaatar</p><p class="text-sm text-slate-400">Research Fellow in Attosecond Physics</p></div><div class="flex flex-col items-center md:items-end gap-3"><div class="flex space-x-6"><a href="https://github.com/tsendsuren" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a><a href="https://orcid.org/0000-0001-7785-0415" target="_blank" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="book-open" class="w-5 h-5"></i></a><a href="mailto:t.khurelbaatar@griffith.edu.au" class="text-slate-400 hover:text-cyan-400 transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a></div><div id="visitor-container" class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full text-[10px] font-mono tracking-wider text-slate-400 opacity-0 transition-opacity duration-700 shadow-inner"><span class="flex h-1.5 w-1.5 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-500"></span></span>VISITORS: <span id="visitor-count" class="text-cyan-400 font-bold">...</span></div></div></div><div class="max-w-6xl mx-auto mt-8 pt-8 border-t border-slate-800 text-sm text-slate-500 text-center md:text-left flex flex-col md:flex-row justify-between"><span>&copy; 2026 Tsendsuren Khurelbaatar. All rights reserved.</span><span class="mt-2 md:mt-0">Brisbane, QLD, Australia</span></div></footer><div id="research-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeResearchModal()"><div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()"><button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeResearchModal()"><i data-lucide="x" class="w-6 h-6"></i></button><div class="h-48 sm:h-64 w-full relative bg-slate-800 shrink-0 border-b border-slate-800"><img id="research-modal-img" src="" alt="Research Area" class="w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div></div><div class="p-6 sm:p-10 overflow-y-auto"><div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-wider"><i data-lucide="microscope" class="w-3 h-3"></i><span>Research Focus</span></div><h3 id="research-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6">Title</h3><div id="research-modal-desc" class="text-slate-300 leading-relaxed font-light space-y-4">Description goes here.</div></div></div></div><div id="note-modal" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeNoteModal()"><div class="relative w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()"><button class="absolute top-4 right-4 z-10 bg-slate-900/50 text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition-colors p-2 rounded-full backdrop-blur-md" onclick="closeNoteModal()"><i data-lucide="x" class="w-6 h-6"></i></button><div class="p-6 sm:p-10 overflow-y-auto mt-6"><div class="inline-flex items-center space-x-2 bg-cyan-900/30 border border-cyan-800/50 text-cyan-400 px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-wider"><i data-lucide="notebook-pen" class="w-3 h-3"></i><span id="note-modal-date">Date</span></div><h3 id="note-modal-title" class="text-2xl sm:text-3xl font-bold text-white mb-6 border-b border-slate-800 pb-4">Title</h3><div id="note-modal-content" class="markdown-body text-slate-300 font-light">Content goes here.</div></div></div></div><div id="lightbox" class="fixed inset-0 z-[100] bg-slate-950/95 hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeLightbox()"><button class="absolute top-6 right-6 text-slate-400 hover:text-cyan-400 transition-colors p-2" onclick="closeLightbox()"><i data-lucide="x" class="w-8 h-8"></i></button><img id="lightbox-img" src="" alt="Expanded Lab Photo" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain border border-slate-800" onclick="event.stopPropagation()"></div><script>lucide.createIcons();
+const notesData = {
+'note1': {
+date: 'May 26, 2024',
+title: 'My PhD Dissertation: Exploring Attosecond Chemical Physics',
+file: 'notes/phd-dissertation.md' 
+},
+'note2': {
+date: 'Mar 28, 2026',
+title: 'Python Script: Attosecond Streaking',
+file: 'notes/attosecond-streaking.md'
+},
+'note3': {
+date: 'Feb 10, 2026',
+title: 'Quick Ref: Phase-matching in HHG',
+file: 'notes/phase-matching.md'
+}
+};
+async function openNoteModal(id) {
+const data = notesData[id];
+if (!data) return;
+document.getElementById('note-modal-title').textContent = data.title;
+document.getElementById('note-modal-date').textContent = data.date;
+const contentDiv = document.getElementById('note-modal-content');
+contentDiv.innerHTML = '<div class="flex items-center justify-center py-10"><i data-lucide="loader-2" class="w-8 h-8 animate-spin text-cyan-500"></i></div>';
+const modal = document.getElementById('note-modal');
+modal.classList.remove('hidden');
+modal.classList.add('flex');
+setTimeout(() => {
+modal.classList.remove('opacity-0');
+}, 10);
+document.body.style.overflow = 'hidden';
+lucide.createIcons(); 
+try {
+const response = await fetch(data.file);
+if (!response.ok) throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
+const markdownText = await response.text();
+contentDiv.innerHTML = marked.parse(markdownText);
+} catch (error) {
+console.error("Error loading note:", error);
+contentDiv.innerHTML = `
+<div class="text-red-400 p-4 bg-red-950/30 rounded-lg border border-red-800/50 flex flex-col gap-2">
+<strong><i data-lucide="alert-circle" class="w-5 h-5 inline"></i> Error loading note content.</strong>
+<p class="text-sm">Could not fetch the file <code>${data.file}</code>. Make sure the 'notes' folder and the .md file exist in your repository.</p>
+</div>`;
+lucide.createIcons();
+}
+}
+function closeNoteModal() {
+const modal = document.getElementById('note-modal');
+modal.classList.add('opacity-0');
+setTimeout(() => {
+modal.classList.add('hidden');
+modal.classList.remove('flex');
+if (document.getElementById('research-modal').classList.contains('hidden') && document.getElementById('lightbox').classList.contains('hidden')) {
+document.body.style.overflow = '';
+}
+}, 300);
+}
+const researchData = {
+'ultrafast': {
+title: 'Ultrafast Electron Dynamics',
+desc: '<p>At the core of my research is the pursuit to unravel the complex interplay of electrons in atoms and molecules on their natural, attosecond timescale.</p><p>My specific interests include studying strong-field ionization processes, under-the-barrier electron tunneling dynamics, and observing charge migration—the purely electronic response of a molecule following sudden ionization before the heavy nuclei have time to move.</p>'
+},
+'pulses': {
+title: 'Ultrashort Pulse Generation',
+desc: '<p>My work involves the intricate design, construction, and optimization of state-of-the-art carrier-envelope phase (CEP) stabilized femtosecond laser systems.</p><p>Generating single-cycle or few-cycle optical pulses requires advanced post-compression techniques. By spectrally broadening the output of a standard amplifier and carefully compensating for dispersion, we achieve high-contrast, intense pulses.</p>'
+},
+'strong-field': {
+title: 'Strong Field Physics',
+desc: '<p>I investigate the fundamental physical processes that occur when atoms and molecules are exposed to intense, ultrashort laser fields.</p><p>This includes exploring high-order harmonic generation (HHG), strong-field photoelectron holography, and quantum metrology beyond the standard quantum limit.</p>'
+},
+'metrology': {
+title: 'Quantum Metrology',
+desc: '<p>Quantum metrology aims to enhance measurement precision beyond classical limits by harnessing quantum properties.</p><p>My recent work explores strong-field quantum metrology, aiming to surpass the standard quantum limit. By utilizing ultrafast laser fields and advanced detection schemes, we can push the boundaries of precision measurements.</p>'
+}
+};
+function openResearchModal(element, id) {
+const data = researchData[id];
+if(!data) return;
+const imgSrc = element.querySelector('img').src;
+document.getElementById('research-modal-title').textContent = data.title;
+document.getElementById('research-modal-img').src = imgSrc;
+document.getElementById('research-modal-desc').innerHTML = data.desc;
+const modal = document.getElementById('research-modal');
+modal.classList.remove('hidden');
+modal.classList.add('flex');
+setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
+document.body.style.overflow = 'hidden';
+}
+function closeResearchModal() {
+const modal = document.getElementById('research-modal');
+modal.classList.add('opacity-0');
+setTimeout(() => {
+modal.classList.add('hidden');
+modal.classList.remove('flex');
+if (document.getElementById('note-modal').classList.contains('hidden') && document.getElementById('lightbox').classList.contains('hidden')) {
+document.body.style.overflow = '';
+}
+}, 300);
+}
+function openLightbox(element) {
+const imgSrc = element.querySelector('img').src;
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+lightboxImg.src = imgSrc;
+lightbox.classList.remove('hidden');
+lightbox.classList.add('flex');
+setTimeout(() => { lightbox.classList.remove('opacity-0'); }, 10);
+document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+const lightbox = document.getElementById('lightbox');
+lightbox.classList.add('opacity-0');
+setTimeout(() => {
+lightbox.classList.add('hidden');
+lightbox.classList.remove('flex');
+if (document.getElementById('research-modal').classList.contains('hidden') && document.getElementById('note-modal').classList.contains('hidden')) {
+document.body.style.overflow = '';
+}
+}, 300);
+}
+document.addEventListener('keydown', (e) => {
+if (e.key === "Escape") {
+closeLightbox();
+closeResearchModal();
+closeNoteModal();
+}
+});
+const canvas = document.getElementById('quantum-canvas');
+if (canvas) {
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
+function resizeCanvas() {
+canvas.width = canvas.parentElement.offsetWidth;
+canvas.height = canvas.parentElement.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+class Particle {
+constructor(x, y, directionX, directionY, size, color) {
+this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
+}
+draw() {
+ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill();
+}
+update() {
+if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+this.x += this.directionX; this.y += this.directionY; this.draw();
+}
+}
+function initParticles() {
+particlesArray = [];
+let numberOfParticles = (canvas.height * canvas.width) / 12000;
+for (let i = 0; i < numberOfParticles; i++) {
+let size = (Math.random() * 1.5) + 0.5;
+let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
+let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
+let directionX = (Math.random() * 0.6) - 0.3;
+let directionY = (Math.random() * 0.6) - 0.3;
+particlesArray.push(new Particle(x, y, directionX, directionY, size, '#22d3ee'));
+}
+}
+function connect() {
+for (let a = 0; a < particlesArray.length; a++) {
+for (let b = a; b < particlesArray.length; b++) {
+let distance = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
+if (distance < 15000) {
+ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - (distance / 15000)) * 0.5})`;
+ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
+}
+}
+}
+}
+function animate() {
+requestAnimationFrame(animate); ctx.clearRect(0, 0, canvas.width, canvas.height);
+for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
+connect();
+}
+initParticles(); animate();
+}
+const profileContainer = document.getElementById('profile-container');
+if (profileContainer) {
+profileContainer.addEventListener('mouseenter', () => {
+const numPhotons = Math.floor(Math.random() * 2) + 2; 
+for(let i=0; i < numPhotons; i++) {
+setTimeout(emitPhoton, i * 150);
+}
+});
+function emitPhoton() {
+const shadowColors = ['#e879f9', '#22d3ee', '#34d399', '#a78bfa', '#fbbf24'];
+const color = shadowColors[Math.floor(Math.random() * shadowColors.length)];
+const svgNS = "http://www.w3.org/2000/svg";
+const svg = document.createElementNS(svgNS, "svg");
+svg.setAttribute("width", "40");
+svg.setAttribute("height", "16");
+svg.setAttribute("viewBox", "0 0 40 16");
+svg.className = "absolute top-1/2 left-1/2 pointer-events-none z-20";
+svg.style.filter = `drop-shadow(0 0 4px ${color}) drop-shadow(0 0 8px ${color})`;
+const path = document.createElementNS(svgNS, "path");
+path.setAttribute("d", "M 0 8 Q 5 0, 10 8 T 20 8 T 30 8 T 40 8");
+path.setAttribute("fill", "transparent");
+path.setAttribute("stroke", color);
+path.setAttribute("stroke-width", "2.5");
+path.setAttribute("stroke-linecap", "round");
+svg.appendChild(path);
+profileContainer.appendChild(svg);
+const angle = Math.random() * Math.PI * 2;
+const containerRadius = profileContainer.offsetWidth / 2;
+const isOuterRing = Math.random() > 0.5;
+const startRadius = isOuterRing ? containerRadius : (containerRadius - 16);
+const endRadius = startRadius + 100 + Math.random() * 100;
+const startX = Math.cos(angle) * startRadius;
+const startY = Math.sin(angle) * startRadius;
+const endX = Math.cos(angle) * endRadius;
+const endY = Math.sin(angle) * endRadius;
+const rotationDeg = angle * (180 / Math.PI);
+const animation = svg.animate([
+{ 
+transform: `translate(calc(-50% + ${startX}px), calc(-50% + ${startY}px)) rotate(${rotationDeg}deg) scale(0)`, 
+opacity: 0 
+},
+{ 
+transform: `translate(calc(-50% + ${startX + (endX-startX)*0.2}px), calc(-50% + ${startY + (endY-startY)*0.2}px)) rotate(${rotationDeg}deg) scale(1)`, 
+opacity: 1 
+},
+{ 
+transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) rotate(${rotationDeg}deg) scale(0.5)`, 
+opacity: 0 
+}
+], {
+duration: 1000 + Math.random() * 400, // 1s to 1.4s duration
+easing: 'cubic-bezier(0.25, 1, 0.5, 1)' 
+});
+animation.onfinish = () => svg.remove();
+}
+}
+const EXPLAIN_ENDPOINT = ""; // e.g. "https://your-worker.workers.dev/explain"
+window.addEventListener('load', () => {
+if (!EXPLAIN_ENDPOINT) {
+document.querySelectorAll('[id^="btn-pub-"]').forEach(b => b.style.display = 'none');
+}
+});
+async function fetchWithRetry(url, options, retries = 5) {
+const delays = [1000, 2000, 4000, 8000, 16000];
+for (let i = 0; i < retries; i++) {
+try {
+const response = await fetch(url, options);
+if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+return await response.json();
+} catch (error) {
+if (i === retries - 1) throw error;
+await new Promise(resolve => setTimeout(resolve, delays[i]));
+}
+}
+}
+async function explainResearch(title, containerId, btnId) {
+const container = document.getElementById(containerId);
+const btn = document.getElementById(btnId);
+btn.disabled = true;
+btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Explaining...`;
+lucide.createIcons();
+container.classList.remove('hidden');
+container.innerHTML = `<div class="p-4 bg-slate-900/50 rounded-lg text-cyan-400 text-sm animate-pulse flex items-center gap-3 border border-slate-800"><i data-lucide="brain-circuit" class="w-5 h-5"></i> Consulting the AI...</div>`;
+lucide.createIcons();
+const prompt = `Explain research paper: "${title}" in simple terms (2-3 sentences). Focus on impact.`;
+try {
+const data = await fetchWithRetry(EXPLAIN_ENDPOINT, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ prompt })
+});
+const text = data.text || data.candidates?.[0]?.content?.parts?.[0]?.text || "Couldn't generate explanation.";
+container.innerHTML = `<div class="p-5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 border border-cyan-800/30 rounded-lg text-slate-300 text-sm flex gap-4 items-start shadow-inner"><div class="bg-cyan-900/50 p-2 rounded-full text-cyan-400 shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div><div class="leading-relaxed"><strong class="text-cyan-400 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>${text}</div></div>`;
+} catch (error) {
+container.innerHTML = `<div class="p-4 bg-red-950/30 border border-red-800/50 rounded-lg text-red-400 text-sm flex items-center gap-3"><i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation.</div>`;
+} finally {
+btn.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4"></i> Explain this ✨`;
+btn.disabled = false;
+lucide.createIcons();
+}
+}</script></body></html>

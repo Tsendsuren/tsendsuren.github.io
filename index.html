@@ -4,6 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsendsuren Khurelbaatar | Experimental Physicist</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Tsendsuren Khurelbaatar — experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation. Publications, research, and tools.">
+    <meta name="author" content="Tsendsuren Khurelbaatar">
+    <meta name="keywords" content="Tsendsuren Khurelbaatar, attosecond physics, strong-field physics, high-harmonic generation, ultrafast science, quantum metrology, experimental physicist">
+    <link rel="canonical" href="https://tsendsuren.github.io/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tsendsuren Khurelbaatar | Experimental Physicist">
+    <meta property="og:description" content="Experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation.">
+    <meta property="og:url" content="https://tsendsuren.github.io/">
+    <meta property="og:site_name" content="Tsendsuren Khurelbaatar">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Tsendsuren Khurelbaatar | Experimental Physicist">
+    <meta name="twitter:description" content="Experimental physicist working on attosecond science, strong-field physics, and high-harmonic generation.">
+
+    <!-- Tailwind via CDN. For a production build (smaller, no runtime compile) consider
+         compiling Tailwind to a static stylesheet, but the CDN keeps this a single self-
+         contained file. Suppress the CDN's dev-only console warning: -->
+    <script>
+        (function () {
+            const warn = console.warn;
+            console.warn = function (msg) {
+                if (typeof msg === 'string' && msg.includes('cdn.tailwindcss.com')) return;
+                warn.apply(console, arguments);
+            };
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Modern Sans-Serif Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,23 +50,34 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        // To enable the visitor counter, paste your Firebase web config object below.
+        // Leave as null to disable (the counter widget will simply stay hidden).
+        // Example:
+        // const firebaseConfig = { apiKey: "...", authDomain: "...", projectId: "...", appId: "..." };
+        const firebaseConfig = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : null;
+        const appId = (typeof __app_id !== 'undefined') ? __app_id : 'tsendsuren-site';
 
         async function initVisitorCount() {
             const counterElement = document.getElementById('visitor-count');
             const container = document.getElementById('visitor-container');
-            
+
+            // No config -> feature disabled. Hide the widget instead of showing a broken state.
+            if (!firebaseConfig) {
+                if (container) container.style.display = 'none';
+                return;
+            }
+
             try {
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
+                const db = getFirestore(app);
+
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
-                
+
                 const counterDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'visitorStats');
                 const docSnap = await getDoc(counterDocRef);
                 
@@ -54,7 +97,7 @@
                 }
             } catch (error) {
                 console.error("Counter Error:", error);
-                if (counterElement) counterElement.textContent = "Live";
+                if (container) container.style.display = 'none';
             }
         }
 
@@ -987,10 +1030,20 @@
             }
         }
 
-        // --- Gemini API Integration (Restored with Retry & Styling) ---
-        const apiKey = "";
-        const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
+        // --- "Explain this" AI Integration ---
+        // SECURITY: never put an API key in client-side code on a public site.
+        // Instead, deploy a tiny serverless proxy (Cloudflare Worker / Netlify / Vercel
+        // function) that holds the key and forwards the prompt to Gemini, then set its
+        // URL here. The proxy should accept { prompt } and return { text }.
+        // While EXPLAIN_ENDPOINT is empty, the "Explain this" buttons are hidden.
+        const EXPLAIN_ENDPOINT = ""; // e.g. "https://your-worker.workers.dev/explain"
+
+        // Hide all "Explain this" buttons until a backend is configured.
+        window.addEventListener('load', () => {
+            if (!EXPLAIN_ENDPOINT) {
+                document.querySelectorAll('[id^="btn-pub-"]').forEach(b => b.style.display = 'none');
+            }
+        });
 
         async function fetchWithRetry(url, options, retries = 5) {
             const delays = [1000, 2000, 4000, 8000, 16000];
@@ -1019,12 +1072,12 @@
             
             const prompt = `Explain research paper: "${title}" in simple terms (2-3 sentences). Focus on impact.`;
             try {
-                const data = await fetchWithRetry(API_URL, {
+                const data = await fetchWithRetry(EXPLAIN_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    body: JSON.stringify({ prompt })
                 });
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Couldn't generate explanation.";
+                const text = data.text || data.candidates?.[0]?.content?.parts?.[0]?.text || "Couldn't generate explanation.";
                 container.innerHTML = `<div class="p-5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 border border-cyan-800/30 rounded-lg text-slate-300 text-sm flex gap-4 items-start shadow-inner"><div class="bg-cyan-900/50 p-2 rounded-full text-cyan-400 shrink-0"><i data-lucide="sparkles" class="w-5 h-5"></i></div><div class="leading-relaxed"><strong class="text-cyan-400 block mb-1 text-xs uppercase tracking-wider font-semibold">AI Simplified Summary</strong>${text}</div></div>`;
             } catch (error) {
                 container.innerHTML = `<div class="p-4 bg-red-950/30 border border-red-800/50 rounded-lg text-red-400 text-sm flex items-center gap-3"><i data-lucide="alert-circle" class="w-5 h-5"></i> Failed to generate explanation.</div>`;

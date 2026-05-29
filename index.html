@@ -86,12 +86,24 @@
                 }
 
                 const counterDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'visitorStats');
+
+                // Mark this browser as the owner: visit the site once with #iamowner in the URL
+                // (e.g. https://tsendsuren.github.io/#iamowner). After that this browser never
+                // increments the counter. To undo, visit with #notowner.
+                if (location.hash === '#iamowner') localStorage.setItem('counterOwner', 'true');
+                if (location.hash === '#notowner') localStorage.removeItem('counterOwner');
+                const isOwner = localStorage.getItem('counterOwner') === 'true';
+
+                // Only increment once per browser, and never for the owner.
+                const alreadyCounted = localStorage.getItem('visitorCounted') === 'true';
+
                 const docSnap = await getDoc(counterDocRef);
-                
-                if (docSnap.exists()) {
+                if (!docSnap.exists()) {
+                    await setDoc(counterDocRef, { count: isOwner ? 0 : 1 });
+                    if (!isOwner) localStorage.setItem('visitorCounted', 'true');
+                } else if (!alreadyCounted && !isOwner) {
                     await updateDoc(counterDocRef, { count: increment(1) });
-                } else {
-                    await setDoc(counterDocRef, { count: 1 });
+                    localStorage.setItem('visitorCounted', 'true');
                 }
 
                 const updatedSnap = await getDoc(counterDocRef);

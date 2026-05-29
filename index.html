@@ -54,7 +54,14 @@
         // Leave as null to disable (the counter widget will simply stay hidden).
         // Example:
         // const firebaseConfig = { apiKey: "...", authDomain: "...", projectId: "...", appId: "..." };
-        const firebaseConfig = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : null;
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-HyRj4B6cwAfYz__aOM8CvkhAjQC1MoY",
+            authDomain: "tsegit-5ad7b.firebaseapp.com",
+            projectId: "tsegit-5ad7b",
+            storageBucket: "tsegit-5ad7b.firebasestorage.app",
+            messagingSenderId: "271800867813",
+            appId: "1:271800867813:web:20d2bd5151823db8acad0c"
+        };
         const appId = (typeof __app_id !== 'undefined') ? __app_id : 'tsendsuren-site';
 
         async function initVisitorCount() {

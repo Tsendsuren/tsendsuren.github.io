@@ -230,7 +230,7 @@
             </div>
             
             <div class="flex justify-between text-[10px] text-slate-400 mt-4 font-mono px-2 relative z-10 font-medium">
-                <span>100 nm</span>
+                <span>1 nm</span>
                 <span>400 nm</span>
                 <span>700 nm</span>
                 <span>2500 nm</span>
@@ -325,16 +325,17 @@
         let label = "";
         
         let percent = 0;
-        if (wavelengthNm < 100) percent = 0;
+        if (wavelengthNm < 1) percent = 0;
         else if (wavelengthNm > 2500) percent = 100;
         else {
-            if (wavelengthNm <= 400) percent = ((wavelengthNm - 100) / 300) * 40;
+            if (wavelengthNm <= 400) percent = ((wavelengthNm - 1) / 399) * 40;
             else if (wavelengthNm <= 700) percent = 40 + ((wavelengthNm - 400) / 300) * 15;
             else percent = 55 + ((wavelengthNm - 700) / 1800) * 45;
         }
         marker.style.left = `${percent}%`;
 
-        if (wavelengthNm < 10) label = "X-Ray / Deep UV";
+        if (wavelengthNm < 1) label = "X-Ray";
+        else if (wavelengthNm < 10) label = "Extreme UV (XUV)";
         else if (wavelengthNm < 400) label = "Ultraviolet (UV)";
         else if (wavelengthNm < 750) label = "Visible Spectrum";
         else if (wavelengthNm < 1400) label = "Near-Infrared (NIR)";
